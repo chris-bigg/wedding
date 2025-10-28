@@ -1,3 +1,11 @@
+// Helper function to get the correct image path with base URL
+const getImagePath = (path: string) => {
+	if (typeof import.meta !== 'undefined' && import.meta.env) {
+		return `${import.meta.env.BASE_URL}${path}`;
+	}
+	return path;
+};
+
 export const weddingContent = {
 	// Core Details
 	couple: {
@@ -61,14 +69,14 @@ export const weddingContent = {
 			description: "The Hatherley Manor is a beautiful 17th-century house set in the countryside, perfect if you're looking to make a full weekend of it. It offers a luxury spa, an indoor pool, and a highly-rated restaurant. It's about a 15-minute taxi ride to the main attractions in Gloucester.",
 			link: "https://hatherleymanor.com/",
 			blockCode: null,
-			image: "/images/hotels/hatherley-manor-hotel.jpeg",
+			image: getImagePath("/images/hotels/hatherley-manor-hotel.jpeg"),
 		},
 		{
 			name: "Premier Inn Gloucester (Quayside)",
 			description: "For those who prefer being in the heart of the action (and a great deal!), the Premier Inn is the ideal spot. It's located right next to the Gloucester Quays designer outlet shops, the historic docks, and lots of bars and restaurants. It's a quick 10-minute walk to all the quayside buzz.",
 			link: "https://www.premierinn.com/gb/en/hotels/england/gloucestershire/gloucester/gloucester-quayside.html",
 			blockCode: null,
-			image: "/images/hotels/premier-inn.webp",
+			image: getImagePath("/images/hotels/premier-inn.webp"),
 		},
 	],
 

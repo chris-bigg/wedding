@@ -60,7 +60,7 @@ export default function HoneymoonModal() {
 					{/* QR Code */}
 					<div className="bg-white p-4 rounded-2xl shadow-lg mb-6 inline-block">
 						<img
-							src="/images/qrcode.png"
+							src={`${import.meta.env.BASE_URL}/images/qrcode.png`}
 							alt="PayPal QR Code"
 							className="w-64 h-64 mx-auto"
 						/>

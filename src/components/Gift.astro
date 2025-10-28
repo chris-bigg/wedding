@@ -1,6 +1,7 @@
 ---
 import { weddingContent } from '../config/wedding-content';
 import HoneymoonModal from './HoneymoonModal';
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <section id="gift" class="py-20 px-4 bg-gradient-to-br from-emerald-50/40 via-[#F3F7F1]/50 to-[#E8F2E6]/40 dark:from-stone-900/20 dark:via-stone-900/15 dark:to-stone-950/20">
@@ -25,7 +26,7 @@ import HoneymoonModal from './HoneymoonModal';
 				<!-- Right: Image -->
 				<div class="relative h-64 md:h-auto">
 					<img 
-						src="/images/croatia.jpg" 
+						src={`${baseUrl}/images/croatia.jpg`}
 						alt="Croatia honeymoon destination"
 						class="w-full h-full object-cover"
 						loading="lazy"
