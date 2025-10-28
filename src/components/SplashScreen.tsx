@@ -119,21 +119,21 @@ export default function SplashScreen() {
 				<div className="absolute inset-0 texture-overlay pointer-events-none"></div>
 				{/* Lottie Animation */}
 				<div className={`w-64 h-64 md:w-96 md:h-96 relative z-10 transition-opacity duration-500 ${hideLottie ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-					<DotLottieReact
-						src={`${import.meta.env.BASE_URL}/lottie/Wedding Rings.lottie`}
-						loop
-						autoplay
-					/>
+				<DotLottieReact
+					src="/lottie/Wedding Rings.lottie"
+					loop
+					autoplay
+				/>
 				</div>
 				
 				{/* Falling Image */}
 				{showFallingImage && (
 					<div className="w-80 h-80 md:w-[32rem] md:h-[32rem] absolute z-10 falling-image">
-						<img
-							src={`${import.meta.env.BASE_URL}/images/splash.png`}
-							alt="Wedding splash"
-							className="w-full h-full object-contain drop-shadow-2xl image-flip"
-						/>
+					<img
+						src="/images/splash.png"
+						alt="Wedding splash"
+						className="w-full h-full object-contain drop-shadow-2xl image-flip"
+					/>
 					</div>
 				)}
 			</div>

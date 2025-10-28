@@ -41,9 +41,9 @@ export default function MusicPlayer() {
 
 		return (
 		<>
-			<audio ref={audioRef} loop>
-				<source src={`${import.meta.env.BASE_URL}/audio/wedding-music.mp3`} type="audio/mpeg" />
-			</audio>
+		<audio ref={audioRef} loop>
+			<source src="/audio/wedding-music.mp3" type="audio/mpeg" />
+		</audio>
 			
 			<button
 				onClick={togglePlay}

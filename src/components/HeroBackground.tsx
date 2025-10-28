@@ -1,16 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-const BASE_URL = import.meta.env.BASE_URL;
-
 const images = [
-	`${BASE_URL}/images/us/1.jpg`,
-	`${BASE_URL}/images/us/2.jpg`,
-	`${BASE_URL}/images/us/3.jpg`,
-	`${BASE_URL}/images/us/4.jpg`,
-	`${BASE_URL}/images/us/5.jpg`,
-	`${BASE_URL}/images/us/6.jpg`,
-	`${BASE_URL}/images/us/7.jpg`
+	"/images/us/1.jpg",
+	"/images/us/2.jpg",
+	"/images/us/3.jpg",
+	"/images/us/4.jpg",
+	"/images/us/5.jpg",
+	"/images/us/6.jpg",
+	"/images/us/7.jpg"
 ];
 
 export default function HeroBackground() {

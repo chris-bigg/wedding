@@ -32,10 +32,10 @@ export default function FloralAnimation() {
 		<div ref={containerRef} className="w-full flex items-center justify-center -mb-10">
 			<div className="w-full max-w-4xl aspect-[16/5]">
 				{isVisible && (
-					<DotLottieReact
-						src={`${import.meta.env.BASE_URL}/lottie/weddingfloral.lottie`}
-						autoplay
-					/>
+				<DotLottieReact
+					src="/lottie/weddingfloral.lottie"
+					autoplay
+				/>
 				)}
 			</div>
 		</div>
