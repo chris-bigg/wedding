@@ -7,6 +7,9 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://chris-bigg.github.io',
+  base: '/wedding',
+  
   vite: {
     plugins: [tailwindcss()]
   },
