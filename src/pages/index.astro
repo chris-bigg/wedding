@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Story from '../components/Story.astro';
+import Details from '../components/Details.astro';
+import Location from '../components/Location.astro';
+import Accommodation from '../components/Accommodation.astro';
+import FAQ from '../components/FAQ.astro';
+import Gift from '../components/Gift.astro';
+import RSVPForm from '../components/RSVPForm';
+import DarkModeToggle from '../components/DarkModeToggle';
+import Navigation from '../components/Navigation';
+import SplashScreen from '../components/SplashScreen';
+import FloralAnimation from '../components/FloralAnimation';
+import MusicPlayer from '../components/MusicPlayer';
+import { weddingContent } from '../config/wedding-content';
+---
+
+<Layout title={`${weddingContent.couple.name1} & ${weddingContent.couple.name2} | Wedding`}>
+	<!-- Splash Screen -->
+	<SplashScreen client:load />
+
+	<!-- Music Player -->
+	<MusicPlayer client:load />
+
+	<!-- Navigation -->
+	<Navigation client:load />
+
+	<!-- Main Content -->
+	<main>
+		<Hero />
+		<Story />
+		<Details />
+		<Location />
+		<Accommodation />
+		<FAQ />
+		<Gift />
+		<RSVPForm client:visible />
+	</main>
+
+	<!-- Floral Animation -->
+	<FloralAnimation client:visible />
+
+	<!-- Footer -->
+	<footer class="bg-gradient-to-br from-emerald-900 to-stone-900 dark:from-emerald-950 dark:to-stone-950 text-stone-200 dark:text-stone-300 py-8 px-4 relative">
+		<div class="max-w-4xl mx-auto text-center">
+			<p class="mb-2">For questions, please contact us at <a href={`mailto:${weddingContent.contact.email}`} class="text-emerald-300 dark:text-emerald-400 hover:text-emerald-200 dark:hover:text-emerald-300 hover:underline transition-colors">{weddingContent.contact.email}</a></p>
+			<p class="text-sm">&copy; {new Date().getFullYear()} {weddingContent.couple.name1} & {weddingContent.couple.name2}</p>
+		</div>
+		<!-- Nerdy Stuff CTA -->
+		<a 
+			href="/tech" 
+			class="fixed bottom-6 right-6 z-50 bg-stone-800/80 hover:bg-stone-700/90 backdrop-blur-sm text-stone-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 border border-stone-600/50"
+			title="View tech stack"
+		>
+			🤓 Nerdy stuff
+		</a>
+	</footer>
+</Layout>

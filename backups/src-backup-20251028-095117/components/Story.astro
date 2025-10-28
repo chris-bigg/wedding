@@ -1,0 +1,21 @@
+---
+import { weddingContent } from '../config/wedding-content';
+---
+
+<section id="story" class="py-20 px-4 bg-white">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-4xl md:text-5xl font-serif font-light text-center text-neutral-800 mb-12">
+			{weddingContent.story.title}
+		</h2>
+		<div class="prose prose-lg md:prose-xl mx-auto text-neutral-700 leading-relaxed">
+			<p>{weddingContent.story.content}</p>
+		</div>
+		<!-- Add your engagement photos here -->
+		<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+			<!-- Example: Replace with actual images using Astro's Image component
+			<Image src="/images/engagement-1.jpg" alt="Engagement photo 1" width={600} height={400} />
+			<Image src="/images/engagement-2.jpg" alt="Engagement photo 2" width={600} height={400} />
+			-->
+		</div>
+	</div>
+</section>

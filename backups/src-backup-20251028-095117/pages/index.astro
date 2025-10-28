@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Story from '../components/Story.astro';
+import Details from '../components/Details.astro';
+import Location from '../components/Location.astro';
+import Accommodation from '../components/Accommodation.astro';
+import FAQ from '../components/FAQ.astro';
+import Gift from '../components/Gift.astro';
+import RSVPForm from '../components/RSVPForm';
+import { weddingContent } from '../config/wedding-content';
+---
+
+<Layout title={`${weddingContent.couple.name1} & ${weddingContent.couple.name2} | Wedding`}>
+	<!-- Navigation -->
+	<nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+		<div class="max-w-6xl mx-auto px-4 py-3">
+			<ul class="flex flex-wrap justify-center gap-2 md:gap-4 lg:gap-8 text-xs sm:text-sm md:text-base">
+				<li><a href="#home" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Home</a></li>
+				<li><a href="#story" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Story</a></li>
+				<li><a href="#details" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Details</a></li>
+				<li><a href="#location" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Location</a></li>
+				<li><a href="#accommodation" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Stay</a></li>
+				<li><a href="#faq" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">FAQ</a></li>
+				<li><a href="#gift" class="text-neutral-700 hover:text-rose-600 transition-colors whitespace-nowrap">Gift</a></li>
+				<li><a href="#rsvp" class="bg-rose-600 hover:bg-rose-700 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors whitespace-nowrap">RSVP</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- Main Content -->
+	<main>
+		<Hero />
+		<Story />
+		<Details />
+		<Location />
+		<Accommodation />
+		<FAQ />
+		<Gift />
+		<RSVPForm client:visible />
+	</main>
+
+	<!-- Footer -->
+	<footer class="bg-neutral-800 text-neutral-300 py-8 px-4">
+		<div class="max-w-4xl mx-auto text-center">
+			<p class="mb-2">For questions, please contact us at <a href={`mailto:${weddingContent.contact.email}`} class="text-rose-400 hover:underline">{weddingContent.contact.email}</a></p>
+			<p class="text-sm">&copy; {new Date().getFullYear()} {weddingContent.couple.name1} & {weddingContent.couple.name2}</p>
+		</div>
+	</footer>
+</Layout>

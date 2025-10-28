@@ -1,0 +1,28 @@
+---
+import { weddingContent } from '../config/wedding-content';
+---
+
+<section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-50 to-neutral-50 px-4 pt-20">
+	<div class="text-center">
+		<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-serif font-light text-neutral-800 mb-6">
+			{weddingContent.couple.name1}
+			<span class="block text-2xl sm:text-3xl md:text-4xl lg:text-6xl my-4">&</span>
+			{weddingContent.couple.name2}
+		</h1>
+		<div class="h-px w-32 bg-neutral-400 mx-auto my-8"></div>
+		<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-neutral-700 mb-4">
+			{weddingContent.date.full}
+		</p>
+		<p class="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-neutral-600">
+			{weddingContent.venue.name}
+		</p>
+		<div class="mt-12">
+			<a 
+				href="#rsvp" 
+				class="inline-block bg-rose-600 hover:bg-rose-700 text-white font-medium px-8 py-3 rounded-full transition-colors duration-300"
+			>
+				RSVP Now
+			</a>
+		</div>
+	</div>
+</section>

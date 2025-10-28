@@ -1,0 +1,29 @@
+---
+import { weddingContent } from '../config/wedding-content';
+---
+
+<section id="details" class="py-20 px-4 bg-neutral-50">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-4xl md:text-5xl font-serif font-light text-center text-neutral-800 mb-12">
+			Wedding Details
+		</h2>
+		
+		<div class="bg-white rounded-lg shadow-md p-8 md:p-12 mb-8">
+			<div class="text-center mb-12">
+				<h3 class="text-2xl font-medium text-neutral-800 mb-2">{weddingContent.venue.name}</h3>
+				<p class="text-lg text-neutral-600">{weddingContent.venue.address}</p>
+				<p class="text-lg text-neutral-600 mt-4">{weddingContent.date.full} at {weddingContent.date.time}</p>
+			</div>
+
+			<h3 class="text-2xl font-medium text-neutral-800 mb-6 text-center">Schedule</h3>
+			<div class="space-y-4">
+				{weddingContent.schedule.map((item) => (
+					<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-neutral-200 pb-3">
+						<span class="text-base sm:text-lg font-medium text-neutral-700">{item.time}</span>
+						<span class="text-base sm:text-lg text-neutral-600">{item.event}</span>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>

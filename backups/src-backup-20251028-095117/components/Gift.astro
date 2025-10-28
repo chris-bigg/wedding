@@ -1,0 +1,24 @@
+---
+import { weddingContent } from '../config/wedding-content';
+---
+
+<section id="gift" class="py-20 px-4 bg-neutral-50">
+	<div class="max-w-3xl mx-auto text-center">
+		<h2 class="text-4xl md:text-5xl font-serif font-light text-neutral-800 mb-8">
+			Honeymoon Fund
+		</h2>
+
+		<p class="text-lg text-neutral-700 mb-8 leading-relaxed">
+			{weddingContent.gift.message}
+		</p>
+
+		<a 
+			href={weddingContent.gift.donationUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="inline-block bg-rose-600 hover:bg-rose-700 text-white font-medium px-8 py-3 rounded-full transition-colors duration-300"
+		>
+			Contribute to Our Honeymoon
+		</a>
+	</div>
+</section>
