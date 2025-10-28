@@ -33,7 +33,7 @@ export default function FloralAnimation() {
 			<div className="w-full max-w-4xl aspect-[16/5]">
 				{isVisible && (
 					<DotLottieReact
-						src="/lottie/weddingfloral.lottie"
+						src={`${import.meta.env.BASE_URL}/lottie/weddingfloral.lottie`}
 						autoplay
 					/>
 				)}

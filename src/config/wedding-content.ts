@@ -37,14 +37,14 @@ export const weddingContent = {
 
 	// Schedule
 	schedule: [
-		{ time: "[Time]", event: "Guests Arrive" },
-		{ time: "[Time]", event: "Ceremony" },
-		{ time: "[Time]", event: "Cocktail Hour & Canapés" },
-		{ time: "[Time]", event: "Dinner Reception" },
-		{ time: "[Time]", event: "First Dance" },
-		{ time: "[Time]", event: "Dancing Begins / Party Time" },
-		{ time: "[Time]", event: "Last Orders" },
-		{ time: "[Time]", event: "Send-Off/End" },
+		{ time: "12:00", event: "Guests Arrive" },
+		{ time: "13:00", event: "Ceremony" },
+		{ time: "14:00", event: "Cocktail Hour & Canapés" },
+		{ time: "16:00", event: "Dinner Reception" },
+		{ time: "18:00", event: "First Dance" },
+		{ time: "19:00", event: "Dancing Begins / Party Time" },
+		{ time: "23:00", event: "Last Orders" },
+		{ time: "00:00", event: "Send-Off/End" },
 	],
 
 	// Travel & Location
