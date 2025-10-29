@@ -17,17 +17,17 @@ import { weddingContent } from '../config/wedding-content';
 				<div class="space-y-4 text-stone-700 dark:text-stone-300">
 					<div>
 						<h4 class="font-semibold mb-2 text-emerald-700 dark:text-emerald-400">Driving</h4>
-						<p>{weddingContent.travel.driving}</p>
+						<div set:html={weddingContent.travel.driving} />
 					</div>
 					
 					<div>
 						<h4 class="font-semibold mb-2 text-emerald-700 dark:text-emerald-400">Public Transit</h4>
-						<p>{weddingContent.travel.publicTransit}</p>
+						<div set:html={weddingContent.travel.publicTransit} />
 					</div>
 					
 					<div>
 						<h4 class="font-semibold mb-2 text-emerald-700 dark:text-emerald-400">Taxi / Rideshare</h4>
-						<p>{weddingContent.travel.taxiRideshare}</p>
+						<div set:html={weddingContent.travel.taxiRideshare} />
 					</div>
 					
 					<div>
@@ -37,7 +37,7 @@ import { weddingContent } from '../config/wedding-content';
 				</div>
 			</div>
 
-			<div class="rounded-2xl overflow-hidden shadow-lg border border-stone-200/50">
+			<div class="rounded-2xl overflow-hidden shadow-lg border border-stone-200/50 relative">
 				<iframe
 					src={weddingContent.venue.mapUrl}
 					width="100%"
@@ -47,6 +47,19 @@ import { weddingContent } from '../config/wedding-content';
 					loading="lazy"
 					referrerpolicy="no-referrer-when-downgrade"
 				></iframe>
+				<div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+					<a
+						href="https://www.google.com/maps/dir//Blackfriars+Priory+Ladybellegate+St+Gloucester+GL1+2HN/@51.8643905,-2.2487749,17z/data=!4m5!4m4!1m0!1m2!1m1!1s0x487106653ae895d5:0x8492fffdb15df426"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+						</svg>
+						Get Directions
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
