@@ -26,6 +26,8 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 			y: 50,
 		});
 
+		let scrollTriggerInstance: ScrollTrigger | null = null;
+
 		const animate = () => {
 			if (!svgRef.current || !name1PathRef.current || !name2PathRef.current || !containerRef.current) return;
 
@@ -57,7 +59,10 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 						
 						// Setup scroll-triggered parallax after reveal
 						if (containerRef.current) {
-							gsap.to(containerRef.current, {
+							// Detect mobile devices
+							const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+							
+							const animation = gsap.to(containerRef.current, {
 								scale: 2.5,
 								y: 150,
 								opacity: 0,
@@ -66,9 +71,12 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 									trigger: '#home',
 									start: 'top top',
 									end: 'bottom top',
-									scrub: 1,
+									scrub: isMobile ? 0.5 : 1, // Faster scrub on mobile for less lag
+									invalidateOnRefresh: true, // Recalculate on orientation change
+									fastScrollEnd: isMobile ? true : false, // Better handling of fast scrolling
 								},
 							});
+							scrollTriggerInstance = animation.scrollTrigger as ScrollTrigger;
 						}
 					},
 				},
@@ -85,11 +93,25 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 
 		return () => {
 			window.removeEventListener('splashComplete', handleSplashComplete);
+			// Clean up ScrollTrigger instance
+			if (scrollTriggerInstance) {
+				scrollTriggerInstance.kill();
+			}
+			ScrollTrigger.refresh();
 		};
 	}, []);
 
 	return (
-		<div ref={containerRef} className="mb-6">
+		<div 
+			ref={containerRef} 
+			className="mb-6"
+			style={{
+				willChange: 'transform, opacity',
+				transform: 'translateZ(0)', // Force GPU acceleration
+				backfaceVisibility: 'hidden' as const,
+				perspective: 1000,
+			}}
+		>
 			<svg
 				ref={svgRef}
 				className="w-full overflow-visible"
