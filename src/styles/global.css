@@ -2,7 +2,49 @@
 
 @custom-variant dark (&:is(.dark, .dark *));
 
+/* Custom Fonts */
+@font-face {
+  font-family: 'Greater Theory';
+  src: url('/font/greater-theory/GreaterTheory.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat/Montserrat-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @layer base {
+  /* Apply Montserrat as body font */
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300; /* Light weight for body text */
+  }
+
+  /* Medium weight for buttons and navigation */
+  button, a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+  }
+
+  /* Apply Greater Theory to h3 and h4 with increased letter-spacing */
+  h3, h4 {
+    font-family: 'Greater Theory', sans-serif;
+    letter-spacing: 0.05em;
+  }
   /* Lenis smooth scroll */
   html.lenis,
   html.lenis body {

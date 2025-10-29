@@ -10,7 +10,7 @@ export const weddingContent = {
 		name2: "Feleena",
 	},
 	date: {
-		full: "Saturday, August 1st, 2025",
+		full: "Saturday, August 1st, 2026",
 		time: "1pm",
 	},
 	venue: {
@@ -106,7 +106,7 @@ export const weddingContent = {
 	// Gift Registry / Honeymoon
 	gift: {
 		message:
-			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to [Location].",
+			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to 🇸🇮 Slovenia & 🇭🇷 Croatia.",
 		donationUrl: "[The URL for Stripe/PayPal/Honeyfund]",
 	},
 };
