@@ -11,13 +11,21 @@ import { weddingContent } from '../config/wedding-content';
 		</h2>
 		
 		<div class="bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 dark:border-stone-700/50 p-8 md:p-12 mb-8">
-			<div class="text-center mb-12">
-				<h3 class="text-2xl font-medium text-emerald-800 dark:text-emerald-400 mb-2">{weddingContent.venue.name}</h3>
-				<p class="text-lg text-stone-600 dark:text-stone-400">{weddingContent.venue.address}</p>
-				<p class="text-lg text-stone-600 dark:text-stone-400 mt-4">{weddingContent.date.full} at {weddingContent.date.time}</p>
+			<div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+				<div class="text-center md:text-left">
+					<h3 class="text-2xl font-medium text-emerald-800 dark:text-emerald-400 mb-2">{weddingContent.venue.name}</h3>
+					<p class="text-lg text-stone-600 dark:text-stone-400">{weddingContent.venue.address}</p>
+				</div>
+				<div class="rounded-xl overflow-hidden shadow-md">
+					<img 
+						src="/images/bp.jpg" 
+						alt="Blackfriars Priory" 
+						class="w-full h-64 object-cover"
+					/>
+				</div>
 			</div>
-
-			<h3 class="text-2xl font-medium text-emerald-800 dark:text-emerald-400 mb-6 text-center">Schedule</h3>
+			<h3 class="text-2xl font-medium text-emerald-800 dark:text-emerald-400 mb-2 text-center">Schedule</h3>
+			<p class="text-lg text-stone-600 dark:text-stone-400 text-center mb-6">{weddingContent.date.full} at {weddingContent.date.time}</p>
 			<div class="space-y-4">
 				{weddingContent.schedule.map((item) => (
 					<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-emerald-200/40 dark:border-emerald-800/40 pb-3">
