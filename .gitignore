@@ -1,5 +1,5 @@
 # build output
-# dist/ - Commented out to allow GitHub Pages deployment
+dist/
 # generated types
 .astro/
 
@@ -19,6 +19,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+**/.DS_Store
 
 # jetbrains setting folder
 .idea/
