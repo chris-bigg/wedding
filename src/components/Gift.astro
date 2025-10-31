@@ -15,9 +15,7 @@ import HoneymoonModal from './HoneymoonModal';
 						</span>
 					</h2>
 
-					<p class="text-lg text-stone-700 dark:text-stone-300 mb-8 leading-relaxed">
-						{weddingContent.gift.message}
-					</p>
+					<p class="text-lg text-stone-700 dark:text-stone-300 mb-8 leading-relaxed" set:html={weddingContent.gift.message} />
 
 					<HoneymoonModal client:load />
 				</div>
