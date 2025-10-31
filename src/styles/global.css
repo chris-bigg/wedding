@@ -197,4 +197,85 @@
   .button-sparkle:hover::before {
     animation: sparkle 1.2s ease-in-out infinite;
   }
+
+  /* Swiper Carousel Styles */
+  .accommodation-swiper {
+    padding: 0;
+    margin: 0;
+  }
+
+  .accommodation-swiper .swiper-wrapper {
+    padding: 20px 0;
+    align-items: stretch;
+  }
+
+  .accommodation-swiper .swiper-slide {
+    height: auto;
+    display: flex;
+  }
+
+  .accommodation-swiper .swiper-slide > * {
+    height: 100%;
+  }
+
+
+  .accommodation-swiper .swiper-button-prev,
+  .accommodation-swiper .swiper-button-next {
+    color: #059669;
+    width: 32px;
+    height: 32px;
+  }
+
+  .accommodation-swiper .swiper-button-prev {
+    left: 0;
+  }
+  
+  .accommodation-swiper .swiper-button-next {
+    right: 0;
+  }
+
+  @media (min-width: 768px) {
+    .accommodation-swiper .swiper-button-prev {
+      left: -50px;
+    }
+    
+    .accommodation-swiper .swiper-button-next {
+      right: -50px;
+    }
+  }
+
+  .dark .accommodation-swiper .swiper-button-prev,
+  .dark .accommodation-swiper .swiper-button-next {
+    color: #34d399;
+  }
+
+  .accommodation-swiper .swiper-button-prev:after,
+  .accommodation-swiper .swiper-button-next:after {
+    font-size: 24px;
+  }
+
+  .accommodation-swiper .swiper-pagination {
+    bottom: 0 !important;
+    position: absolute;
+  }
+
+  .accommodation-swiper .swiper-pagination-bullet {
+    background: #059669;
+    opacity: 0.3;
+    width: 10px;
+    height: 10px;
+  }
+
+  .accommodation-swiper .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #059669;
+  }
+
+  .dark .accommodation-swiper .swiper-pagination-bullet {
+    background: #34d399;
+  }
+
+  .dark .accommodation-swiper .swiper-pagination-bullet-active {
+    background: #34d399;
+  }
 }
