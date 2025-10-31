@@ -129,7 +129,6 @@ export default function Navigation() {
 								)}
 							</svg>
 						</button>
-						<span className="text-sm font-semibold text-stone-700 dark:text-stone-200">Menu</span>
 						<DarkModeToggle />
 					</div>
 				</nav>
