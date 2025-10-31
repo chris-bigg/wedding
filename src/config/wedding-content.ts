@@ -102,7 +102,7 @@ export const weddingContent = {
 	faqs: [
 		{
 			question: "What is the dress code?",
-			answer: "[e.g., Black Tie Optional, Cocktail Attire, or Smart Casual]",
+			answer: "We'd love for everyone to put on their best for our big day! The dress code is Formal Attire. This means a suit and tie for the men, and a beautiful dress, dressy skirt, or smart trouser suit for the women. We want everyone to feel elegant and celebrate in style!",
 		},
 		{
 			question: "Can I bring a plus-one?",
@@ -112,22 +112,28 @@ export const weddingContent = {
 		{
 			question: "Are children invited?",
 			answer:
-				"[Yes/No - if No: We love your little ones, but this will be an adults-only celebration.]",
+				"We love your little ones, but this will be an adults-only celebration.",
 		},
 		{
 			question: "When should I RSVP by?",
-			answer: "Please let us know your plans by [Date].",
+			answer: null as string | null, // Will be set after object creation
 		},
 		{
 			question: "Is parking available?",
-			answer: "[Yes/No, give specifics]",
+			answer: "No, there is no direct visitor parking on-site. Paid public parking is available immediately next door at the Ladybellegate Street Car Park (City Council) and the NCP Blackfriars Car Park. Additional options are the Longsmith Street Car Park and Gloucester Quays.",
 		},
 	],
 
 	// Gift Registry / Honeymoon
 	gift: {
 		message:
-			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to 🇸🇮 Slovenia & 🇭🇷 Croatia.",
+			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to<br>🇸🇮 Slovenia & 🇭🇷 Croatia.",
 		donationUrl: "[The URL for Stripe/PayPal/Honeyfund]",
 	},
 };
+
+// Set the RSVP deadline in the FAQ answer
+const rsvpFaqIndex = weddingContent.faqs.findIndex(faq => faq.question === "When should I RSVP by?");
+if (rsvpFaqIndex !== -1) {
+	weddingContent.faqs[rsvpFaqIndex].answer = `Please let us know your plans by ${weddingContent.rsvp.deadline}.`;
+}
