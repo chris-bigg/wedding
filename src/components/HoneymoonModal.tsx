@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { weddingContent } from '../config/wedding-content';
 
 export default function HoneymoonModal() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,12 @@ export default function HoneymoonModal() {
 						</span>
 					</h3>
 
-					<p className="text-stone-700 dark:text-stone-300 mb-6">
+					<p 
+						className="text-stone-700 dark:text-stone-300 mb-6"
+						dangerouslySetInnerHTML={{ __html: weddingContent.gift.message }}
+					/>
+
+					<p className="text-stone-600 dark:text-stone-400 mb-6 text-sm">
 						Scan the QR code or click the button below to contribute
 					</p>
 
