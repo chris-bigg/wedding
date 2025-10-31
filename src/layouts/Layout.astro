@@ -16,7 +16,8 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="icon" type="image/svg+xml" href="/marriage-light.svg?v=1" media="(prefers-color-scheme: light)" />
+		<link rel="icon" type="image/svg+xml" href="/marriage-dark.svg?v=1" media="(prefers-color-scheme: dark)" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,6 +37,36 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 	</head>
 	<body class="bg-gradient-to-br from-[#F3F7F1]/50 via-stone-50 to-emerald-50/40 dark:from-stone-950 dark:via-stone-900 dark:to-emerald-950/30 text-stone-900 dark:text-stone-100 antialiased">
 		<SmoothScroll client:load />
+		<script is:inline>
+			// Smoothly keep floating CTAs above the footer by increasing bottom offset
+			document.addEventListener('DOMContentLoaded', () => {
+				const root = document.documentElement;
+				const footer = document.querySelector('footer');
+				if (!footer) return;
+				let ticking = false;
+				const base = 24; // px baseline spacing above bottom
+				const safe = () => (parseInt(getComputedStyle(root).getPropertyValue('padding-bottom')) || 0);
+				const compute = () => {
+					const rect = footer.getBoundingClientRect();
+					const vh = window.innerHeight || 0;
+					const overlap = Math.max(0, vh - rect.top);
+					const bottom = Math.round(base + overlap);
+					root.style.setProperty('--cta-bottom', `${bottom}px`);
+						// note: buttons already have transition-all so movement is smooth
+				};
+				const requestUpdate = () => {
+					if (ticking) return;
+					ticking = true;
+					requestAnimationFrame(() => {
+						compute();
+						ticking = false;
+					});
+				};
+				window.addEventListener('scroll', requestUpdate, { passive: true });
+				window.addEventListener('resize', requestUpdate);
+				requestUpdate();
+			});
+		</script>
 		<slot />
 	</body>
 </html>
