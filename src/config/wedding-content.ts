@@ -67,27 +67,7 @@ export const weddingContent = {
 			link: "https://hatherleymanor.com/",
 			blockCode: null,
 			image: "/images/hotels/hatherley-manor-hotel.jpeg",
-		},
-		{
-			name: "Premier Inn Gloucester (Quayside)",
-			description: "For those who prefer being in the heart of the action (and a great deal!), the Premier Inn is the ideal spot. It's located right next to the Gloucester Quays designer outlet shops, the historic docks, and lots of bars and restaurants. It's a quick 10-minute walk to all the quayside buzz.",
-			link: "https://www.premierinn.com/gb/en/hotels/england/gloucestershire/gloucester/gloucester-quayside.html",
-			blockCode: null,
-			image: "/images/hotels/premier-inn.webp",
-		},
-		{
-			name: "The New Inn Hotel",
-			description: "A charming historic inn in the heart of Gloucester city centre, offering traditional hospitality with modern comforts. Perfect for those who want to be within walking distance of the venue and explore the city's rich history and vibrant dining scene.",
-			link: "https://www.thenewinngloucester.co.uk/",
-			blockCode: null,
-			image: "/images/hotels/new-inn.jpeg",
-		},
-		{
-			name: "Travelodge Gloucester Quays",
-			description: "Budget-friendly accommodation in a prime location next to Gloucester Quays. Modern, comfortable rooms with easy access to the historic docks, shopping outlets, and city centre. Great value for guests looking for affordable convenience.",
-			link: "https://www.travelodge.co.uk/hotels/gloucester-quays",
-			blockCode: null,
-			image: "/images/hotels/travelodge.jpg",
+			distance: 7.2, // miles from venue
 		},
 		{
 			name: "The Mooring Post @ The Lock Keepers",
@@ -95,6 +75,31 @@ export const weddingContent = {
 			link: "https://www.themooringpost.co.uk/",
 			blockCode: null,
 			image: "/images/hotels/lock-keeper.jpg",
+			distance: 2.5, // miles from venue
+		},
+		{
+			name: "The New Inn Hotel",
+			description: "A charming historic inn in the heart of Gloucester city centre, offering traditional hospitality with modern comforts. Perfect for those who want to be within walking distance of the venue and explore the city's rich history and vibrant dining scene.",
+			link: "https://www.thenewinngloucester.co.uk/",
+			blockCode: null,
+			image: "/images/hotels/new-inn.jpeg",
+			distance: 0.3, // miles from venue
+		},
+		{
+			name: "Premier Inn Gloucester (Quayside)",
+			description: "For those who prefer being in the heart of the action (and a great deal!), the Premier Inn is the ideal spot. It's located right next to the Gloucester Quays designer outlet shops, the historic docks, and lots of bars and restaurants. It's a quick 10-minute walk to all the quayside buzz.",
+			link: "https://www.premierinn.com/gb/en/hotels/england/gloucestershire/gloucester/gloucester-quayside.html",
+			blockCode: null,
+			image: "/images/hotels/premier-inn.webp",
+			distance: 0.6, // miles from venue
+		},
+		{
+			name: "Travelodge Gloucester Quays",
+			description: "Budget-friendly accommodation in a prime location next to Gloucester Quays. Modern, comfortable rooms with easy access to the historic docks, shopping outlets, and city centre. Great value for guests looking for affordable convenience.",
+			link: "https://www.travelodge.co.uk/hotels/gloucester-quays",
+			blockCode: null,
+			image: "/images/hotels/travelodge.jpg",
+			distance: 0.6, // miles from venue
 		},
 	],
 
