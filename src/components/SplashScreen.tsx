@@ -70,6 +70,25 @@ export default function SplashScreen() {
 					background-size: 400% 400%;
 					animation: gradient-shimmer 6s ease infinite;
 				}
+				/* Dark mode: deeper champagne/bronze tones over near-black */
+				.dark .gradient-shimmer {
+					background: linear-gradient(
+						-45deg,
+						#0f0f0f,
+						#1a1916,
+						#2a241a,
+						#3a2f1f,
+						#4a3a25,
+						#5a4a2f,
+						#4a3a25,
+						#3a2f1f,
+						#2a241a,
+						#1a1916,
+						#0f0f0f
+					);
+					background-size: 400% 400%;
+					animation: gradient-shimmer 6s ease infinite;
+				}
 				
 				@keyframes fall-and-rotate {
 					0% {
@@ -110,6 +129,11 @@ export default function SplashScreen() {
 					background-size: 100px 100px;
 					mix-blend-mode: multiply;
 					opacity: 0.25;
+				}
+				/* Dark mode: softer blending so gold tones stay visible */
+				.dark .texture-overlay {
+					mix-blend-mode: soft-light;
+					opacity: 0.15;
 				}
 			`}</style>
 			<div 

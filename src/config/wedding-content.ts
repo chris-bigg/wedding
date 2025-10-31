@@ -75,6 +75,27 @@ export const weddingContent = {
 			blockCode: null,
 			image: "/images/hotels/premier-inn.webp",
 		},
+		{
+			name: "The New Inn Hotel",
+			description: "A charming historic inn in the heart of Gloucester city centre, offering traditional hospitality with modern comforts. Perfect for those who want to be within walking distance of the venue and explore the city's rich history and vibrant dining scene.",
+			link: "https://www.thenewinngloucester.co.uk/",
+			blockCode: null,
+			image: "/images/hotels/new-inn.jpeg",
+		},
+		{
+			name: "Travelodge Gloucester Quays",
+			description: "Budget-friendly accommodation in a prime location next to Gloucester Quays. Modern, comfortable rooms with easy access to the historic docks, shopping outlets, and city centre. Great value for guests looking for affordable convenience.",
+			link: "https://www.travelodge.co.uk/hotels/gloucester-quays",
+			blockCode: null,
+			image: "/images/hotels/travelodge.jpg",
+		},
+		{
+			name: "The Mooring Post @ The Lock Keepers",
+			description: "A unique waterside pub with boutique accommodation along the Gloucester & Sharpness Canal. Combining character, comfort and stunning canal views, it's perfect for those seeking something a little different with excellent food and atmosphere.",
+			link: "https://www.themooringpost.co.uk/",
+			blockCode: null,
+			image: "/images/hotels/lock-keeper.jpg",
+		},
 	],
 
 	// FAQs
