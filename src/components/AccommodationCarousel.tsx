@@ -12,6 +12,7 @@ interface AccommodationItem {
   link: string;
   blockCode: string | null;
   image: string;
+  distance?: number; // miles from venue
 }
 
 interface AccommodationCarouselProps {
@@ -41,31 +42,44 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
 
   useEffect(() => {
     const equalizeHeights = () => {
-      // Target the card elements inside slides, not the slides themselves
-      const cards = document.querySelectorAll('.accommodation-swiper .swiper-slide > div');
-      if (cards.length === 0) return;
+      if (!swiperInstance) return;
       
-      // Reset heights first
-      cards.forEach((card) => {
-        (card as HTMLElement).style.height = 'auto';
-      });
+      // Get all slides (both visible and those that need equalizing)
+      const allSlides = Array.from(swiperInstance.slides);
+      if (allSlides.length === 0) return;
       
-      // Wait for layout to settle
-      setTimeout(() => {
-        // Find the tallest card
+      // Use requestAnimationFrame for smoother updates
+      requestAnimationFrame(() => {
+        // First pass: measure natural heights without resetting to avoid visual jump
         let maxHeight = 0;
-        cards.forEach((card) => {
-          const height = (card as HTMLElement).offsetHeight;
-          if (height > maxHeight) maxHeight = height;
+        const cards: HTMLElement[] = [];
+        
+        allSlides.forEach((slide) => {
+          const card = slide.querySelector('div') as HTMLElement;
+          if (card) {
+            // Measure natural height by temporarily setting to auto
+            const currentHeight = card.style.height;
+            card.style.height = 'auto';
+            // Force a reflow
+            void card.offsetHeight;
+            const naturalHeight = card.offsetHeight;
+            // Restore original height immediately to prevent visual jump
+            card.style.height = currentHeight || '';
+            
+            if (naturalHeight > maxHeight) maxHeight = naturalHeight;
+            cards.push(card);
+          }
         });
         
-        // Set all cards to the tallest height
-        if (maxHeight > 0) {
+        // Second pass: apply height in next frame for smooth update
+        requestAnimationFrame(() => {
           cards.forEach((card) => {
-            (card as HTMLElement).style.height = `${maxHeight}px`;
+            if (maxHeight > 0) {
+              card.style.height = `${maxHeight}px`;
+            }
           });
-        }
-      }, 50);
+        });
+      });
     };
 
     // Initial equalization after mount
@@ -74,9 +88,9 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
     // Equalize on resize
     window.addEventListener('resize', equalizeHeights);
     
-    // Equalize when swiper updates (after slide changes)
+    // Equalize when swiper finishes transitioning (prevents jump during animation)
     if (swiperInstance) {
-      swiperInstance.on('slideChange', equalizeHeights);
+      swiperInstance.on('slideChangeTransitionEnd', equalizeHeights);
       swiperInstance.on('resize', equalizeHeights);
     }
 
@@ -84,20 +98,37 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
       clearTimeout(timer1);
       window.removeEventListener('resize', equalizeHeights);
       if (swiperInstance) {
-        swiperInstance.off('slideChange', equalizeHeights);
+        swiperInstance.off('slideChangeTransitionEnd', equalizeHeights);
         swiperInstance.off('resize', equalizeHeights);
       }
     };
   }, [accommodation, swiperInstance]);
 
   const AccommodationCard = ({ hotel }: { hotel: AccommodationItem }) => (
-    <div className="bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_25px_-5px_rgba(0,0,0,0.15)] border border-stone-200/50 dark:border-stone-700/50 overflow-hidden transition-all duration-300 h-full flex flex-col">
+    <div className="bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_25px_-5px_rgba(0,0,0,0.15)] border border-stone-200/50 dark:border-stone-700/50 overflow-hidden transition-[shadow,transform] duration-300 h-full flex flex-col relative" style={{ transition: 'box-shadow 0.3s ease, transform 0.3s ease' }}>
       {hotel.image && (
-        <img 
-          src={hotel.image} 
-          alt={hotel.name}
-          className="w-full h-48 object-cover flex-shrink-0"
-        />
+        <div className="relative">
+          <img 
+            src={hotel.image} 
+            alt={hotel.name}
+            className="w-full h-48 object-cover flex-shrink-0"
+          />
+          {hotel.distance !== undefined && (
+            <div className="absolute top-3 right-3 bg-emerald-600/95 dark:bg-emerald-500/95 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-lg flex items-center gap-1.5">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>{hotel.distance.toFixed(1)} mi</span>
+            </div>
+          )}
+        </div>
       )}
       <div className="p-6 flex flex-col flex-grow min-h-0">
         <h3 className="text-xl font-medium text-emerald-800 dark:text-emerald-400 mb-3 flex-shrink-0">{hotel.name}</h3>
@@ -132,6 +163,11 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
           dynamicBullets: false
         }}
         navigation
+        simulateTouch={true}
+        touchStartPreventDefault={false}
+        touchRatio={1}
+        touchAngle={45}
+        grabCursor={true}
         className="accommodation-swiper"
         onSwiper={setSwiperInstance}
         breakpoints={{
