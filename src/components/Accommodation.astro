@@ -1,46 +1,45 @@
 ---
 import { weddingContent } from '../config/wedding-content';
+import AccommodationCarousel from './AccommodationCarousel';
 ---
 
 <section id="accommodation" class="py-20 px-4 bg-gradient-to-br from-[#F3F7F1]/40 via-[#E8F2E6]/30 to-emerald-50/40 dark:from-stone-900/30 dark:via-stone-900/20 dark:to-stone-950/30">
-	<div class="max-w-4xl mx-auto">
+	<div class="max-w-6xl mx-auto">
 		<h2 class="text-5xl md:text-6xl text-center mb-12 overflow-visible" style="font-family: 'Great Vibes', cursive; font-weight: 400; line-height: 1.3; padding: 0.5rem 0;">
 			<span class="inline-block bg-gradient-to-r from-emerald-600 to-emerald-800 dark:from-emerald-400 dark:to-emerald-600 bg-clip-text text-transparent px-4">
 				Where to Stay
 			</span>
 		</h2>
 
-		<div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8">
-			{weddingContent.accommodation.map((hotel) => (
-				<div class="bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 dark:border-stone-700/50 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
-					{hotel.image && (
-						<img 
-							src={hotel.image} 
-							alt={hotel.name}
-							class="w-full h-48 object-cover"
-						/>
-					)}
-					<div class="p-6">
-						<h3 class="text-xl font-medium text-emerald-800 dark:text-emerald-400 mb-3">{hotel.name}</h3>
-						{hotel.description && (
-							<p class="text-stone-600 dark:text-stone-400 mb-4 text-sm leading-relaxed">{hotel.description}</p>
-						)}
-						{hotel.blockCode && (
-							<p class="text-sm text-stone-600 dark:text-stone-400 mb-4">
-								Block Code: <span class="font-mono font-semibold text-emerald-700 dark:text-emerald-400">{hotel.blockCode}</span>
-							</p>
-						)}
-						<a 
-							href={hotel.link}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="inline-block bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-medium px-6 py-2 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
-						>
-							Book Now
-						</a>
-					</div>
-				</div>
-			))}
+		<AccommodationCarousel client:load accommodation={weddingContent.accommodation} />
+		
+		<div class="mt-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
+			<a 
+				href="https://www.airbnb.com/s/Gloucester--UK/homes?checkin=2026-08-01&checkout=2026-08-02"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center justify-center gap-3 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm border-2 border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 font-medium px-8 py-3 rounded-full hover:bg-emerald-50 dark:hover:bg-stone-700/70 transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-64"
+			>
+				<svg class="w-5 h-5 fill-emerald-700 dark:fill-emerald-400" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+					<path d="M29.524 22.279c-0.372-1.044-0.752-1.907-1.183-2.74l0.058 0.123v-0.038c-2.361-5.006-4.551-9.507-6.632-13.551l-0.139-0.204c-1.483-3.040-2.544-4.866-5.627-4.866-3.049 0-4.344 2.118-5.667 4.871l-0.101 0.2c-2.086 4.044-4.275 8.551-6.627 13.555v0.066l-0.699 1.525c-0.262 0.63-0.396 0.96-0.431 1.058-0.279 0.691-0.441 1.492-0.441 2.332 0 3.526 2.859 6.385 6.385 6.385 0.020 0 0.040-0 0.060-0l-0.003 0c0.117-0 0.232-0.012 0.342-0.036l-0.011 0.002h0.465c2.744-0.574 5.073-2.061 6.71-4.121l0.018-0.024c1.656 2.082 3.983 3.568 6.65 4.132l0.075 0.013h0.465c0.099 0.021 0.214 0.034 0.331 0.034h0c0.017 0 0.038 0 0.059 0 3.526 0 6.384-2.858 6.384-6.384 0-0.84-0.162-1.642-0.457-2.376l0.015 0.043zM27.999 25.266c-0.262 1.581-1.309 2.87-2.719 3.467l-0.030 0.011c-2.815 1.225-5.602-0.729-7.988-3.379 3.945-4.937 4.674-8.782 2.98-11.269-0.887-1.289-2.353-2.123-4.015-2.123-0.080 0-0.159 0.002-0.237 0.006l0.011-0c-0.023-0-0.049-0.001-0.076-0.001-2.816 0-5.098 2.282-5.098 5.098 0 0.583 0.098 1.142 0.278 1.664l-0.011-0.036c0.782 2.574 2.032 4.8 3.665 6.686l-0.019-0.023c-0.978 1.128-2.103 2.094-3.352 2.879l-0.062 0.036c-0.657 0.387-1.43 0.657-2.256 0.758l-0.029 0.003c-0.186 0.027-0.401 0.043-0.62 0.043-2.474 0-4.48-2.006-4.48-4.48 0-0.599 0.117-1.17 0.33-1.692l-0.011 0.030c0.165-0.431 0.494-1.225 1.056-2.451l0.031-0.066c1.829-3.971 4.051-8.485 6.604-13.49l0.066-0.165 0.725-1.395c0.348-0.857 0.932-1.559 1.672-2.043l0.017-0.010c0.425-0.248 0.935-0.395 1.48-0.395 0.027 0 0.054 0 0.081 0.001l-0.004-0c1.024 0.009 1.933 0.497 2.514 1.251l0.006 0.008c0.197 0.299 0.431 0.696 0.727 1.191l0.697 1.361 0.1 0.199c2.551 5.004 4.775 9.507 6.597 13.489l0.033 0.031 0.666 1.525 0.397 0.955c0.199 0.493 0.314 1.065 0.314 1.664 0 0.232-0.017 0.46-0.051 0.683l0.003-0.025zM16.001 23.841c-1.367-1.544-2.407-3.411-2.991-5.47l-0.024-0.099c-0.126-0.348-0.198-0.749-0.198-1.167 0-0.711 0.21-1.372 0.57-1.927l-0.008 0.014c0.543-0.803 1.45-1.325 2.479-1.325 0.060 0 0.12 0.002 0.18 0.005l-0.008-0c0.052-0.003 0.112-0.005 0.173-0.005 1.030 0 1.938 0.525 2.469 1.323l0.007 0.011c0.351 0.538 0.56 1.196 0.56 1.904 0 0.422-0.074 0.826-0.211 1.201l0.008-0.024c-0.624 2.155-1.661 4.019-3.029 5.588l0.015-0.017z"/>
+				</svg>
+				More on Airbnb
+			</a>
+			<a 
+				href="https://www.booking.com/searchresults.en-gb.html?ss=Gloucester%2C+Gloucestershire%2C+United+Kingdom&ssne=Gloucester&ssne_untouched=Gloucester&efdco=1&label=cht532js-10CAQoggJCIXNlYXJjaF9nbG91Y2VzdGVyLCB1bml0ZWQga2luZ2RvbUgzWANoUIgBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC5syMyAbAAgHSAiQwNmIxZjlkMy02YjE1LTQyNGEtODhkNi04NTM1OTgyYWMzMTLYAgHgAgE&sid=a3aa0f2f2a25dedd151d9fe95760cced&aid=2440491&lang=en-gb&sb=1&src_elem=sb&src=searchresults&dest_id=-2597215&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=en&ac_suggestion_list_length=3&search_selected=true&search_pageview_id=4bff3e00ebdf0084&ac_meta=GhA0YmZmM2UwMGViZGYwMDg0IAAoATICZW46CUdMb3VjdGVlckABSghnbG91c3RlclA%2B&checkin=2026-08-01&checkout=2026-08-02&group_adults=2&no_rooms=1&group_children=0"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center justify-center gap-3 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm border-2 border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 font-medium px-8 py-3 rounded-full hover:bg-emerald-50 dark:hover:bg-stone-700/70 transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-72"
+			>
+				<svg class="w-5 h-5 fill-emerald-700 dark:fill-emerald-400" viewBox="0 0 73.926649 72.407883" xmlns="http://www.w3.org/2000/svg">
+					<g transform="translate(45.311933,-49.834307)">
+						<g transform="matrix(1.378728,0,0,1.378728,-79.238333,13.337998)">
+							<path d="m 35.940796,56.048166 c -1.072151,0.679833 -1.250696,2.041807 -1.279101,3.205255 -0.0086,3.395701 0.0041,6.791402 0.0041,10.183639 3.130416,-0.01731 6.265265,0.02424 9.400112,-0.008 2.141185,-0.04271 4.327383,-1.180761 5.337783,-3.115226 1.523909,-2.92709 1.225892,-7.0511 -1.37871,-9.279888 -2.133105,-1.789034 -5.077277,-1.565117 -7.677838,-1.581275 -1.465737,0.06117 -3.101491,-0.244694 -4.406296,0.595575 z M 35.646829,35.880568 c -0.877826,0.775632 -0.952227,2.017568 -0.985134,3.107147 -0.0086,2.798972 0.0082,5.59448 0,8.393451 2.724606,-0.01267 5.449591,0.03694 8.174693,-0.01267 1.631136,-0.03232 3.275085,-0.744469 4.27325,-2.061429 1.967129,-2.683549 1.855285,-7.1065 -0.948187,-9.177163 -1.921538,-1.403525 -4.414873,-1.011092 -6.642623,-1.072266 -1.300223,0.03232 -2.852989,-0.174285 -3.871999,0.822956 z M 24.615514,31.9597 c -0.178543,-2.923627 2.488324,-5.562162 5.386938,-5.487138 4.418936,0 8.837466,-0.0035 13.255917,0 4.352661,0.09926 8.956823,1.379287 12.033614,4.61686 4.746248,4.895025 4.46035,13.600115 -0.430637,18.295461 -0.575261,0.539019 -1.183994,1.031868 -1.780493,1.540877 2.518152,1.262711 4.849551,3.088679 6.103837,5.672967 2.273687,4.642253 2.000022,10.559913 -0.894056,14.875523 -3.184479,4.728819 -9.102024,6.732535 -14.593202,6.857191 -6.356723,0.02078 -12.717509,0 -19.077861,0.008 -0.0041,-15.458401 0.0041,-30.916803 -0.0041,-46.37982 v 0" />
+						</g>
+					</g>
+				</svg>
+				More on Booking.com
+			</a>
 		</div>
 	</div>
 </section>

@@ -6,16 +6,56 @@ export default function DarkModeToggle() {
 	useEffect(() => {
 		// Check for saved preference or system preference
 		const saved = localStorage.getItem('darkMode');
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const media = window.matchMedia('(prefers-color-scheme: dark)');
+		const prefersDark = media.matches;
 		const shouldBeDark = saved ? saved === 'true' : prefersDark;
-		
+
 		setIsDark(shouldBeDark);
 		if (shouldBeDark) {
 			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+
+		// If user hasn't explicitly set a preference, follow OS/browser changes
+		const handleChange = (e: MediaQueryListEvent) => {
+			const hasUserPreference = localStorage.getItem('darkMode');
+			if (!hasUserPreference) {
+				const nextIsDark = e.matches;
+				setIsDark(nextIsDark);
+				if (nextIsDark) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			}
+		};
+
+		try {
+			media.addEventListener('change', handleChange);
+			return () => media.removeEventListener('change', handleChange);
+		} catch {
+			// Safari <14 fallback
+			media.addListener(handleChange as any);
+			return () => media.removeListener(handleChange as any);
 		}
 	}, []);
 
-	const toggleDarkMode = () => {
+	const toggleDarkMode = (e?: React.MouseEvent<HTMLButtonElement>) => {
+		// Shift+Click clears saved preference and follows system
+		if (e?.shiftKey) {
+			localStorage.removeItem('darkMode');
+			const media = window.matchMedia('(prefers-color-scheme: dark)');
+			const follow = media.matches;
+			setIsDark(follow);
+			if (follow) {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+			return;
+		}
+
 		const newValue = !isDark;
 		setIsDark(newValue);
 		localStorage.setItem('darkMode', String(newValue));
@@ -32,7 +72,7 @@ export default function DarkModeToggle() {
 			onClick={toggleDarkMode}
 			className="p-2 rounded-full bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors duration-300"
 			aria-label="Toggle dark mode"
-			title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+			title={`${isDark ? 'Switch to light mode' : 'Switch to dark mode'} (Shift+Click to follow system)`}
 		>
 			{isDark ? (
 				// Sun icon
