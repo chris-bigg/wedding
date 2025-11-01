@@ -47,8 +47,8 @@ export default function MusicPlayer() {
 			
 			<button
 				onClick={togglePlay}
-				className="fixed left-6 z-50 bg-stone-800/80 hover:bg-stone-700/90 backdrop-blur-sm text-stone-200 px-4 py-2 rounded-full text-sm font-medium transition-[background-color,shadow,transform] duration-300 shadow-lg hover:shadow-xl hover:scale-105 border border-stone-600/50 flex items-center gap-2"
-				style={{ bottom: 'var(--cta-bottom, 1.5rem)', transition: 'background-color 300ms, box-shadow 300ms, transform 300ms' }}
+				className="fixed left-4 md:left-6 z-50 bg-stone-800/80 hover:bg-stone-700/90 backdrop-blur-sm text-stone-200 px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-[background-color,shadow,transform] duration-300 shadow-lg hover:shadow-xl hover:scale-105 border border-stone-600/50 flex items-center gap-2"
+				style={{ bottom: 'var(--cta-bottom, 1.5rem)', transition: 'background-color 300ms, box-shadow 300ms' }}
 				title={isPlaying ? 'Pause music' : 'Play music'}
 			>
 				{isPlaying ? (
