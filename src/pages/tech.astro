@@ -1,10 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import DarkModeToggle from '../components/DarkModeToggle';
+import AnimatedText from '../components/AnimatedText';
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Tech Stack | Chris & Feleena">
+	<script is:inline>
+		// Prevent scroll restoration on page refresh and ensure page starts at top
+		if (typeof window !== 'undefined') {
+			window.history.scrollRestoration = 'manual';
+			// Ensure scroll position is at top immediately
+			window.scrollTo(0, 0);
+			// Also ensure on DOM ready
+			document.addEventListener('DOMContentLoaded', () => {
+				window.scrollTo(0, 0);
+			});
+		}
+	</script>
 	<!-- Navigation -->
 	<nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm z-50 border-b border-stone-200/50 dark:border-stone-700/50">
 		<div class="max-w-6xl mx-auto px-4 py-3">
@@ -23,7 +36,11 @@ const baseUrl = import.meta.env.BASE_URL;
 	<main class="min-h-screen bg-gradient-to-br from-stone-50 via-white to-emerald-50/30 dark:from-emerald-950 dark:via-stone-950 dark:to-stone-900 pt-24 pb-16 px-4">
 		<div class="max-w-5xl mx-auto">
 			<h1 class="text-4xl md:text-5xl text-center text-emerald-900 dark:text-emerald-200 mb-4 font-semibold" style="font-family: 'Greater Theory', sans-serif; letter-spacing: 0.05em;">
-				Nerdy Stuff 🤓
+				<AnimatedText 
+					client:load
+					text="Nerdy Stuff 🤓"
+					type="split"
+				/>
 			</h1>
 			<p class="text-center text-stone-600 dark:text-stone-300 mb-12 text-lg font-light">
 				Welcome! This site was a passion project—I built it myself with modern web technologies to make sure all the details for our big day are easy for you to find.			</p>
