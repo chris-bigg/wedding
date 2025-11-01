@@ -33,6 +33,9 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 			} else {
 				document.documentElement.classList.remove('dark');
 			}
+			
+			// Initialize --cta-bottom immediately with default value
+			document.documentElement.style.setProperty('--cta-bottom', '1.5rem');
 		</script>
 		<title>{title}</title>
 	</head>
@@ -41,20 +44,23 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<SmoothScroll client:load />
 		<script is:inline>
 			// Smoothly keep floating CTAs above the footer by increasing bottom offset
-			document.addEventListener('DOMContentLoaded', () => {
+			const updateCtaBottom = () => {
 				const root = document.documentElement;
 				const footer = document.querySelector('footer');
-				if (!footer) return;
+				if (!footer) {
+					// If footer not ready, set default and retry
+					root.style.setProperty('--cta-bottom', '1.5rem');
+					return;
+				}
 				let ticking = false;
 				const base = 24; // px baseline spacing above bottom
-				const safe = () => (parseInt(getComputedStyle(root).getPropertyValue('padding-bottom')) || 0);
 				const compute = () => {
 					const rect = footer.getBoundingClientRect();
 					const vh = window.innerHeight || 0;
 					const overlap = Math.max(0, vh - rect.top);
 					const bottom = Math.round(base + overlap);
 					root.style.setProperty('--cta-bottom', `${bottom}px`);
-						// note: buttons already have transition-all so movement is smooth
+					// note: buttons already have transition-all so movement is smooth
 				};
 				const requestUpdate = () => {
 					if (ticking) return;
@@ -64,10 +70,25 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 						ticking = false;
 					});
 				};
+				// Run immediately
+				requestUpdate();
+				// Then on scroll and resize
 				window.addEventListener('scroll', requestUpdate, { passive: true });
 				window.addEventListener('resize', requestUpdate);
-				requestUpdate();
-			});
+			};
+			
+			// Run as soon as possible
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', updateCtaBottom);
+			} else {
+				updateCtaBottom();
+			}
+			
+			// Also run on window load to ensure footer is rendered
+			window.addEventListener('load', updateCtaBottom);
+			
+			// Run when splash screen completes (if it dispatches an event)
+			window.addEventListener('splashComplete', updateCtaBottom);
 		</script>
 		<slot />
 	</body>
