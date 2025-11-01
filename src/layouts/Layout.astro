@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import SmoothScroll from '../components/SmoothScroll';
+import CustomCursor from '../components/CustomCursor';
 
 interface Props {
 	title: string;
@@ -36,6 +37,7 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="bg-gradient-to-br from-[#F3F7F1]/50 via-stone-50 to-emerald-50/40 dark:from-stone-950 dark:via-stone-900 dark:to-emerald-950/30 text-stone-900 dark:text-stone-100 antialiased">
+		<CustomCursor client:load />
 		<SmoothScroll client:load />
 		<script is:inline>
 			// Smoothly keep floating CTAs above the footer by increasing bottom offset
