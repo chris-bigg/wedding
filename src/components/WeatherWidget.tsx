@@ -109,7 +109,7 @@ export default function WeatherWidget() {
 
   return (
     <div className="w-full md:w-auto z-40">
-      <div className="bg-stone-800/80 dark:bg-stone-900/80 backdrop-blur-sm text-stone-200 border border-stone-600/40 rounded-xl p-3 shadow-lg max-w-full md:max-w-[320px] mx-auto md:mx-0">
+      <div className="bg-stone-800/50 dark:bg-stone-900/80 backdrop-blur-sm text-stone-200 border border-stone-600/40 rounded-xl p-3 shadow-lg max-w-full md:max-w-[320px] mx-auto md:mx-0">
         <div className="flex items-center justify-between mb-2">
           <div className="text-xs uppercase tracking-wide text-emerald-300">Gloucester</div>
           <div className="text-[10px] text-stone-300/80">OpenWeather</div>
@@ -119,7 +119,7 @@ export default function WeatherWidget() {
         ) : error ? (
           <div className="text-sm text-stone-300">{error}</div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-4 sm:grid-cols-4 gap-3">
             {dailyForecasts.map((day, idx) => {
               const now = new Date();
               const isToday = day.date.toDateString() === now.toDateString();
