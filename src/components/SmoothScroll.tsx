@@ -3,6 +3,14 @@ import Lenis from 'lenis';
 
 export default function SmoothScroll() {
 	useEffect(() => {
+		// Scroll to top on initial load (before Lenis initializes)
+		if (typeof window !== 'undefined' && window.history.scrollRestoration) {
+			window.history.scrollRestoration = 'manual';
+		}
+		
+		// Ensure page starts at top
+		window.scrollTo(0, 0);
+		
 		// Initialize Lenis
 		const lenis = new Lenis({
 			duration: 1.2,
@@ -11,6 +19,9 @@ export default function SmoothScroll() {
 			smooth: true,
 			smoothTouch: false, // Disable on touch devices for better mobile experience
 		});
+
+		// Scroll to top after Lenis initializes (in case browser restoration happened)
+		lenis.scrollTo(0, { immediate: true });
 
 		// Animation frame loop
 		function raf(time: number) {
