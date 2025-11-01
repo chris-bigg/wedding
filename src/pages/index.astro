@@ -14,6 +14,7 @@ import SplashScreen from '../components/SplashScreen';
 import FloralAnimation from '../components/FloralAnimation';
 import WeatherWidget from '../components/WeatherWidget';
 import MusicPlayer from '../components/MusicPlayer';
+import SectionAnimations from '../components/SectionAnimations';
 import { weddingContent } from '../config/wedding-content';
 ---
 
@@ -41,6 +42,9 @@ import { weddingContent } from '../config/wedding-content';
 
 	<!-- Floral Animation -->
 	<FloralAnimation client:visible />
+
+	<!-- Section Animations -->
+	<SectionAnimations client:load />
 
     <!-- Footer -->
     <footer class="bg-gradient-to-br from-emerald-900 to-stone-900 dark:from-emerald-950 dark:to-stone-950 text-stone-200 dark:text-stone-300 py-4 md:py-6 px-4 relative">
