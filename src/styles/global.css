@@ -290,8 +290,13 @@
     cursor: none !important;
   }
 
-  html,
+  html {
+    overflow-x: hidden;
+    cursor: none !important;
+  }
+  
   body {
+    overflow-x: hidden;
     cursor: none !important;
   }
 
