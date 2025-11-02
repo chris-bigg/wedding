@@ -1,17 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { weddingContent } from '../config/wedding-content';
 
 export default function HoneymoonModal() {
 	const [isOpen, setIsOpen] = useState(false);
+	const modalRef = useRef<HTMLDivElement>(null);
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
+	const triggerButtonRef = useRef<HTMLButtonElement>(null);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleEscape = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				setIsOpen(false);
+			}
+		};
+
+		// Focus the close button when modal opens
+		setTimeout(() => {
+			closeButtonRef.current?.focus();
+		}, 0);
+
+		document.addEventListener('keydown', handleEscape);
+		return () => {
+			document.removeEventListener('keydown', handleEscape);
+		};
+	}, [isOpen]);
+
+	useEffect(() => {
+		if (!isOpen && triggerButtonRef.current) {
+			triggerButtonRef.current.focus();
+		}
+	}, [isOpen]);
 
 	const modalContent = isOpen ? (
 		<div
+			ref={modalRef}
 			className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
 			onClick={() => setIsOpen(false)}
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="honeymoon-modal-title"
 		>
 			{/* Backdrop */}
-			<div className="absolute inset-0 bg-stone-900/70 dark:bg-stone-950/80 backdrop-blur-sm" />
+			<div className="absolute inset-0 bg-stone-900/70 dark:bg-stone-950/80 backdrop-blur-sm" aria-hidden="true" />
 
 			{/* Modal */}
 			<div
@@ -20,9 +53,10 @@ export default function HoneymoonModal() {
 			>
 				{/* Close button */}
 				<button
+					ref={closeButtonRef}
 					onClick={() => setIsOpen(false)}
 					className="absolute top-4 right-4 text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 transition-colors z-10"
-					aria-label="Close"
+					aria-label="Close modal"
 				>
 					<svg
 						className="w-6 h-6"
@@ -42,6 +76,7 @@ export default function HoneymoonModal() {
 				{/* Content */}
 				<div className="p-8 text-center">
 					<h3
+						id="honeymoon-modal-title"
 						className="text-4xl md:text-5xl mb-6 overflow-visible"
 						style={{
 							fontFamily: "'Great Vibes', cursive",
@@ -84,6 +119,7 @@ export default function HoneymoonModal() {
 	return (
 		<>
 			<button
+				ref={triggerButtonRef}
 				onClick={() => setIsOpen(true)}
 				className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-fit"
 			>
