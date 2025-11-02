@@ -6,6 +6,9 @@ import HeroContent from './HeroContent';
 ---
 
 <section id="home" class="min-h-screen flex items-center justify-center px-4 pt-20 relative overflow-hidden">
+	<!-- Screen reader only heading -->
+	<h1 class="sr-only">{weddingContent.couple.name1} & {weddingContent.couple.name2} Wedding</h1>
+	
 	<!-- Background Image -->
 	<HeroBackground client:load />
 	
