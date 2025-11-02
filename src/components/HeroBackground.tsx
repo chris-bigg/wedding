@@ -129,7 +129,7 @@ export default function HeroBackground() {
 				))}
 			</div>
 			{/* Overlay for image visibility - always on top of images */}
-			<div className="absolute inset-0 z-10 bg-gradient-to-br from-[#F5EDE0]/70 via-[#E8DCC8]/60 to-[#F5EDE0]/70 dark:from-stone-900/80 dark:via-stone-900/70 dark:to-stone-900/80 pointer-events-none"></div>
+			<div className="absolute inset-0 z-10 bg-gradient-to-br from-[#F5EDE0]/60 via-[#E8DCC8]/80 to-[#F5EDE0]/60 dark:from-stone-900/80 dark:via-stone-900/70 dark:to-stone-900/80 pointer-events-none"></div>
 			{/* Center vignette for text area */}
 			<div className="absolute inset-0 z-10 bg-gradient-radial from-[#F5EDE0]/40 via-[#E8DCC8]/50 to-[#D4C5A9]/60 dark:from-stone-900/50 dark:via-stone-900/60 dark:to-stone-900/70 pointer-events-none"></div>
 			{/* Darker radial vignette from edges */}
