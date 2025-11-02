@@ -166,7 +166,7 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 						fontSize: '500px',
 						fontWeight: 400,
 						fill: 'url(#goldGradient)',
-						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
+						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 1)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
 					}}
 				>
 					{name1}
@@ -183,7 +183,7 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 						fontSize: '500px',
 						fontWeight: 400,
 						fill: 'url(#goldGradient)',
-						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
+						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 1)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
 					}}
 				>
 					{name2}

@@ -49,7 +49,7 @@ export default function CountdownTimer() {
 			<div className="flex justify-center items-center gap-3 sm:gap-4 md:gap-6">
 				{timeUnits.map((unit) => (
 					<div key={unit.label} className="flex flex-col items-center gap-1" style={{ filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))' }}>
-						<span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-sans font-normal text-stone-700 dark:text-stone-200 tabular-nums inline-block min-w-[3ch] text-center">
+						<span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-stone-700 dark:text-stone-200 tabular-nums inline-block min-w-[3ch] text-center" style={{ fontFamily: "'Greater Theory', sans-serif" }}>
 							{unit.label === 'Days' ? String(unit.value).padStart(3, '0') : String(unit.value).padStart(2, '0')}
 						</span>
 						<span className="text-xs sm:text-xs text-stone-700 dark:text-stone-300 font-sans font-light uppercase tracking-widest whitespace-nowrap" style={{ letterSpacing: '0.15em' }}>
