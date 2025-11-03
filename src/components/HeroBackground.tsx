@@ -116,14 +116,15 @@ export default function HeroBackground() {
 	}, []);
 
 	return (
-		<div className="absolute inset-0 z-0">
+		<div className="absolute inset-0 z-0" role="presentation" aria-hidden="true">
 			<div ref={containerRef} className="absolute inset-0">
 				{images.map((image, index) => (
 					<div key={index} className="carousel-slide absolute inset-0">
 						<img
 							src={image}
-							alt="Wedding photo"
+							alt=""
 							className="w-full h-full object-cover"
+							aria-hidden="true"
 						/>
 					</div>
 				))}
