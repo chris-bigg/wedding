@@ -17,6 +17,7 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
 		<link rel="icon" type="image/svg+xml" href="/marriage-light.svg?v=1" media="(prefers-color-scheme: light)" />
 		<link rel="icon" type="image/svg+xml" href="/marriage-dark.svg?v=1" media="(prefers-color-scheme: dark)" />
 		<meta name="generator" content={Astro.generator} />
@@ -40,6 +41,9 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="bg-gradient-to-br from-[#F3F7F1]/50 via-stone-50 to-emerald-50/40 dark:from-stone-950 dark:via-stone-900 dark:to-emerald-950/30 text-stone-900 dark:text-stone-100 antialiased">
+		<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:font-medium focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2">
+			Skip to main content
+		</a>
 		<CustomCursor client:load />
 		<SmoothScroll client:load />
 		<script is:inline>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import DarkModeToggle from './DarkModeToggle';
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
 export default function Navigation() {
 	const [activeSection, setActiveSection] = useState('home');
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		const observerOptions = {
@@ -53,14 +54,31 @@ export default function Navigation() {
 		setIsMobileMenuOpen(false);
 	};
 
+	// Handle Escape key to close mobile menu
+	useEffect(() => {
+		if (!isMobileMenuOpen) return;
+
+		const handleEscape = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				setIsMobileMenuOpen(false);
+				mobileMenuButtonRef.current?.focus();
+			}
+		};
+
+		document.addEventListener('keydown', handleEscape);
+		return () => {
+			document.removeEventListener('keydown', handleEscape);
+		};
+	}, [isMobileMenuOpen]);
+
 	return (
 		<>
 			{/* Desktop Navigation */}
 			<div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4 hidden md:block">
-				<nav className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
+				<nav aria-label="Main navigation" className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
 					<div className="px-4 py-3">
 						<div className="flex justify-between items-center">
-							<ul className="flex flex-wrap justify-center gap-2 md:gap-4 lg:gap-6 text-xs sm:text-sm mx-auto">
+							<ul className="flex flex-wrap justify-center gap-2 md:gap-4 lg:gap-6 text-xs sm:text-sm mx-auto" role="list">
 								{navItems.map((item) => {
 									const isActive = activeSection === item.href.substring(1);
 									return (
@@ -99,12 +117,15 @@ export default function Navigation() {
 
 			{/* Mobile Navigation */}
 			<div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full px-4 md:hidden">
-				<nav className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
+				<nav aria-label="Main navigation" className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
 					<div className="px-4 py-3 flex justify-between items-center">
 						<button
+							ref={mobileMenuButtonRef}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 							className="text-stone-700 dark:text-stone-200 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
 							aria-label="Toggle menu"
+							aria-expanded={isMobileMenuOpen}
+							aria-controls="mobile-menu"
 						>
 							<svg
 								className="w-6 h-6"
@@ -139,13 +160,18 @@ export default function Navigation() {
 				<div
 					className="fixed inset-0 z-40 md:hidden"
 					onClick={() => setIsMobileMenuOpen(false)}
+					role="dialog"
+					aria-modal="true"
+					aria-labelledby="mobile-menu-title"
 				>
-					<div className="absolute inset-0 bg-stone-900/50 dark:bg-stone-950/70 backdrop-blur-sm" />
+					<div className="absolute inset-0 bg-stone-900/50 dark:bg-stone-950/70 backdrop-blur-sm" aria-hidden="true" />
 					<div
+						id="mobile-menu"
 						className="absolute top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-stone-200/50 dark:border-stone-700/50 overflow-hidden"
 						onClick={(e) => e.stopPropagation()}
 					>
-						<ul className="py-6">
+						<h2 id="mobile-menu-title" className="sr-only">Mobile menu</h2>
+						<ul className="py-6" role="list">
 							{navItems.map((item) => {
 								const isActive = activeSection === item.href.substring(1);
 								return (
