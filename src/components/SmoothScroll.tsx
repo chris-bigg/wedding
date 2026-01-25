@@ -1,15 +1,41 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 
 export default function SmoothScroll() {
+	const lenisRef = useRef<Lenis | null>(null);
+	const forceTopRafRef = useRef<number | null>(null);
+	const isInitializingRef = useRef(true);
+
 	useEffect(() => {
 		// Scroll to top on initial load (before Lenis initializes)
 		if (typeof window !== 'undefined' && window.history.scrollRestoration) {
 			window.history.scrollRestoration = 'manual';
 		}
 		
-		// Ensure page starts at top
+		// Remove hash from URL to prevent browser from scrolling to it
+		if (window.location.hash) {
+			// Replace state without hash but keep URL clean
+			window.history.replaceState(null, '', window.location.pathname + window.location.search);
+		}
+		
+		// Force scroll to top multiple times to catch any race conditions
 		window.scrollTo(0, 0);
+		document.documentElement.scrollTop = 0;
+		document.body.scrollTop = 0;
+		
+		// Monitor and force scroll to top during initialization
+		const forceTop = () => {
+			if (isInitializingRef.current) {
+				const currentScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+				if (currentScroll > 0) {
+					window.scrollTo(0, 0);
+					document.documentElement.scrollTop = 0;
+					document.body.scrollTop = 0;
+				}
+				forceTopRafRef.current = requestAnimationFrame(forceTop);
+			}
+		};
+		forceTopRafRef.current = requestAnimationFrame(forceTop);
 		
 		// Initialize Lenis
 		const lenis = new Lenis({
@@ -19,9 +45,19 @@ export default function SmoothScroll() {
 			smooth: true,
 			smoothTouch: false, // Disable on touch devices for better mobile experience
 		});
+		lenisRef.current = lenis;
 
-		// Scroll to top after Lenis initializes (in case browser restoration happened)
+		// Force Lenis to scroll to top immediately
 		lenis.scrollTo(0, { immediate: true });
+		
+		// Keep monitoring scroll position for a longer period to catch late scrolls
+		const stopForceTop = setTimeout(() => {
+			isInitializingRef.current = false;
+			if (forceTopRafRef.current) {
+				cancelAnimationFrame(forceTopRafRef.current);
+				forceTopRafRef.current = null;
+			}
+		}, 500);
 
 		// Animation frame loop
 		function raf(time: number) {
@@ -55,7 +91,12 @@ export default function SmoothScroll() {
 
 		// Cleanup
 		return () => {
+			clearTimeout(stopForceTop);
+			if (forceTopRafRef.current) {
+				cancelAnimationFrame(forceTopRafRef.current);
+			}
 			document.removeEventListener('click', handleAnchorClick);
+			isInitializingRef.current = false;
 			lenis.destroy();
 		};
 	}, []);

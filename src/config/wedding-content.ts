@@ -11,13 +11,13 @@ export const weddingContent = {
 	},
 	date: {
 		full: "Saturday, August 1st, 2026",
-		time: "1pm",
+		time: "12pm",
 	},
 	venue: {
-		name: "Blackfriars Priory",
-		address: "Blackfriars Priory, Ladybellegate St, Gloucester GL1 2HN",
-		description: "Blackfriars is a stunning example of a 13th century medieval Priory site, nestled at the heart of the waterside City of Gloucester.",
-	mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.429!2d-2.2487749!3d51.8643905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487106653ae895d5%3A0x8492fffdb15df426!2sBlackfriars%20Priory!5e0!3m2!1sen!2suk!4v1730110000000!5m2!1sen!2suk"
+		name: "Kings Head Hotel",
+		address: "24 Market Pl, Cirencester GL7 2NW",
+		description: "Kings Head Hotel is a stunning venue nestled at the heart of the historic market town of Cirencester.",
+		mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.429!2d-1.9681!3d51.7186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4871088b8c0b5a5b%3A0x8e8b8c0b5a5b8c0b!2sKings%20Head%20Hotel%2C%2024%20Market%20Pl%2C%20Cirencester%20GL7%202NW%2C%20UK!5e0!3m2!1sen!2suk!4v1730110000000!5m2!1sen!2suk"
 	},
 	rsvp: {
 		deadline: "01/05/2026",
@@ -34,28 +34,28 @@ export const weddingContent = {
 
 	// Schedule
 	schedule: [
-		{ time: "12:00", event: "Guests Arrive" },
-		{ time: "13:00", event: "Ceremony" },
-		{ time: "14:00", event: "Cocktail Hour & Canapés" },
-		{ time: "16:00", event: "Dinner Reception" },
-		{ time: "18:00", event: "First Dance" },
-		{ time: "19:00", event: "Dancing Begins / Party Time" },
-		{ time: "23:00", event: "Last Orders" },
-		{ time: "00:00", event: "Send-Off/End" },
+		{ time: "11:00", event: "Guests Arrive" },
+		{ time: "12:00", event: "Ceremony" },
+		{ time: "13:00", event: "Cocktail Hour & Canapés" },
+		{ time: "15:00", event: "Dinner Reception" },
+		{ time: "17:00", event: "First Dance" },
+		{ time: "18:00", event: "Dancing Begins / Party Time" },
+		{ time: "22:00", event: "Last Orders" },
+		{ time: "23:00", event: "Send-Off/End" },
 	],
 
 	// Travel & Location
 	travel: {
-		driving: "The Priory is located on <strong>Blackfriars Lane</strong>, off <strong>Ladybellegate Street</strong> in Gloucester city centre. The main entrance has a small curb, but a temporary ramp is available when the site is open to the public. You'll likely need to use nearby public car parks.",
-		publicTransit: "The nearest bus stops are on <strong>Ladybellegate Street (Stop Code gloawtat, near Blackfriars Priory)</strong> and the main <strong>Gloucester Train Station</strong> is approximately a 10-minute walk.",
-		taxiRideshare: "Yes, it should be easy to get a taxi or rideshare. The Priory is in the city centre, and local taxi companies <strong>(e.g., Five Star Taxis)</strong> operate in Gloucester. UberX is also available in the Gloucester area as a rideshare option. You can request a ride using an app or call a local firm.",
-		parking: `<p><strong>No</strong>, there is no visitor parking immediately on-site, but charged public parking is available next door.</p>
+		driving: "Kings Head Hotel is located on <strong>Market Place</strong> in the heart of Cirencester town centre. The venue is easily accessible by car, with several public car parks nearby.",
+		publicTransit: "Cirencester is well-served by local bus routes. The nearest bus stops are on <strong>Market Place</strong> and <strong>Cricklade Street</strong>, both within walking distance of the venue. The nearest train stations are <strong>Kemble</strong> (approximately 4 miles away) and <strong>Swindon</strong> (approximately 15 miles away), with regular bus connections to Cirencester.",
+		taxiRideshare: "Yes, it should be easy to get a taxi or rideshare. Kings Head Hotel is in the town centre, and local taxi companies operate in Cirencester. You can request a ride using an app or call a local firm.",
+		parking: `<p><strong>No</strong>, there is no visitor parking immediately on-site, but public parking is available nearby.</p>
 
 					<h4 class="font-semibold mb-2 mt-4">Specifics:</h4>
 					<ul class="list-disc pl-5 space-y-2">
-						<li>The nearest car parks are the <strong>Ladybellegate Street Car Park</strong> (a Gloucester City Council car park) and the <strong>NCP Gloucester Blackfriars</strong> car park. Both are paid parking.</li>
-						<li><strong>Blue Badge holders</strong> can park free of charge for up to 3 hours in the <strong>Ladybellegate Street</strong> Council car park (must display badge and set the time clock). The NCP car park does not offer free parking for Blue Badge holders.</li>
-						<li>Other nearby options include the <strong>Longsmith Street</strong> car park and parking at <strong>Gloucester Quays</strong>.</li>
+						<li>The nearest car parks are the <strong>Brewery Car Park</strong> and <strong>Watermoor Car Park</strong>, both within a short walk of Market Place.</li>
+						<li><strong>Blue Badge holders</strong> can find designated disabled parking spaces in the town centre car parks.</li>
+						<li>Additional parking options include <strong>Castle Street Car Park</strong> and on-street parking (where available).</li>
 					</ul>`,
 	},
 
@@ -125,7 +125,7 @@ export const weddingContent = {
 		},
 		{
 			question: "Is parking available?",
-			answer: "No, there is no direct visitor parking on-site. Paid public parking is available immediately next door at the Ladybellegate Street Car Park (City Council) and the NCP Blackfriars Car Park. Additional options are the Longsmith Street Car Park and Gloucester Quays.",
+			answer: "No, there is no direct visitor parking on-site. Paid public parking is available nearby at the Brewery Car Park and Watermoor Car Park, both within a short walk of the venue. Additional options include Castle Street Car Park and on-street parking where available.",
 		},
 	],
 

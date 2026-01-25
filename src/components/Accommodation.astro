@@ -1,6 +1,7 @@
 ---
 import { weddingContent } from '../config/wedding-content';
 import AccommodationCarousel from './AccommodationCarousel';
+import AccommodationHero from './AccommodationHero';
 ---
 
 <section id="accommodation" class="py-20 px-4 bg-gradient-to-br from-[#F3F7F1]/40 via-[#E8F2E6]/30 to-emerald-50/40 dark:from-stone-900/30 dark:via-stone-900/20 dark:to-stone-950/30">
@@ -11,13 +12,19 @@ import AccommodationCarousel from './AccommodationCarousel';
 			</span>
 		</h2>
 
+		<!-- Hero Card with Room Slideshow -->
 		<div data-animate-fade-up>
+			<AccommodationHero client:load />
+		</div>
+
+		<!-- Archived Carousel - Hidden for now -->
+		<div data-animate-fade-up style="display: none;">
 			<AccommodationCarousel client:load accommodation={weddingContent.accommodation} />
 		</div>
 		
 		<div class="mt-2 flex flex-col sm:flex-row gap-4 justify-center items-center" data-animate-stagger>
 			<a 
-				href="https://www.airbnb.com/s/Gloucester--UK/homes?checkin=2026-08-01&checkout=2026-08-02"
+				href="https://www.airbnb.com/s/Cirencester--UK/homes?checkin=2026-08-01&checkout=2026-08-02"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="inline-flex items-center justify-center gap-3 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm border-2 border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 font-medium px-8 py-3 rounded-full hover:bg-emerald-50 dark:hover:bg-stone-700/70 transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-64"
@@ -29,7 +36,7 @@ import AccommodationCarousel from './AccommodationCarousel';
 				More on Airbnb
 			</a>
 			<a 
-				href="https://www.booking.com/searchresults.en-gb.html?ss=Gloucester%2C+Gloucestershire%2C+United+Kingdom&ssne=Gloucester&ssne_untouched=Gloucester&efdco=1&label=cht532js-10CAQoggJCIXNlYXJjaF9nbG91Y2VzdGVyLCB1bml0ZWQga2luZ2RvbUgzWANoUIgBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC5syMyAbAAgHSAiQwNmIxZjlkMy02YjE1LTQyNGEtODhkNi04NTM1OTgyYWMzMTLYAgHgAgE&sid=a3aa0f2f2a25dedd151d9fe95760cced&aid=2440491&lang=en-gb&sb=1&src_elem=sb&src=searchresults&dest_id=-2597215&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=en&ac_suggestion_list_length=3&search_selected=true&search_pageview_id=4bff3e00ebdf0084&ac_meta=GhA0YmZmM2UwMGViZGYwMDg0IAAoATICZW46CUdMb3VjdGVlckABSghnbG91c3RlclA%2B&checkin=2026-08-01&checkout=2026-08-02&group_adults=2&no_rooms=1&group_children=0"
+				href="https://www.booking.com/searchresults.en-gb.html?ss=Cirencester%2C+Gloucestershire%2C+United+Kingdom&checkin=2026-08-01&checkout=2026-08-02&group_adults=2&no_rooms=1&group_children=0"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="inline-flex items-center justify-center gap-3 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm border-2 border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 font-medium px-8 py-3 rounded-full hover:bg-emerald-50 dark:hover:bg-stone-700/70 transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-72"

@@ -25,6 +25,49 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
 		<script is:inline>
+			// Prevent scroll restoration and hash scrolling - run immediately
+			(function() {
+				if (typeof window === 'undefined') return;
+				
+				// Disable scroll restoration
+				if (window.history.scrollRestoration) {
+					window.history.scrollRestoration = 'manual';
+				}
+				
+				// Remove hash from URL immediately to prevent browser from scrolling to it
+				if (window.location.hash) {
+					window.history.replaceState(null, '', window.location.pathname + window.location.search);
+				}
+				
+				// Scroll to top immediately
+				window.scrollTo(0, 0);
+				document.documentElement.scrollTop = 0;
+				document.body.scrollTop = 0;
+				
+				// Prevent hash change events from causing scroll
+				window.addEventListener('hashchange', function(e) {
+					e.preventDefault();
+					window.history.replaceState(null, '', window.location.pathname + window.location.search);
+					window.scrollTo(0, 0);
+				}, { passive: false });
+				
+				// Continuously monitor and prevent unwanted scrolling during initial load
+				var scrollCheckCount = 0;
+				var maxScrollChecks = 50; // Check for ~1 second (50 * ~20ms)
+				var scrollCheckInterval = setInterval(function() {
+					var scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+					if (scrollY > 0) {
+						window.scrollTo(0, 0);
+						document.documentElement.scrollTop = 0;
+						document.body.scrollTop = 0;
+					}
+					scrollCheckCount++;
+					if (scrollCheckCount >= maxScrollChecks) {
+						clearInterval(scrollCheckInterval);
+					}
+				}, 20);
+			})();
+			
 			// Initialize dark mode before page renders to prevent flash
 			const saved = localStorage.getItem('darkMode');
 			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
