@@ -28,7 +28,7 @@ export default function WeatherWidget() {
     const controller = new AbortController();
     const fetchWeather = async () => {
       try {
-        const url = `https://api.openweathermap.org/data/2.5/forecast?q=Gloucester,GB&units=metric&appid=9bfd98eb96fcba5c3c9a9121c3f1869a`;
+        const url = `https://api.openweathermap.org/data/2.5/forecast?q=Cirencester,GB&units=metric&appid=9bfd98eb96fcba5c3c9a9121c3f1869a`;
         const res = await fetch(url, { signal: controller.signal });
         const json = await res.json();
         if (!res.ok) {
@@ -111,7 +111,7 @@ export default function WeatherWidget() {
     <div className="w-full md:w-auto z-40">
       <div className="bg-stone-800/50 dark:bg-stone-900/80 backdrop-blur-sm text-stone-200 border border-stone-600/40 rounded-xl p-3 shadow-lg max-w-full md:max-w-[320px] mx-auto md:mx-0">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-xs uppercase tracking-wide text-emerald-300">Gloucester</div>
+          <div className="text-xs uppercase tracking-wide text-emerald-300">Cirencester</div>
           <div className="text-[10px] text-stone-300/80">OpenWeather</div>
         </div>
         {loading ? (
