@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 
 const images = [
 	"/images/us/1.jpg",
-	"/images/Collage.jpg"
+	"/images/Collagev3.jpg"
 ];
 
 export default function HeroBackground() {
@@ -25,7 +25,7 @@ export default function HeroBackground() {
 		const collageImg = slides[1]?.querySelector('img');
 		if (collageImg) {
 			gsap.set(slides[1], { zIndex: 0 });
-			gsap.set(collageImg, { scale: 1.3, filter: 'blur(20px)' });
+			gsap.set(collageImg, { scale: 1, filter: 'blur(20px)' });
 		}
 
 		// Start zoom on first image immediately
@@ -57,7 +57,7 @@ export default function HeroBackground() {
 
 			// Set initial state for the collage - start zoomed in and slightly blurred behind
 			gsap.set(next, { opacity: 0, zIndex: 0 });
-			gsap.set(nextImg, { scale: 1.3, filter: 'blur(20px)' });
+			gsap.set(nextImg, { scale: 1.1, filter: 'blur(20px)' });
 
 			// Cinematic transition: first image zooms out, blurs, and fades
 			// while collage zooms in from behind and sharpens
@@ -85,9 +85,9 @@ export default function HeroBackground() {
 			}, 0.5);
 
 			if (nextImg) {
-				// Collage zooms in from 1.3x to 1.1x (smooth zoom in) and sharpens
+				// Collage zooms in from 1.1x to 1.0x (smooth zoom in) and sharpens
 				tl.to(nextImg, {
-					scale: 1.1,
+					scale: 1.0,
 					filter: 'blur(0px)',
 					duration: 2.5,
 					ease: 'power2.out',
@@ -95,7 +95,7 @@ export default function HeroBackground() {
 
 				// Continue slow zoom forever after transition completes
 				tl.to(nextImg, {
-					scale: 1.15,
+					scale: 1.05,
 					duration: 1000,
 					ease: 'linear',
 				}, 3);
