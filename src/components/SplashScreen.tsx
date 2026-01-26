@@ -55,35 +55,35 @@ export default function SplashScreen() {
 				.gradient-shimmer {
 					background: linear-gradient(
 						-45deg,
-						#FFFEF9,
-						#F5EDE0,
-						#E8DCC8,
-						#D4C5A9,
-						#C4B69A,
-						#B8AA8E,
-						#C4B69A,
-						#D4C5A9,
-						#E8DCC8,
-						#F5EDE0,
-						#FFFEF9
+						#F8F6F2,
+						#E8E6E1,
+						#D9D7D2,
+						#C9C7C1,
+						#BAB8B2,
+						#AAA8A2,
+						#BAB8B2,
+						#C9C7C1,
+						#D9D7D2,
+						#E8E6E1,
+						#F8F6F2
 					);
 					background-size: 400% 400%;
 					animation: gradient-shimmer 6s ease infinite;
 				}
-				/* Dark mode: deeper champagne/bronze tones over near-black */
+				/* Dark mode: monochrome gray tones over near-black */
 				.dark .gradient-shimmer {
 					background: linear-gradient(
 						-45deg,
 						#0f0f0f,
-						#1a1916,
-						#2a241a,
-						#3a2f1f,
-						#4a3a25,
-						#5a4a2f,
-						#4a3a25,
-						#3a2f1f,
-						#2a241a,
-						#1a1916,
+						#1a1a18,
+						#252522,
+						#30302d,
+						#3b3b37,
+						#464642,
+						#3b3b37,
+						#30302d,
+						#252522,
+						#1a1a18,
 						#0f0f0f
 					);
 					background-size: 400% 400%;

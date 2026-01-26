@@ -106,26 +106,44 @@ export const weddingContent = {
 	// FAQs
 	faqs: [
 		{
+			question: "What time should I arrive?",
+			answer: "You are welcome to use the public bar at the hotel before the ceremony. Please ensure that you are seated by 11.45am for our 12 noon ceremony. You will not be able to enter the ceremony room after 11.45am.",
+		},
+		{
 			question: "What is the dress code?",
 			answer: "We'd love for everyone to put on their best for our big day! The dress code is Formal Attire. This means a suit and tie for the men, and a beautiful dress, dressy skirt, or smart trouser suit for the women. We want everyone to feel elegant and celebrate in style!",
 		},
 		{
-			question: "Can I bring a plus-one?",
-			answer:
-				"We unfortunately have limited capacity, so we can only accommodate guests formally listed on your invitation/RSVP.",
+			question: "Is there a gifts registry?",
+			answer: "Having you celebrate with us is the greatest gift. However, if you would like to give a gift we'd be incredibly grateful for a contribution towards our honeymoon (since we have accumulated most of what we need for our home).",
 		},
 		{
-			question: "Are children invited?",
-			answer:
-				"We love your little ones, but this will be an adults-only celebration.",
+			question: "Can I bring a date?",
+			answer: "We regret that we are limited on numbers and all guests are named on the invite.",
+		},
+		{
+			question: "Can I bring my children?",
+			answer: "Whilst we adore all our family and friend's children, this is an adult only celebration.",
+		},
+		{
+			question: "Where should I park?",
+			answer: "There is no parking at the venue. There is long stay parking available in Cirencester.",
+		},
+		{
+			question: "Is the wedding indoors or outdoors?",
+			answer: "The ceremony will be indoors but there will be a terrace for drinks.",
+		},
+		{
+			question: "Can I take photographs with my phone/camera?",
+			answer: "Please do not take photographs during the ceremony but feel free to take photographs and videos over the rest of the day. We will be thrilled to see them.",
 		},
 		{
 			question: "When should I RSVP by?",
 			answer: null as string | null, // Will be set after object creation
 		},
 		{
-			question: "Is parking available?",
-			answer: "No, there is no direct visitor parking on-site. Paid public parking is available nearby at the Brewery Car Park and Watermoor Car Park, both within a short walk of the venue. Additional options include Castle Street Car Park and on-street parking where available.",
+			question: "Who should I call with questions?",
+			answer: "Please contact Feleena at 07977291638 or Chris at 07584032612.",
 		},
 	],
 
