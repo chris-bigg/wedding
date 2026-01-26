@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
+import { GUEST_LIST } from '../data/guests';
 
 interface FormData {
-	name: string;
+	names: string[];
 	email: string;
 	attendance: 'yes' | 'no' | '';
 	plusOne: boolean;
@@ -14,7 +15,7 @@ interface FormData {
 
 export default function RSVPForm() {
 	const [formData, setFormData] = useState<FormData>({
-		name: '',
+		names: [''],
 		email: '',
 		attendance: '',
 		plusOne: false,
@@ -44,33 +45,24 @@ export default function RSVPForm() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	// Read URL parameters and pre-fill form
+	// Read URL ID parameter and pre-fill form
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			const params = new URLSearchParams(window.location.search);
-			const firstNames: string[] = [];
-			let index = 1;
-			while (params.has(`fname${index}`)) {
-				const fname = params.get(`fname${index}`);
-				if (fname) {
-					firstNames.push(fname);
-				}
-				index++;
-			}
+			const id = params.get('id');
 			
-			if (firstNames.length > 0) {
+			if (id && GUEST_LIST[id]) {
+				const guestData = GUEST_LIST[id];
 				setFormData(prev => ({
 					...prev,
-					name: firstNames.join(' ')
+					names: [...guestData.names],
+					email: guestData.email || prev.email,
 				}));
-			}
-			
-			const email = params.get('email');
-			if (email) {
-				setFormData(prev => ({
-					...prev,
-					email: email
-				}));
+				
+				// Clean up URL by removing the id parameter
+				params.delete('id');
+				const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+				window.history.replaceState({}, '', newUrl);
 			}
 		}
 	}, []);
@@ -84,11 +76,18 @@ export default function RSVPForm() {
 		const attendingYes = formData.attendance === 'yes';
 		console.log('Attending yes?', attendingYes);
 
+		// Combine names for submission (Formspree expects a single name field)
+		const submissionData = {
+			...formData,
+			name: formData.names.filter(n => n.trim()).join(' '),
+		};
+		delete (submissionData as any).names;
+
 		try {
 			const response = await fetch('https://formspree.io/f/xgvpanpe', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(formData),
+				body: JSON.stringify(submissionData),
 			});
 
 			if (response.ok) {
@@ -117,7 +116,7 @@ export default function RSVPForm() {
 
 				// Reset form
 				setFormData({
-					name: '',
+					names: [''],
 					email: '',
 					attendance: '',
 					plusOne: false,
@@ -143,10 +142,36 @@ export default function RSVPForm() {
 		const { name, value, type } = e.target;
 		const checked = (e.target as HTMLInputElement).checked;
 
+		// Handle name array fields (name-0, name-1, etc.)
+		if (name.startsWith('name-')) {
+			const index = parseInt(name.split('-')[1], 10);
+			setFormData((prev) => ({
+				...prev,
+				names: prev.names.map((n, i) => (i === index ? value : n)),
+			}));
+			return;
+		}
+
 		setFormData((prev) => ({
 			...prev,
 			[name]: type === 'checkbox' ? checked : value,
 		}));
+	};
+
+	const addNameField = () => {
+		setFormData((prev) => ({
+			...prev,
+			names: [...prev.names, ''],
+		}));
+	};
+
+	const removeNameField = (index: number) => {
+		if (formData.names.length > 1) {
+			setFormData((prev) => ({
+				...prev,
+				names: prev.names.filter((_, i) => i !== index),
+			}));
+		}
 	};
 
 	console.log('RSVPForm render - showConfetti:', showConfetti, 'windowDimensions:', windowDimensions);
@@ -188,20 +213,44 @@ export default function RSVPForm() {
 				</p>
 
 				<form onSubmit={handleSubmit} className="space-y-6 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl p-8 border border-stone-200/50 dark:border-stone-700/50 shadow-lg">
-					{/* Name */}
+					{/* Names - Dynamic fields */}
 					<div>
-						<label htmlFor="name" className="block text-sm font-medium text-emerald-800 dark:text-emerald-400 mb-2">
-							Your Name *
+						<label className="block text-sm font-medium text-emerald-800 dark:text-emerald-400 mb-2">
+							{formData.names.length === 1 ? 'Your Name *' : 'Names *'}
 						</label>
-						<input
-							type="text"
-							id="name"
-							name="name"
-							required
-							value={formData.name}
-							onChange={handleChange}
-							className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-						/>
+						{formData.names.map((name, index) => (
+							<div key={index} className="mb-3 flex gap-2">
+								<input
+									type="text"
+									id={`name-${index}`}
+									name={`name-${index}`}
+									required
+									value={name}
+									onChange={handleChange}
+									placeholder={formData.names.length === 1 ? 'Your Name' : `Name ${index + 1}`}
+									className="flex-1 px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+								/>
+								{formData.names.length > 1 && (
+									<button
+										type="button"
+										onClick={() => removeNameField(index)}
+										className="px-3 py-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+										aria-label="Remove name field"
+									>
+										<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+										</svg>
+									</button>
+								)}
+							</div>
+						))}
+						<button
+							type="button"
+							onClick={addNameField}
+							className="text-sm text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 font-medium"
+						>
+							+ Add another name
+						</button>
 					</div>
 
 					{/* Email */}
