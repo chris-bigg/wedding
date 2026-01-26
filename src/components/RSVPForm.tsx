@@ -44,6 +44,37 @@ export default function RSVPForm() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
+	// Read URL parameters and pre-fill form
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const params = new URLSearchParams(window.location.search);
+			const firstNames: string[] = [];
+			let index = 1;
+			while (params.has(`fname${index}`)) {
+				const fname = params.get(`fname${index}`);
+				if (fname) {
+					firstNames.push(fname);
+				}
+				index++;
+			}
+			
+			if (firstNames.length > 0) {
+				setFormData(prev => ({
+					...prev,
+					name: firstNames.join(' ')
+				}));
+			}
+			
+			const email = params.get('email');
+			if (email) {
+				setFormData(prev => ({
+					...prev,
+					email: email
+				}));
+			}
+		}
+	}, []);
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('Form submitted with data:', formData);
