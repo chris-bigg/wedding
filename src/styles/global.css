@@ -221,7 +221,7 @@
 
   .accommodation-swiper .swiper-button-prev,
   .accommodation-swiper .swiper-button-next {
-    color: #059669;
+    color: #1a3d0e;
     width: 32px;
     height: 32px;
   }
@@ -246,7 +246,7 @@
 
   .dark .accommodation-swiper .swiper-button-prev,
   .dark .accommodation-swiper .swiper-button-next {
-    color: #34d399;
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .accommodation-swiper .swiper-button-prev:after,
@@ -264,7 +264,7 @@
   }
 
   .accommodation-swiper .swiper-pagination-bullet {
-    background: #059669;
+    background: #1a3d0e;
     opacity: 0.3;
     width: 10px;
     height: 10px;
@@ -272,15 +272,15 @@
 
   .accommodation-swiper .swiper-pagination-bullet-active {
     opacity: 1;
-    background: #059669;
+    background: #1a3d0e;
   }
 
   .dark .accommodation-swiper .swiper-pagination-bullet {
-    background: #34d399;
+    background: rgba(255, 255, 255, 0.3);
   }
 
   .dark .accommodation-swiper .swiper-pagination-bullet-active {
-    background: #34d399;
+    background: rgba(255, 255, 255, 0.7);
   }
 
   /* Custom Cursor Styles */
@@ -304,7 +304,7 @@
     position: fixed;
     width: 40px;
     height: 40px;
-    border: 2px solid rgba(5, 150, 105, 0.5);
+    border: 2px solid rgba(26, 61, 14, 0.5);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
@@ -316,14 +316,14 @@
   }
 
   .dark .custom-cursor {
-    border-color: rgba(52, 211, 153, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   .custom-cursor-dot {
     position: fixed;
     width: 8px;
     height: 8px;
-    background: rgba(5, 150, 105, 0.8);
+    background: rgba(26, 61, 14, 0.8);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
@@ -335,7 +335,7 @@
   }
 
   .dark .custom-cursor-dot {
-    background: rgba(52, 211, 153, 0.9);
+    background: rgba(255, 255, 255, 0.8);
   }
 
   /* Hide custom cursor on touch devices */
@@ -352,10 +352,10 @@
 
   /* Interactive elements hover effect */
   .custom-cursor.cursor-hover {
-    border-color: rgba(5, 150, 105, 0.8) !important;
+    border-color: rgba(26, 61, 14, 0.8) !important;
   }
 
   .dark .custom-cursor.cursor-hover {
-    border-color: rgba(52, 211, 153, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
   }
 }

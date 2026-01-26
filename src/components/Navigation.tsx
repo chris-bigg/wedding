@@ -87,8 +87,8 @@ export default function Navigation() {
 												href={item.href}
 												className={`transition-all duration-300 whitespace-nowrap ${
 													isActive
-														? 'text-emerald-700 dark:text-emerald-400 font-bold'
-														: 'text-stone-700 dark:text-stone-200 hover:text-emerald-700 dark:hover:text-emerald-400'
+														? 'text-green-900 dark:text-white font-bold'
+														: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200'
 												}`}
 											>
 												{item.label}
@@ -99,8 +99,8 @@ export default function Navigation() {
 								<li>
 									<a
 										href="#rsvp"
-										className={`bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap ${
-											activeSection === 'rsvp' ? 'ring-2 ring-emerald-400 ring-offset-2' : ''
+										className={`bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap ${
+											activeSection === 'rsvp' ? 'ring-2 ring-green-600 dark:ring-white/40 ring-offset-2' : ''
 										}`}
 									>
 										RSVP
@@ -122,7 +122,7 @@ export default function Navigation() {
 						<button
 							ref={mobileMenuButtonRef}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-							className="text-stone-700 dark:text-stone-200 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
+							className="text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 transition-colors"
 							aria-label="Toggle menu"
 							aria-expanded={isMobileMenuOpen}
 							aria-controls="mobile-menu"
@@ -181,8 +181,8 @@ export default function Navigation() {
 											onClick={handleMenuItemClick}
 											className={`block px-8 py-4 text-lg transition-all duration-300 ${
 												isActive
-													? 'text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/30'
-													: 'text-stone-700 dark:text-stone-200 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+													? 'text-green-900 dark:text-white font-bold bg-green-50 dark:bg-stone-200/20'
+													: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800/50'
 											}`}
 										>
 											{item.label}
@@ -194,7 +194,7 @@ export default function Navigation() {
 								<a
 									href="#rsvp"
 									onClick={handleMenuItemClick}
-									className="block text-center bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-semibold"
+									className="block text-center bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white px-6 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-semibold"
 								>
 									RSVP
 								</a>
