@@ -8,6 +8,7 @@ import Accommodation from '../components/Accommodation.astro';
 import FAQ from '../components/FAQ.astro';
 import Gift from '../components/Gift.astro';
 import RSVPForm from '../components/RSVPForm';
+import PersonalizedGreeting from '../components/PersonalizedGreeting';
 import DarkModeToggle from '../components/DarkModeToggle';
 import Navigation from '../components/Navigation';
 import SplashScreen from '../components/SplashScreen';
@@ -31,6 +32,7 @@ import { weddingContent } from '../config/wedding-content';
 	<!-- Main Content -->
 	<main id="main-content">
 		<Hero />
+		<PersonalizedGreeting client:load />
 		<Story />
 		<Details />
 		<Location />
