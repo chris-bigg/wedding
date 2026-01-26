@@ -76,7 +76,7 @@ export default function AccommodationHero() {
               href="https://kingshead-hotel-brakspear.rezcontrol.com/?startDate=2026-07-31&endDate=2026-08-02&promoCode=Feleena+%26+Christopher&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center gap-2 bg-green-800 hover:bg-green-900 dark:bg-stone-200/30 dark:hover:bg-stone-300/40 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
               <span>View Rooms & Book</span>
               <svg

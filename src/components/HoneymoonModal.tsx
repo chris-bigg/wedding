@@ -84,7 +84,7 @@ export default function HoneymoonModal() {
 							lineHeight: 1.3,
 						}}
 					>
-						<span className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-800 dark:from-emerald-400 dark:to-emerald-600 bg-clip-text text-transparent px-4">
+						<span className="inline-block bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent px-4">
 							Honeymoon Fund
 						</span>
 					</h3>
@@ -107,7 +107,7 @@ export default function HoneymoonModal() {
 						href="https://paypal.me/mahoganyjoint"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+						className="inline-block bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
 					>
 						Open PayPal
 					</a>
@@ -121,7 +121,7 @@ export default function HoneymoonModal() {
 			<button
 				ref={triggerButtonRef}
 				onClick={() => setIsOpen(true)}
-				className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-fit"
+				className="inline-block bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-fit"
 			>
 				Contribute to Our Honeymoon
 			</button>

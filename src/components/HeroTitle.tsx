@@ -121,26 +121,26 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 			>
 				<defs>
 					<linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-						<stop offset="0%" stopColor="#D4C5A9">
+						<stop offset="0%" stopColor="#C9C7C1">
 							<animate
 								attributeName="stop-color"
-								values="#D4C5A9; #F5EDE0; #C4B69A; #B8AA8E; #D4C5A9"
+								values="#C9C7C1; #E8E6E1; #BAB8B2; #AAA8A2; #C9C7C1"
 								dur="4s"
 								repeatCount="indefinite"
 							/>
 						</stop>
-						<stop offset="50%" stopColor="#C4B69A">
+						<stop offset="50%" stopColor="#BAB8B2">
 							<animate
 								attributeName="stop-color"
-								values="#C4B69A; #B8AA8E; #F5EDE0; #D4C5A9; #C4B69A"
+								values="#BAB8B2; #AAA8A2; #E8E6E1; #C9C7C1; #BAB8B2"
 								dur="4s"
 								repeatCount="indefinite"
 							/>
 						</stop>
-						<stop offset="100%" stopColor="#B8AA8E">
+						<stop offset="100%" stopColor="#AAA8A2">
 							<animate
 								attributeName="stop-color"
-								values="#B8AA8E; #D4C5A9; #C4B69A; #F5EDE0; #B8AA8E"
+								values="#AAA8A2; #C9C7C1; #BAB8B2; #E8E6E1; #AAA8A2"
 								dur="4s"
 								repeatCount="indefinite"
 							/>

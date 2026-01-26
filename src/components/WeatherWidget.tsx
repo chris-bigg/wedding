@@ -111,7 +111,7 @@ export default function WeatherWidget() {
     <div className="w-full md:w-auto z-40">
       <div className="bg-stone-800/50 dark:bg-stone-900/80 backdrop-blur-sm text-stone-200 border border-stone-600/40 rounded-xl p-3 shadow-lg max-w-full md:max-w-[320px] mx-auto md:mx-0">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-xs uppercase tracking-wide text-emerald-300">Cirencester</div>
+          <div className="text-xs uppercase tracking-wide text-green-700">Cirencester</div>
           <div className="text-[10px] text-stone-300/80">OpenWeather</div>
         </div>
         {loading ? (
