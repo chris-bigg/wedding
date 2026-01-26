@@ -114,7 +114,7 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
             className="w-full h-48 object-cover flex-shrink-0"
           />
           {hotel.distance !== undefined && (
-            <div className="absolute top-3 right-3 bg-emerald-600/95 dark:bg-emerald-500/95 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-lg flex items-center gap-1.5">
+            <div className="absolute top-3 right-3 bg-green-800/95 dark:bg-white/20 backdrop-blur-sm text-white dark:text-stone-900 px-3 py-1.5 rounded-full text-sm font-medium shadow-lg flex items-center gap-1.5">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-4 w-4" 
@@ -131,20 +131,20 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
         </div>
       )}
       <div className="p-6 flex flex-col flex-grow min-h-0">
-        <h3 className="text-xl font-medium text-emerald-800 dark:text-emerald-400 mb-3 flex-shrink-0">{hotel.name}</h3>
+        <h3 className="text-xl font-medium text-green-950 dark:text-white mb-3 flex-shrink-0">{hotel.name}</h3>
         {hotel.description && (
           <p className="text-stone-600 dark:text-stone-400 mb-4 text-sm leading-relaxed flex-grow overflow-auto">{hotel.description}</p>
         )}
         {hotel.blockCode && (
           <p className="text-sm text-stone-600 dark:text-stone-400 mb-4 flex-shrink-0">
-            Block Code: <span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">{hotel.blockCode}</span>
+            Block Code: <span className="font-mono font-semibold text-green-900 dark:text-white">{hotel.blockCode}</span>
           </p>
         )}
         <a 
           href={hotel.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-medium px-6 py-2 rounded-full transition-all duration-300 shadow-md hover:shadow-lg self-start mt-auto flex-shrink-0"
+          className="inline-block bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-6 py-2 rounded-full transition-all duration-300 shadow-md hover:shadow-lg self-start mt-auto flex-shrink-0"
         >
           Book Now
         </a>

@@ -151,7 +151,7 @@ This file controls:
 - Wedding date and time
 - Venue details
 - Schedule
-- FAQs
+- FAQs (see FAQ section below for details)
 - Accommodation info
 - Travel details
 - Gift registry message
@@ -164,12 +164,28 @@ This file controls:
 
 ### 3. Customize Colors & Styling
 
-The site uses an emerald green and champagne/stone color scheme. To change:
+The site uses a **dark forest green and warm cream/beige** color scheme with white typography in dark mode. To change:
 
-1. **Colors**: Edit Tailwind classes in components (search for `emerald-` and stone color codes)
-2. **Fonts**: The "Great Vibes" script font is loaded from Google Fonts in `Layout.astro`
-3. **Animations**: Custom animations are defined in `src/styles/global.css`
-4. **Global Styles**: Tailwind configuration and custom CSS in `src/styles/global.css`
+1. **Light Mode Colors**: 
+   - Primary green: Dark forest green shades (`green-800`, `green-900`, `green-950`)
+   - Accent colors: Warm cream/beige tones (`#F8F6F2`, `#E8E6E1`, `#D9D7D2`, `#C9C7C1`, `#BAB8B2`, `#AAA8A2`)
+   - Edit Tailwind classes in components (search for `green-*` classes)
+
+2. **Dark Mode Colors**:
+   - Typography: White (`text-white`, `text-stone-200`)
+   - Backgrounds: Cream/white gradients (`dark:from-stone-200/30 dark:to-stone-300/40`)
+   - Secondary elements: Slightly darker white/cream tones
+
+3. **Fonts**: The "Great Vibes" script font is loaded from Google Fonts in `Layout.astro`
+
+4. **Animations**: Custom animations are defined in `src/styles/global.css`
+
+5. **Global Styles**: Tailwind configuration and custom CSS in `src/styles/global.css`
+
+**Color Locations:**
+- Champagne/cream colors: `SplashScreen.tsx`, `HeroTitle.tsx`, `HeroBackground.tsx`, `RSVPForm.tsx`
+- Green colors: All component files (search for `green-*` Tailwind classes)
+- Dark mode overrides: Look for `dark:` variants in component files
 
 ### 4. RSVP Form Configuration
 
@@ -196,11 +212,102 @@ const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
 - Custom colors matching site theme
 - Mobile-optimized with smooth fade-out
 
+### 4.1. RSVP Guest List & Unique IDs
+
+The RSVP system supports personalized guest invitations using unique ID slugs. Instead of putting names directly in the URL, guests receive links with a single `id` parameter (e.g., `?id=jon-abby`).
+
+#### How It Works
+
+1. **Guest List**: All guest data is stored in `src/data/guests.ts` in the `GUEST_LIST` object
+2. **URL Parameter**: Guests visit links like `/rsvp?id=jon-abby`
+3. **Auto-Population**: The form automatically pre-fills with the guest's name(s) from the guest list
+4. **Dynamic Fields**: The form shows separate input fields for each person (e.g., 2 fields for a couple)
+5. **URL Cleanup**: After loading, the `?id=...` parameter is automatically removed from the URL for a clean appearance
+
+#### Adding Guests
+
+Edit `src/data/guests.ts` to add or modify guests:
+
+```typescript
+export const GUEST_LIST: Record<string, GuestData> = {
+  'jon-abby': {
+    names: ['Jon', 'Abby'],
+  },
+  'ewan': {
+    names: ['Ewan'],
+  },
+  'spence-amanda': {
+    names: ['Spence', 'Amanda'],
+    email: 'spence@example.com', // Optional: pre-fill email
+  },
+  // Add more guests here...
+};
+```
+
+**Key Points:**
+- **ID Format**: Use lowercase with hyphens (e.g., `jon-abby`, `spence-amanda`)
+- **Names Array**: Supports 1, 2, or more names per guest entry
+- **Optional Email**: You can include an email to pre-fill that field too
+- **Easy to Extend**: Just add new entries to the `GUEST_LIST` object
+
+#### Creating Guest Links
+
+Generate personalized RSVP links for your guests:
+
+- Single person: `https://yourwebsite.com/rsvp?id=ewan`
+- Couple: `https://yourwebsite.com/rsvp?id=jon-abby`
+- Multiple people: `https://yourwebsite.com/rsvp?id=family-smith` (if you add a family entry)
+
+#### Form Behavior
+
+- **Single Name**: Shows one "Your Name" field
+- **Multiple Names**: Shows separate fields for each person (e.g., "Name 1", "Name 2")
+- **Editable**: Guests can modify pre-filled names or add/remove fields as needed
+- **Submission**: All names are combined into a single field for Formspree submission
+
+#### Personalized Greeting
+
+The `PersonalizedGreeting` component also uses the same ID system. When a guest visits with `?id=...`, they'll see a personalized greeting like "Hi Jon & Abby, we can't wait to celebrate with you!" just after the Hero section.
+
 ### 5. Update Favicon
 
 Replace `/public/marriage-light.svg` and `/public/marriage-dark.svg` with your own icons. The site supports different favicons for light and dark modes.
 
-### 6. Customize Google Maps
+### 6. Customize FAQs
+
+The FAQs section displays in a **2-column grid on desktop** and a single column on mobile. Edit the FAQs in `src/config/wedding-content.ts`:
+
+```typescript
+faqs: [
+  {
+    question: "What time should I arrive?",
+    answer: "Your answer here...",
+  },
+  {
+    question: "What is the dress code?",
+    answer: "Your answer here...",
+  },
+  // Add more FAQs...
+  {
+    question: "When should I RSVP by?",
+    answer: null, // This is automatically populated from rsvp.deadline
+  },
+]
+```
+
+**Features:**
+- **2-Column Layout**: Automatically displays in 2 columns on desktop (md breakpoint and up)
+- **Single Column on Mobile**: Stacks vertically on mobile devices
+- **Auto RSVP Deadline**: The "When should I RSVP by?" question automatically uses the `rsvp.deadline` value
+- **HTML Support**: Answer fields support HTML formatting if needed
+- **Animated Stagger**: FAQs animate in sequence with scroll-triggered animations
+
+**Layout Details:**
+- Container: `max-w-6xl` (wider to accommodate 2 columns)
+- Grid: `grid grid-cols-1 md:grid-cols-2 gap-4`
+- Responsive: Single column on mobile, 2 columns on desktop
+
+### 7. Customize Google Maps
 
 Update the Google Maps embed URL in `wedding-content.ts`:
 
@@ -225,10 +332,11 @@ venue: {
 │   │   ├── Location.astro           # Travel info with Google Maps
 │   │   ├── Accommodation.astro      # Hotel recommendations wrapper
 │   │   ├── AccommodationCarousel.tsx # Swiper carousel for hotels
-│   │   ├── FAQ.astro                # Frequently asked questions
+│   │   ├── FAQ.astro                # Frequently asked questions (2-column layout on desktop)
 │   │   ├── Gift.astro               # Gift registry message
 │   │   ├── HoneymoonModal.tsx       # Modal for honeymoon donation info
-│   │   ├── RSVPForm.tsx             # Interactive RSVP with confetti
+│   │   ├── RSVPForm.tsx             # Interactive RSVP with confetti & guest ID system
+│   │   ├── PersonalizedGreeting.tsx # Personalized greeting based on guest ID
 │   │   ├── Navigation.tsx           # Sticky nav with active section tracking
 │   │   ├── SplashScreen.tsx         # Animated intro screen
 │   │   ├── MusicPlayer.tsx          # Background music player
@@ -242,6 +350,8 @@ venue: {
 │   │   └── AnimatedText.tsx         # Text animation component (tech page)
 │   ├── config/
 │   │   └── wedding-content.ts        # Central content configuration
+│   ├── data/
+│   │   └── guests.ts                 # Guest list with unique IDs for RSVP personalization
 │   ├── layouts/
 │   │   └── Layout.astro              # Base layout with meta tags & dark mode init
 │   ├── pages/
