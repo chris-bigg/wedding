@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { GUEST_LIST } from '../data/guests';
 
 const formatNames = (names: string[]): string => {
 	if (names.length === 0) return '';
@@ -14,18 +15,11 @@ export default function PersonalizedGreeting() {
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			const params = new URLSearchParams(window.location.search);
-			const firstNames: string[] = [];
-			let index = 1;
-			while (params.has(`fname${index}`)) {
-				const fname = params.get(`fname${index}`);
-				if (fname) {
-					firstNames.push(fname);
-				}
-				index++;
-			}
+			const id = params.get('id');
 			
-			if (firstNames.length > 0) {
-				setFormattedNames(formatNames(firstNames));
+			if (id && GUEST_LIST[id]) {
+				const guestData = GUEST_LIST[id];
+				setFormattedNames(formatNames(guestData.names));
 			}
 		}
 	}, []);
