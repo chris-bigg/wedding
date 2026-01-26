@@ -6,11 +6,11 @@ const getImagePath = (path: string) => {
 export const weddingContent = {
 	// Core Details
 	couple: {
-		name1: "Chris",
-		name2: "Feleena",
+		name1: "Feleena",
+		name2: "Christopher",
 	},
 	date: {
-		full: "Saturday, August 1st, 2026",
+		full: "Saturday, 1st August, 2026",
 		time: "12pm",
 	},
 	venue: {
