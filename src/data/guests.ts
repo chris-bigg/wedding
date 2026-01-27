@@ -3,21 +3,36 @@ export interface GuestData {
 	email?: string;
 }
 
-// Import guest list from gitignored data file
-// This file is in .gitignore so it won't be committed to the repo
-import { GUEST_LIST_DATA } from './guests-data';
+// Import guest list - tries gitignored file first, falls back to stub
+// For local dev: guests-data.ts (gitignored) contains actual data
+// For production: guests-data.stub.ts (committed) is empty, use GUEST_LIST env var
+let GUEST_LIST_DATA: Record<string, GuestData> | undefined;
 
-// Read guest list from gitignored data file or environment variable
+try {
+	// Try to import from gitignored file (local development)
+	const { GUEST_LIST_DATA: localData } = await import('./guests-data');
+	GUEST_LIST_DATA = localData;
+} catch {
+	// File doesn't exist, use stub (production builds)
+	try {
+		const { GUEST_LIST_DATA: stubData } = await import('./guests-data.stub');
+		GUEST_LIST_DATA = stubData;
+	} catch {
+		GUEST_LIST_DATA = undefined;
+	}
+}
+
+// Read guest list from imported data or environment variable
 export function getGuestList(): Record<string, GuestData> {
-	// First try: use imported data file
-	if (typeof GUEST_LIST_DATA !== 'undefined' && GUEST_LIST_DATA) {
+	// First try: use imported data file (local dev uses guests-data.ts, prod uses stub)
+	if (GUEST_LIST_DATA && Object.keys(GUEST_LIST_DATA).length > 0) {
 		if (import.meta.env.DEV) {
-			console.log(`[guests.ts] Loaded ${Object.keys(GUEST_LIST_DATA).length} guests from guests-data.ts`);
+			console.log(`[guests.ts] Loaded ${Object.keys(GUEST_LIST_DATA).length} guests from data file`);
 		}
 		return GUEST_LIST_DATA;
 	}
 	
-	// Fallback: try environment variable
+	// Fallback: environment variable (for production builds like Netlify)
 	const guestListEnv = import.meta.env.GUEST_LIST;
 	if (guestListEnv) {
 		try {
@@ -32,7 +47,7 @@ export function getGuestList(): Record<string, GuestData> {
 	}
 	
 	if (import.meta.env.DEV) {
-		console.warn('[guests.ts] No guest list found. Check guests-data.ts or GUEST_LIST env variable.');
+		console.warn('[guests.ts] No guest list found. Set GUEST_LIST environment variable for production builds.');
 	}
 	return {};
 }
