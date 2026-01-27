@@ -27,6 +27,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Mon de Tresor';
+  src: url('/font/Mon de Tresor.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Auteur Script';
+  src: url('/font/Auteur Script.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   /* Apply Montserrat as body font */
   body {

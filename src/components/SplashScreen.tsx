@@ -154,7 +154,7 @@ export default function SplashScreen() {
 				{showFallingImage && (
 					<div className="w-80 h-80 md:w-[32rem] md:h-[32rem] absolute z-10 falling-image">
 					<img
-						src="/images/splash.png"
+						src="/images/splash-bw.jpg"
 						alt="Wedding splash"
 						className="w-full h-full object-contain drop-shadow-2xl image-flip"
 					/>

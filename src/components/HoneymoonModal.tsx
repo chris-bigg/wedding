@@ -79,7 +79,7 @@ export default function HoneymoonModal() {
 						id="honeymoon-modal-title"
 						className="text-4xl md:text-5xl mb-6 overflow-visible"
 						style={{
-							fontFamily: "'Great Vibes', cursive",
+							fontFamily: "'Mon de Tresor', serif",
 							fontWeight: 400,
 							lineHeight: 1.3,
 						}}
