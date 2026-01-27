@@ -77,15 +77,20 @@ export default function HoneymoonModal() {
 				<div className="p-8 text-center">
 					<h3
 						id="honeymoon-modal-title"
-						className="text-4xl md:text-5xl mb-6 overflow-visible"
+						className="text-5xl md:text-6xl mb-6 overflow-visible"
 						style={{
 							fontFamily: "'Mon de Tresor', serif",
 							fontWeight: 400,
 							lineHeight: 1.3,
 						}}
 					>
-						<span className="inline-block bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent px-4">
-							Honeymoon Fund
+						<span className="inline-block px-4">
+							<span className="bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent">Honeym</span>
+							<span className="inline-flex items-center relative" style={{ marginLeft: '-0.10em', marginRight: '-0.10em' }}>
+								<span className="relative z-10 bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent" style={{ transform: 'translateX(0.08em)' }}>O</span>
+								<span className="relative bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent" style={{ marginLeft: '-0.3em', zIndex: 0, transform: 'translateX(-0.08em)' }}>O</span>
+							</span>
+							<span className="bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent">n Fund</span>
 						</span>
 					</h3>
 
