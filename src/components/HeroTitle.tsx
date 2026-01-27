@@ -118,7 +118,7 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 	return (
 		<div 
 			ref={containerRef} 
-			className="mb-6"
+			className="mb-6 scale-75 md:scale-100 origin-center"
 			style={{
 				willChange: 'transform, opacity',
 				transform: 'translateZ(0)', // Force GPU acceleration
