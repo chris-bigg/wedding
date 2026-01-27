@@ -144,7 +144,7 @@ export default function SplashScreen() {
 				{/* Lottie Animation */}
 				<div className={`w-64 h-64 md:w-96 md:h-96 relative z-10 transition-opacity duration-500 ${hideLottie ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
 				<DotLottieReact
-					src="/lottie/Wedding Rings.lottie"
+					src="/lottie/Wedding Rings BW.lottie"
 					loop
 					autoplay
 				/>
