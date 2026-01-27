@@ -150,7 +150,7 @@ export const weddingContent = {
 	// Gift Registry / Honeymoon
 	gift: {
 		message:
-			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to<br>🇸🇮 Slovenia & 🇭🇷 Croatia.",
+			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to<br>🇮🇹 Italy, 🇸🇮 Slovenia & 🇭🇷 Croatia.",
 		donationUrl: "[The URL for Stripe/PayPal/Honeyfund]",
 	},
 };

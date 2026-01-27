@@ -1,5 +1,16 @@
 ---
 import { weddingContent } from '../config/wedding-content';
+
+// Function to convert phone numbers in text to clickable tel: links
+function formatPhoneNumbers(text: string): string {
+	// Match UK phone numbers (starting with 0, followed by 10 digits)
+	const phoneRegex = /(\+?44\s?)?(0\d{10})/g;
+	return text.replace(phoneRegex, (match, countryCode, number) => {
+		// Use the number with or without country code
+		const phoneNumber = countryCode ? match.replace(/\s/g, '') : number;
+		return `<a href="tel:${phoneNumber}" class="text-green-700 dark:text-green-400 hover:underline font-medium">${match}</a>`;
+	});
+}
 ---
 
 <section id="faq" class="py-20 px-4 bg-gradient-to-br from-stone-50 via-[#F2F4F0]/60 to-[#E6E8E2]/50 dark:from-stone-900/30 dark:via-stone-900/20 dark:to-stone-950/30">
@@ -10,15 +21,14 @@ import { weddingContent } from '../config/wedding-content';
 			</span>
 		</h2>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-4" data-animate-stagger>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start" data-animate-stagger>
 			{weddingContent.faqs.map((faq, index) => (
 				<details class="bg-white/60 dark:bg-stone-800/60 backdrop-blur-sm rounded-2xl overflow-hidden group border border-stone-200/50 dark:border-stone-700/50 shadow-md hover:shadow-lg transition-all" data-stagger-item>
 					<summary class="cursor-pointer p-6 font-medium text-lg text-green-950 dark:text-white hover:bg-green-50/50 dark:hover:bg-stone-200/20 transition-colors flex justify-between items-center">
 						{faq.question}
 						<span class="text-2xl text-green-800 dark:text-white group-open:rotate-45 transition-transform">+</span>
 					</summary>
-					<div class="px-6 pb-6 text-stone-700 dark:text-stone-300">
-						{faq.answer}
+					<div class="px-6 pt-6 pb-6 text-stone-700 dark:text-stone-300" set:html={formatPhoneNumbers(faq.answer)}>
 					</div>
 				</details>
 			))}

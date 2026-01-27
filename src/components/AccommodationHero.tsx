@@ -13,6 +13,10 @@ export default function AccommodationHero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
 
+  // Use encodeURIComponent to handle the special characters safely
+  const promoCode = encodeURIComponent("Feleena & Christopher");
+  const bookingUrl = `https://kingshead-hotel-brakspear.rezcontrol.com/?startDate=2026-07-31&endDate=2026-08-02&promoCode=${promoCode}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFadeState('fade-out');
@@ -30,7 +34,7 @@ export default function AccommodationHero() {
     <div className="mb-12">
       <div className="relative rounded-2xl overflow-hidden shadow-xl border border-stone-200/50 dark:border-stone-700/50 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm">
         {/* Image Slideshow */}
-        <div className="relative h-[500px] md:h-[500px] overflow-hidden">
+        <div className="absolute inset-0 min-h-[500px] md:min-h-[500px]">
           {roomImages.map((image, index) => (
             <div
               key={index}
@@ -55,8 +59,8 @@ export default function AccommodationHero() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
         </div>
 
-        {/* Content Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {/* Content Overlay - This will determine the container height */}
+        <div className="relative flex items-center justify-center min-h-[500px] md:min-h-[500px] pointer-events-none">
           <div className="text-center px-6 md:px-12 py-6 md:py-8 pointer-events-auto w-full">
             {/* Logo above heading */}
             <div className="flex justify-center mb-4 md:mb-8">
@@ -70,10 +74,10 @@ export default function AccommodationHero() {
               Your home for the weekend.
             </h3>
             <p className="text-base md:text-xl text-white/95 mb-6 md:mb-10 max-w-2xl mx-auto drop-shadow-md">
-              We've made the Kings Head our home for the wedding. It's a wonderful old building with 66 rooms, and because it's so historic, no two are exactly the same. We hope you find a cozy corner you love and enjoy being right in the heart of town with us.
+              We've made the Kings Head our home for the wedding. It's a wonderful old building with 66 rooms, and because it's so historic, no two are exactly the same. We hope you find a cozy corner you love and enjoy being right in the heart of town with us. Book your room through the link below and a promo code will be automatically applied for 20% off your stay.
             </p>
             <a
-              href="https://kingshead-hotel-brakspear.rezcontrol.com/?startDate=2026-07-31&endDate=2026-08-02&promoCode=Feleena+%26+Christopher&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D"
+              href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
