@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { GUEST_LIST } from '../data/guests';
+
+interface GuestData {
+	names: string[];
+	email?: string;
+}
 
 const formatNames = (names: string[]): string => {
 	if (names.length === 0) return '';
@@ -9,6 +13,20 @@ const formatNames = (names: string[]): string => {
 	return `${allButLast} & ${names[names.length - 1]}`;
 };
 
+// Get guest list from window global (injected by Astro)
+function getGuestList(): Record<string, GuestData> {
+	if (typeof window !== 'undefined') {
+		const guestList = (window as any).__GUEST_LIST__;
+		if (guestList) {
+			return guestList;
+		}
+		if (import.meta.env.DEV) {
+			console.warn('window.__GUEST_LIST__ not found. Check if script tag is rendering correctly.');
+		}
+	}
+	return {};
+}
+
 export default function PersonalizedGreeting() {
 	const [formattedNames, setFormattedNames] = useState<string>('');
 
@@ -17,10 +35,24 @@ export default function PersonalizedGreeting() {
 			const params = new URLSearchParams(window.location.search);
 			const id = params.get('id');
 			
-			if (id && GUEST_LIST[id]) {
-				const guestData = GUEST_LIST[id];
-				setFormattedNames(formatNames(guestData.names));
-			}
+			// Wait a tick to ensure script has run
+			setTimeout(() => {
+				const guestList = getGuestList();
+				
+				// Debug logging
+				console.log('PersonalizedGreeting - ID:', id);
+				console.log('PersonalizedGreeting - window.__GUEST_LIST__:', (window as any).__GUEST_LIST__);
+				console.log('PersonalizedGreeting - Guest list keys:', Object.keys(guestList));
+				console.log('PersonalizedGreeting - Guest list has ID?', id ? guestList[id] : false);
+				
+				if (id && guestList[id]) {
+					const guestData = guestList[id];
+					setFormattedNames(formatNames(guestData.names));
+				} else if (id) {
+					console.warn('Guest list is empty or ID not found. Guest list:', guestList);
+					console.warn('Available keys:', Object.keys(guestList));
+				}
+			}, 0);
 		}
 	}, []);
 
