@@ -12,15 +12,16 @@ interface HeroTitleProps {
 export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 	const svgRef = useRef<SVGSVGElement>(null);
 	const name1PathRef = useRef<SVGTextElement>(null);
+	const andPathRef = useRef<SVGTextElement>(null);
 	const name2PathRef = useRef<SVGTextElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isDrawn, setIsDrawn] = useState(false);
 
 	useEffect(() => {
-		if (!svgRef.current || !name1PathRef.current || !name2PathRef.current) return;
+		if (!svgRef.current || !name1PathRef.current || !name2PathRef.current || !andPathRef.current) return;
 
 		// Set initial hidden state
-		gsap.set([name1PathRef.current, name2PathRef.current], {
+		gsap.set([name1PathRef.current, andPathRef.current, name2PathRef.current], {
 			opacity: 0,
 			scale: 0.8,
 			y: 50,
@@ -29,7 +30,7 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 		let scrollTriggerInstance: ScrollTrigger | null = null;
 
 		const animate = () => {
-			if (!svgRef.current || !name1PathRef.current || !name2PathRef.current || !containerRef.current) return;
+			if (!svgRef.current || !name1PathRef.current || !name2PathRef.current || !andPathRef.current || !containerRef.current) return;
 
 			const tl = gsap.timeline();
 
@@ -41,6 +42,19 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 				duration: 1.5,
 				ease: 'power3.out',
 			});
+
+			// "And" text, overlapping slightly with first name
+			tl.to(
+				andPathRef.current,
+				{
+					opacity: 1,
+					scale: 1,
+					y: 0,
+					duration: 1.5,
+					ease: 'power3.out',
+				},
+				'-=1' // Start 1s before previous animation ends
+			);
 
 			// Second name, overlapping slightly
 			tl.to(
@@ -158,13 +172,15 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 				<text
 					ref={name1PathRef}
 					x="50%"
-					y="30%"
+					y="10%"
 					textAnchor="middle"
 					dominantBaseline="middle"
 					style={{
-						fontFamily: "'Great Vibes', cursive",
-						fontSize: '500px',
+						fontFamily: "'Mon de Tresor', serif",
+						fontSize: '420px',
 						fontWeight: 400,
+						letterSpacing: '0.02em',
+						textTransform: 'uppercase',
 						fill: 'url(#goldGradient)',
 						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 1)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
 					}}
@@ -173,15 +189,34 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 				</text>
 
 				<text
-					ref={name2PathRef}
+					ref={andPathRef}
 					x="50%"
-					y="75%"
+					y="50%"
 					textAnchor="middle"
 					dominantBaseline="middle"
 					style={{
-						fontFamily: "'Great Vibes', cursive",
-						fontSize: '500px',
+						fontFamily: "'Auteur Script', cursive",
+						fontSize: '160px',
 						fontWeight: 400,
+						fill: 'url(#goldGradient)',
+						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 1)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
+					}}
+				>
+					And
+				</text>
+
+				<text
+					ref={name2PathRef}
+					x="50%"
+					y="90%"
+					textAnchor="middle"
+					dominantBaseline="middle"
+					style={{
+						fontFamily: "'Mon de Tresor', serif",
+						fontSize: '420px',
+						fontWeight: 400,
+						letterSpacing: '0.02em',
+						textTransform: 'uppercase',
 						fill: 'url(#goldGradient)',
 						filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 1)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))',
 					}}

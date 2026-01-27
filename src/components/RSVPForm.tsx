@@ -203,7 +203,7 @@ export default function RSVPForm() {
 			)}
 			<section id="rsvp" className="py-20 px-4 bg-gradient-to-br from-[#F2F4F0]/50 via-[#E6E8E2]/40 to-green-50/40 dark:from-stone-900/30 dark:via-stone-900/20 dark:to-stone-950/30">
 				<div className="max-w-2xl mx-auto">
-				<h2 className="text-5xl md:text-6xl text-center mb-4 overflow-visible" style={{fontFamily: "'Great Vibes', cursive", fontWeight: 400, lineHeight: 1.3, padding: '0.5rem 0'}}>
+				<h2 className="text-5xl md:text-6xl text-center mb-4 overflow-visible" style={{fontFamily: "'Mon de Tresor', serif", fontWeight: 400, lineHeight: 1.3, padding: '0.5rem 0'}}>
 					<span className="inline-block bg-gradient-to-r from-green-800 to-green-950 dark:from-white dark:to-stone-200 bg-clip-text text-transparent px-4">
 						RSVP
 					</span>
@@ -360,7 +360,7 @@ export default function RSVPForm() {
 						type="submit"
 						disabled={isSubmitting}
 						className="w-full button-sparkle bg-gradient-to-r from-[#C9C7C1] via-[#BAB8B2] to-[#AAA8A2] hover:from-[#BAB8B2] hover:via-[#AAA8A2] hover:to-[#9A988F] disabled:bg-stone-400 text-white px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:hover:scale-100 text-3xl"
-						style={{fontFamily: "'Great Vibes', cursive", fontWeight: 400}}
+						style={{fontFamily: "'Mon de Tresor', serif", fontWeight: 400}}
 					>
 						{isSubmitting ? 'Submitting...' : 'Submit RSVP'}
 					</button>
