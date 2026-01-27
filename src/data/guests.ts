@@ -3,23 +3,22 @@ export interface GuestData {
 	email?: string;
 }
 
-// Import guest list - tries gitignored file first, falls back to stub
-// For local dev: guests-data.ts (gitignored) contains actual data
+// Import guest list - always import stub (committed), optionally override with gitignored file
+// For local dev: guests-data.ts (gitignored) can override the stub
 // For production: guests-data.stub.ts (committed) is empty, use GUEST_LIST env var
-let GUEST_LIST_DATA: Record<string, GuestData> | undefined;
+import { GUEST_LIST_DATA as STUB_DATA } from './guests-data.stub';
 
+let GUEST_LIST_DATA: Record<string, GuestData> = STUB_DATA;
+
+// Try to import from gitignored file (local development only - optional)
+// This will fail in production builds, which is expected
 try {
-	// Try to import from gitignored file (local development)
 	const { GUEST_LIST_DATA: localData } = await import('./guests-data');
-	GUEST_LIST_DATA = localData;
-} catch {
-	// File doesn't exist, use stub (production builds)
-	try {
-		const { GUEST_LIST_DATA: stubData } = await import('./guests-data.stub');
-		GUEST_LIST_DATA = stubData;
-	} catch {
-		GUEST_LIST_DATA = undefined;
+	if (localData && Object.keys(localData).length > 0) {
+		GUEST_LIST_DATA = localData;
 	}
+} catch {
+	// File doesn't exist - that's okay, use stub or env var
 }
 
 // Read guest list from imported data or environment variable
