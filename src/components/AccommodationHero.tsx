@@ -14,8 +14,9 @@ export default function AccommodationHero() {
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
 
   // Use encodeURIComponent to handle the special characters safely
-  const promoCode = encodeURIComponent("Feleena & Christopher");
-  const bookingUrl = `https://kingshead-hotel-brakspear.rezcontrol.com/?startDate=2026-07-31&endDate=2026-08-02&promoCode=${promoCode}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
+  // Replace %20 with + for query parameters as some systems prefer + for spaces
+  const promoCode = encodeURIComponent("Feleena & Christopher").replace(/%20/g, '+');
+  const bookingUrl = `https://kingshead-hotel-brakspear.rezcontrol.com/rooms?startDate=2026-07-31&endDate=2026-08-02&promoCode=${promoCode}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
 
   useEffect(() => {
     const interval = setInterval(() => {
