@@ -8,46 +8,34 @@ export interface GuestData {
 // For production: guests-data.stub.ts (committed) is empty, use GUEST_LIST env var
 import { GUEST_LIST_DATA as STUB_DATA } from './guests-data.stub';
 
-let GUEST_LIST_DATA: Record<string, GuestData> = STUB_DATA;
-
-// Try to import from gitignored file (local development only - optional)
-// This will fail in production builds, which is expected
-try {
-	const { GUEST_LIST_DATA: localData } = await import('./guests-data');
-	if (localData && Object.keys(localData).length > 0) {
-		GUEST_LIST_DATA = localData;
-	}
-} catch {
-	// File doesn't exist - that's okay, use stub or env var
-}
-
 // Read guest list from imported data or environment variable
 export function getGuestList(): Record<string, GuestData> {
-	// First try: use imported data file (local dev uses guests-data.ts, prod uses stub)
-	if (GUEST_LIST_DATA && Object.keys(GUEST_LIST_DATA).length > 0) {
-		if (import.meta.env.DEV) {
-			console.log(`[guests.ts] Loaded ${Object.keys(GUEST_LIST_DATA).length} guests from data file`);
-		}
-		return GUEST_LIST_DATA;
-	}
-	
-	// Fallback: environment variable (for production builds like Netlify)
+	// First priority: environment variable (for production builds like Netlify)
+	// This is checked first because it's the most reliable for production
 	const guestListEnv = import.meta.env.GUEST_LIST;
-	if (guestListEnv) {
+	if (guestListEnv && typeof guestListEnv === 'string' && guestListEnv.trim().length > 0) {
 		try {
-			const parsed = JSON.parse(guestListEnv as string);
-			if (import.meta.env.DEV) {
-				console.log(`[guests.ts] Loaded ${Object.keys(parsed).length} guests from environment variable`);
+			const parsed = JSON.parse(guestListEnv);
+			if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+				console.log(`[guests.ts] ✓ Loaded ${Object.keys(parsed).length} guests from GUEST_LIST environment variable`);
+				return parsed;
 			}
-			return parsed;
 		} catch (error) {
-			console.error('Failed to parse GUEST_LIST from environment:', error);
+			console.error('[guests.ts] ✗ Failed to parse GUEST_LIST from environment:', error);
+			console.error('[guests.ts] Raw value:', guestListEnv.substring(0, 100));
 		}
+	} else {
+		console.log('[guests.ts] GUEST_LIST environment variable not set or empty');
 	}
 	
-	if (import.meta.env.DEV) {
-		console.warn('[guests.ts] No guest list found. Set GUEST_LIST environment variable for production builds.');
+	// Second priority: use stub file (empty in production, but exists in repo)
+	// This ensures the import doesn't fail, but won't have data
+	if (STUB_DATA && Object.keys(STUB_DATA).length > 0) {
+		console.log(`[guests.ts] Loaded ${Object.keys(STUB_DATA).length} guests from stub file`);
+		return STUB_DATA;
 	}
+	
+	console.warn('[guests.ts] ⚠️  No guest list found. Set GUEST_LIST environment variable in Netlify.');
 	return {};
 }
 
