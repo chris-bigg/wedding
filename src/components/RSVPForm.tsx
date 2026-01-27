@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
-import { GUEST_LIST } from '../data/guests';
+
+interface GuestData {
+	names: string[];
+	email?: string;
+}
 
 interface FormData {
 	names: string[];
@@ -11,6 +15,14 @@ interface FormData {
 	plusOneName: string;
 	dietaryRestrictions: string;
 	songRequest: string;
+}
+
+// Get guest list from window global (injected by Astro)
+function getGuestList(): Record<string, GuestData> {
+	if (typeof window !== 'undefined' && (window as any).__GUEST_LIST__) {
+		return (window as any).__GUEST_LIST__;
+	}
+	return {};
 }
 
 export default function RSVPForm() {
@@ -50,9 +62,10 @@ export default function RSVPForm() {
 		if (typeof window !== 'undefined') {
 			const params = new URLSearchParams(window.location.search);
 			const id = params.get('id');
+			const guestList = getGuestList();
 			
-			if (id && GUEST_LIST[id]) {
-				const guestData = GUEST_LIST[id];
+			if (id && guestList[id]) {
+				const guestData = guestList[id];
 				setFormData(prev => ({
 					...prev,
 					names: [...guestData.names],

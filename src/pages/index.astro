@@ -17,9 +17,27 @@ import WeatherWidget from '../components/WeatherWidget';
 import MusicPlayer from '../components/MusicPlayer';
 import SectionAnimations from '../components/SectionAnimations';
 import { weddingContent } from '../config/wedding-content';
+import { getGuestList } from '../data/guests';
+
+// Read guest list from environment variable (server-side only)
+const guestList = getGuestList();
+const guestListKeys = Object.keys(guestList);
+
+// Debug: Log guest list status (only in dev)
+if (import.meta.env.DEV) {
+	console.log('[index.astro] Guest list loaded:', guestListKeys.length > 0 ? `${guestListKeys.length} guests` : 'EMPTY - check .env file');
+	console.log('[index.astro] Environment variable GUEST_LIST exists:', !!import.meta.env.GUEST_LIST);
+	if (guestListKeys.length > 0) {
+		console.log('[index.astro] Sample guest keys:', guestListKeys.slice(0, 3));
+		console.log('[index.astro] Sample guest (jon-abby):', guestList['jon-abby']);
+	}
+}
+
+// Serialize for injection into page
+const guestListJson = JSON.stringify(guestList);
 ---
 
-<Layout title={`${weddingContent.couple.name1} & ${weddingContent.couple.name2} | Wedding`}>
+<Layout title={`${weddingContent.couple.name1} & ${weddingContent.couple.name2} | Wedding`} guestListJson={guestListJson}>
 	<!-- Splash Screen -->
 	<SplashScreen client:load />
 

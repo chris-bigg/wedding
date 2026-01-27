@@ -6,9 +6,10 @@ import CustomCursor from '../components/CustomCursor';
 interface Props {
 	title: string;
 	description?: string;
+	guestListJson?: string;
 }
 
-const { title, description = 'Join us for our special day!' } = Astro.props;
+const { title, description = 'Join us for our special day!', guestListJson } = Astro.props;
 ---
 
 <!doctype html>
@@ -81,6 +82,9 @@ const { title, description = 'Join us for our special day!' } = Astro.props;
 			// Initialize --cta-bottom immediately with default value
 			document.documentElement.style.setProperty('--cta-bottom', '1.5rem');
 		</script>
+		{guestListJson && (
+			<script is:inline set:html={`window.__GUEST_LIST__ = ${guestListJson};`}></script>
+		)}
 		<title>{title}</title>
 	</head>
 	<body class="bg-gradient-to-br from-[#F2F4F0]/50 via-stone-50 to-green-50/40 dark:from-stone-950 dark:via-stone-900 dark:to-stone-800/30 text-stone-900 dark:text-stone-100 antialiased">

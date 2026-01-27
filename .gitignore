@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# guest list data (private)
+src/data/guests-data.ts
+
 # macOS-specific files
 .DS_Store
 **/.DS_Store
