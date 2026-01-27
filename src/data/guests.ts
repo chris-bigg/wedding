@@ -3,9 +3,9 @@ export interface GuestData {
 	email?: string;
 }
 
-// Import guest list - always import stub (committed), optionally override with gitignored file
-// For local dev: guests-data.ts (gitignored) can override the stub
-// For production: guests-data.stub.ts (committed) is empty, use GUEST_LIST env var
+// Import guest list stub file (committed to repo, empty by default)
+// For production: Use GUEST_LIST environment variable in Netlify
+// For local dev: Use GUEST_LIST in .env file
 import { GUEST_LIST_DATA as STUB_DATA } from './guests-data.stub';
 
 // Read guest list from imported data or environment variable
