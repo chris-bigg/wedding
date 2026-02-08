@@ -51,6 +51,7 @@ export default function AccommodationHero() {
                 src={image}
                 alt={`Kings Head Hotel Room ${index + 1}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           ))}
@@ -69,6 +70,7 @@ export default function AccommodationHero() {
                 src="/images/KH/KingsHead_Insignia_no-bg_white_padding.png"
                 alt="Kings Head Hotel"
                 className="h-20 md:h-32 w-auto drop-shadow-lg"
+                loading="lazy"
               />
             </div>
             <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-8 drop-shadow-lg" style={{ fontFamily: "'Mon de Tresor', serif" }}>

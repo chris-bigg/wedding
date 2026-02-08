@@ -1,33 +1,23 @@
 import { useState, useEffect } from 'react';
+import { getDarkModePreference, setDarkMode, toggleDarkMode as toggleDarkModeUtil, followSystemPreference } from '../utils/darkMode';
 
 export default function DarkModeToggle() {
 	const [isDark, setIsDark] = useState(false);
 
 	useEffect(() => {
 		// Check for saved preference or system preference
-		const saved = localStorage.getItem('darkMode');
-		const media = window.matchMedia('(prefers-color-scheme: dark)');
-		const prefersDark = media.matches;
-		const shouldBeDark = saved ? saved === 'true' : prefersDark;
-
+		const shouldBeDark = getDarkModePreference();
 		setIsDark(shouldBeDark);
-		if (shouldBeDark) {
-			document.documentElement.classList.add('dark');
-		} else {
-			document.documentElement.classList.remove('dark');
-		}
+		setDarkMode(shouldBeDark);
 
 		// If user hasn't explicitly set a preference, follow OS/browser changes
+		const media = window.matchMedia('(prefers-color-scheme: dark)');
 		const handleChange = (e: MediaQueryListEvent) => {
 			const hasUserPreference = localStorage.getItem('darkMode');
 			if (!hasUserPreference) {
 				const nextIsDark = e.matches;
 				setIsDark(nextIsDark);
-				if (nextIsDark) {
-					document.documentElement.classList.add('dark');
-				} else {
-					document.documentElement.classList.remove('dark');
-				}
+				setDarkMode(nextIsDark);
 			}
 		};
 
@@ -41,35 +31,21 @@ export default function DarkModeToggle() {
 		}
 	}, []);
 
-	const toggleDarkMode = (e?: React.MouseEvent<HTMLButtonElement>) => {
+	const handleToggle = (e?: React.MouseEvent<HTMLButtonElement>) => {
 		// Shift+Click clears saved preference and follows system
 		if (e?.shiftKey) {
-			localStorage.removeItem('darkMode');
-			const media = window.matchMedia('(prefers-color-scheme: dark)');
-			const follow = media.matches;
+			const follow = followSystemPreference();
 			setIsDark(follow);
-			if (follow) {
-				document.documentElement.classList.add('dark');
-			} else {
-				document.documentElement.classList.remove('dark');
-			}
 			return;
 		}
 
-		const newValue = !isDark;
+		const newValue = toggleDarkModeUtil();
 		setIsDark(newValue);
-		localStorage.setItem('darkMode', String(newValue));
-		
-		if (newValue) {
-			document.documentElement.classList.add('dark');
-		} else {
-			document.documentElement.classList.remove('dark');
-		}
 	};
 
 	return (
 		<button
-			onClick={toggleDarkMode}
+			onClick={handleToggle}
 			className="p-2 rounded-full bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors duration-300"
 			aria-label="Toggle dark mode"
 			title={`${isDark ? 'Switch to light mode' : 'Switch to dark mode'} (Shift+Click to follow system)`}

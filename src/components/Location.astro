@@ -50,7 +50,8 @@ import { weddingContent } from '../config/wedding-content';
 				></iframe>
 				<div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
 					<a
-						href="https://maps.app.goo.gl/aBivv1RzfmkmcxAF9"
+						href={weddingContent.venue.directionsUrl}
+						aria-label="Get directions to Kings Head Hotel"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="inline-flex items-center gap-2 bg-green-800 hover:bg-green-900 dark:bg-white/20 dark:hover:bg-white/30 text-white dark:text-stone-900 px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"

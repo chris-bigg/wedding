@@ -97,9 +97,11 @@ This strategy ensures optimal performance with minimal JavaScript sent to the br
 ### Performance
 - **Static Generation**: All content rendered at build time for maximum speed
 - **Astro Islands Architecture**: React components hydrated selectively, minimizing JavaScript bundle
+- **Optimized Assets**: Lazy loading for images, preloaded critical fonts, no external font requests
+- **Code Efficiency**: Shared utilities and hooks reduce duplication and bundle size
 - **Smooth Scrolling**: Lenis library for buttery-smooth scroll experience
 - **GPU Acceleration**: Optimized animations with GSAP and CSS transforms
-- **Mobile Optimized**: Special handling for touch devices and fast scrolling
+- **Mobile Optimized**: Special handling for touch devices, debounced resize handlers
 - **Tailwind CSS v4**: Modern utility-first CSS with minimal bundle size
 
 ### Interactive Components
@@ -176,7 +178,12 @@ The site uses a **dark forest green and warm cream/beige** color scheme with whi
    - Backgrounds: Cream/white gradients (`dark:from-stone-200/30 dark:to-stone-300/40`)
    - Secondary elements: Slightly darker white/cream tones
 
-3. **Fonts**: The "Great Vibes" script font is loaded from Google Fonts in `Layout.astro`
+3. **Fonts**: Custom fonts are preloaded for optimal performance:
+   - Montserrat (variable font) - body text
+   - Greater Theory - headings
+   - Mon de Tresor - decorative script
+   - Auteur Script - special elements
+   - Font files located in `/public/font/`
 
 4. **Animations**: Custom animations are defined in `src/styles/global.css`
 
@@ -322,7 +329,7 @@ venue: {
 ```
 /
 ├── src/
-│   ├── components/
+│   ├── components/           # UI components (Astro & React)
 │   │   ├── Hero.astro              # Hero section with background
 │   │   ├── HeroBackground.tsx      # Animated hero background
 │   │   ├── HeroContent.tsx          # Hero content component
@@ -332,10 +339,11 @@ venue: {
 │   │   ├── Location.astro           # Travel info with Google Maps
 │   │   ├── Accommodation.astro      # Hotel recommendations wrapper
 │   │   ├── AccommodationCarousel.tsx # Swiper carousel for hotels
-│   │   ├── FAQ.astro                # Frequently asked questions (2-column layout on desktop)
+│   │   ├── AccommodationHero.tsx    # Accommodation hero with slideshow
+│   │   ├── FAQ.astro                # Frequently asked questions (2-column layout)
 │   │   ├── Gift.astro               # Gift registry message
 │   │   ├── HoneymoonModal.tsx       # Modal for honeymoon donation info
-│   │   ├── RSVPForm.tsx             # Interactive RSVP with confetti & guest ID system
+│   │   ├── RSVPForm.tsx             # Interactive RSVP with confetti & guest ID
 │   │   ├── PersonalizedGreeting.tsx # Personalized greeting based on guest ID
 │   │   ├── Navigation.tsx           # Sticky nav with active section tracking
 │   │   ├── SplashScreen.tsx         # Animated intro screen
@@ -351,28 +359,45 @@ venue: {
 │   ├── config/
 │   │   └── wedding-content.ts        # Central content configuration
 │   ├── data/
-│   │   └── guests.ts                 # Guest list with unique IDs for RSVP personalization
+│   │   ├── guests.ts                 # Guest list for RSVP personalization
+│   │   └── guests-data.stub.ts       # Guest data stub template
+│   ├── hooks/                # Custom React hooks
+│   │   └── useWindowSize.ts          # Debounced window size hook
 │   ├── layouts/
 │   │   └── Layout.astro              # Base layout with meta tags & dark mode init
 │   ├── pages/
 │   │   ├── index.astro               # Main wedding page
 │   │   └── tech.astro                # Tech stack showcase page
-│   └── styles/
-│       └── global.css                # Tailwind + custom animations
+│   ├── styles/
+│   │   └── global.css                # Tailwind + custom animations
+│   ├── types/                # TypeScript type definitions
+│   │   └── guest.ts                  # Guest data interface
+│   └── utils/                # Shared utility functions
+│       ├── darkMode.ts               # Dark mode utilities
+│       ├── formatters.ts             # Name formatting functions
+│       ├── guests.ts                 # Guest list access utilities
+│       ├── scroll.ts                 # Scroll management utilities
+│       └── url.ts                    # URL parameter utilities
 ├── public/
 │   ├── images/                       # Photos, venue images, icons
 │   │   ├── us/                       # Engagement photos
+│   │   ├── KH/                       # Kings Head Hotel images
 │   │   ├── hotels/                   # Hotel images
 │   │   └── icons/                    # Tech stack icons
 │   ├── audio/                        # Background music
 │   ├── lottie/                       # Lottie animation files
-│   ├── font/                         # Custom fonts (Greater Theory, Montserrat)
+│   ├── font/                         # Custom fonts
+│   │   ├── greater-theory/           # Greater Theory font
+│   │   ├── Montserrat/               # Montserrat variable font
+│   │   ├── Mon de Tresor.otf         # Mon de Tresor font
+│   │   └── Auteur Script.otf         # Auteur Script font
 │   ├── marriage-light.svg            # Light mode favicon
 │   └── marriage-dark.svg             # Dark mode favicon
 ├── netlify.toml                      # Netlify deployment configuration
 ├── astro.config.mjs                   # Astro configuration
 ├── tsconfig.json                      # TypeScript configuration
-└── package.json                       # Dependencies and scripts
+├── package.json                       # Dependencies and scripts
+└── REFACTORING.md                     # Performance refactoring documentation
 ```
 
 ## 💻 Development
@@ -402,6 +427,19 @@ No environment variables are required. The project uses `import.meta.env.BASE_UR
 ### TypeScript
 
 The project is fully typed with TypeScript. All components use TypeScript, and the config file is typed for content structure.
+
+**Shared Types:**
+- `src/types/guest.ts` - Guest data interface used across components
+
+**Utility Functions:**
+- `src/utils/guests.ts` - Guest list access
+- `src/utils/url.ts` - URL parameter handling
+- `src/utils/formatters.ts` - Name formatting
+- `src/utils/darkMode.ts` - Dark mode management
+- `src/utils/scroll.ts` - Scroll behavior utilities
+
+**Custom Hooks:**
+- `src/hooks/useWindowSize.ts` - Debounced window dimensions
 
 ## 🚀 Deployment
 

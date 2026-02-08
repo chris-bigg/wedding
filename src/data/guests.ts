@@ -1,7 +1,4 @@
-export interface GuestData {
-	names: string[];
-	email?: string;
-}
+import type { GuestData } from '../types/guest';
 
 // Import guest list stub file (committed to repo, empty by default)
 // For production: Use GUEST_LIST environment variable in Netlify

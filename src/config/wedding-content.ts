@@ -17,7 +17,10 @@ export const weddingContent = {
 		name: "Kings Head Hotel",
 		address: "24 Market Pl, Cirencester GL7 2NW",
 		description: "Kings Head Hotel is a stunning venue nestled at the heart of the historic market town of Cirencester.",
-		mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.429!2d-1.9681!3d51.7186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4871088b8c0b5a5b%3A0x8e8b8c0b5a5b8c0b!2sKings%20Head%20Hotel%2C%2024%20Market%20Pl%2C%20Cirencester%20GL7%202NW%2C%20UK!5e0!3m2!1sen!2suk!4v1730110000000!5m2!1sen!2suk"
+		// Embed centred on 24 Market Place, Cirencester (Kings Head Hotel) for accurate pin
+		mapUrl: "https://www.google.com/maps?q=24+Market+Place,+Cirencester+GL7+2NW,+UK&output=embed",
+		// Get Directions link (from Google Maps Share)
+		directionsUrl: "https://maps.app.goo.gl/zLy9PaM4kZRBpbGM8",
 	},
 	rsvp: {
 		deadline: "01/05/2026",

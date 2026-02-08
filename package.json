@@ -11,7 +11,6 @@
   "dependencies": {
     "@astrojs/react": "^4.4.0",
     "@lottiefiles/dotlottie-react": "^0.17.6",
-    "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.1.16",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

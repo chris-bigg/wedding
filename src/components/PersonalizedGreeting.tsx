@@ -1,39 +1,14 @@
 import { useState, useEffect } from 'react';
-
-interface GuestData {
-	names: string[];
-	email?: string;
-}
-
-const formatNames = (names: string[]): string => {
-	if (names.length === 0) return '';
-	if (names.length === 1) return names[0];
-	if (names.length === 2) return `${names[0]} & ${names[1]}`;
-	const allButLast = names.slice(0, -1).join(', ');
-	return `${allButLast} & ${names[names.length - 1]}`;
-};
-
-// Get guest list from window global (injected by Astro)
-function getGuestList(): Record<string, GuestData> {
-	if (typeof window !== 'undefined') {
-		const guestList = (window as any).__GUEST_LIST__;
-		if (guestList) {
-			return guestList;
-		}
-		if (import.meta.env.DEV) {
-			console.warn('window.__GUEST_LIST__ not found. Check if script tag is rendering correctly.');
-		}
-	}
-	return {};
-}
+import { getGuestList } from '../utils/guests';
+import { getUrlParam } from '../utils/url';
+import { formatNames } from '../utils/formatters';
 
 export default function PersonalizedGreeting() {
 	const [formattedNames, setFormattedNames] = useState<string>('');
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
-			const params = new URLSearchParams(window.location.search);
-			const id = params.get('id');
+			const id = getUrlParam('id');
 			
 			// Wait a tick to ensure script has run
 			setTimeout(() => {

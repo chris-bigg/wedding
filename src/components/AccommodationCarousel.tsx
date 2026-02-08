@@ -112,6 +112,7 @@ export default function AccommodationCarousel({ accommodation }: AccommodationCa
             src={hotel.image} 
             alt={hotel.name}
             className="w-full h-48 object-cover flex-shrink-0"
+            loading="lazy"
           />
           {hotel.distance !== undefined && (
             <div className="absolute top-3 right-3 bg-green-800/95 dark:bg-white/20 backdrop-blur-sm text-white dark:text-stone-900 px-3 py-1.5 rounded-full text-sm font-medium shadow-lg flex items-center gap-1.5">

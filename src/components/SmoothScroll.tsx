@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
+import { initScrollBehavior, scrollToTop } from '../utils/scroll';
 
 export default function SmoothScroll() {
 	const lenisRef = useRef<Lenis | null>(null);
@@ -7,30 +8,15 @@ export default function SmoothScroll() {
 	const isInitializingRef = useRef(true);
 
 	useEffect(() => {
-		// Scroll to top on initial load (before Lenis initializes)
-		if (typeof window !== 'undefined' && window.history.scrollRestoration) {
-			window.history.scrollRestoration = 'manual';
-		}
-		
-		// Remove hash from URL to prevent browser from scrolling to it
-		if (window.location.hash) {
-			// Replace state without hash but keep URL clean
-			window.history.replaceState(null, '', window.location.pathname + window.location.search);
-		}
-		
-		// Force scroll to top multiple times to catch any race conditions
-		window.scrollTo(0, 0);
-		document.documentElement.scrollTop = 0;
-		document.body.scrollTop = 0;
+		// Initialize scroll behavior (prevent restoration, remove hash, scroll to top)
+		initScrollBehavior();
 		
 		// Monitor and force scroll to top during initialization
 		const forceTop = () => {
 			if (isInitializingRef.current) {
 				const currentScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
 				if (currentScroll > 0) {
-					window.scrollTo(0, 0);
-					document.documentElement.scrollTop = 0;
-					document.body.scrollTop = 0;
+					scrollToTop();
 				}
 				forceTopRafRef.current = requestAnimationFrame(forceTop);
 			}
@@ -40,11 +26,8 @@ export default function SmoothScroll() {
 		// Initialize Lenis
 		const lenis = new Lenis({
 			duration: 1.2,
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-			direction: 'vertical',
-			smooth: true,
-			smoothTouch: false, // Disable on touch devices for better mobile experience
-		});
+			easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+		} as any);
 		lenisRef.current = lenis;
 
 		// Force Lenis to scroll to top immediately
@@ -77,7 +60,7 @@ export default function SmoothScroll() {
 				if (href && href.startsWith('#')) {
 					e.preventDefault();
 					const element = document.querySelector(href);
-					if (element) {
+					if (element instanceof HTMLElement) {
 						lenis.scrollTo(element, {
 							duration: 0.8,
 							offset: -60, // Account for fixed nav

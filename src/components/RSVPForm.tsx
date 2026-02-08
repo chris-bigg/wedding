@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
-
-interface GuestData {
-	names: string[];
-	email?: string;
-}
+import { getGuestList } from '../utils/guests';
+import { getUrlParam, removeUrlParam } from '../utils/url';
+import { useWindowSize } from '../hooks/useWindowSize';
+import type { GuestData } from '../types/guest';
 
 interface FormData {
 	names: string[];
@@ -18,14 +17,6 @@ interface FormData {
 	starter: string;
 	main: string;
 	dessert: string;
-}
-
-// Get guest list from window global (injected by Astro)
-function getGuestList(): Record<string, GuestData> {
-	if (typeof window !== 'undefined' && (window as any).__GUEST_LIST__) {
-		return (window as any).__GUEST_LIST__;
-	}
-	return {};
 }
 
 export default function RSVPForm() {
@@ -46,28 +37,14 @@ export default function RSVPForm() {
 	const [submitMessage, setSubmitMessage] = useState('');
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [confettiFading, setConfettiFading] = useState(false);
-	const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
-
-	useEffect(() => {
-		const handleResize = () => {
-			setWindowDimensions({
-				width: window.innerWidth,
-				height: window.innerHeight,
-			});
-		};
-
-		// Set initial dimensions
-		handleResize();
-
-		window.addEventListener('resize', handleResize);
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+	
+	// Use custom hook for window dimensions with debouncing
+	const windowDimensions = useWindowSize();
 
 	// Read URL ID parameter and pre-fill form
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
-			const params = new URLSearchParams(window.location.search);
-			const id = params.get('id');
+			const id = getUrlParam('id');
 			const guestList = getGuestList();
 			
 			if (id && guestList[id]) {
@@ -79,9 +56,7 @@ export default function RSVPForm() {
 				}));
 				
 				// Clean up URL by removing the id parameter
-				params.delete('id');
-				const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
-				window.history.replaceState({}, '', newUrl);
+				removeUrlParam('id');
 			}
 		}
 	}, []);

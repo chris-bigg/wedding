@@ -30,9 +30,10 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 		<link rel="icon" type="image/svg+xml" href="/marriage-light.svg?v=1" media="(prefers-color-scheme: light)" />
 		<link rel="icon" type="image/svg+xml" href="/marriage-dark.svg?v=1" media="(prefers-color-scheme: dark)" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+		
+		<!-- Preload critical fonts for better performance -->
+		<link rel="preload" href="/font/Montserrat/Montserrat-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
+		<link rel="preload" href="/font/greater-theory/GreaterTheory.otf" as="font" type="font/otf" crossorigin />
 		<script is:inline>
 			// Prevent scroll restoration and hash scrolling - run immediately
 			(function() {
@@ -49,15 +50,18 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 				}
 				
 				// Scroll to top immediately
-				window.scrollTo(0, 0);
-				document.documentElement.scrollTop = 0;
-				document.body.scrollTop = 0;
+				var scrollToTop = function() {
+					window.scrollTo(0, 0);
+					document.documentElement.scrollTop = 0;
+					document.body.scrollTop = 0;
+				};
+				scrollToTop();
 				
 				// Prevent hash change events from causing scroll
 				window.addEventListener('hashchange', function(e) {
 					e.preventDefault();
 					window.history.replaceState(null, '', window.location.pathname + window.location.search);
-					window.scrollTo(0, 0);
+					scrollToTop();
 				}, { passive: false });
 				
 				// Continuously monitor and prevent unwanted scrolling during initial load
@@ -66,9 +70,7 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 				var scrollCheckInterval = setInterval(function() {
 					var scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
 					if (scrollY > 0) {
-						window.scrollTo(0, 0);
-						document.documentElement.scrollTop = 0;
-						document.body.scrollTop = 0;
+						scrollToTop();
 					}
 					scrollCheckCount++;
 					if (scrollCheckCount >= maxScrollChecks) {
@@ -78,14 +80,16 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 			})();
 			
 			// Initialize dark mode before page renders to prevent flash
-			const saved = localStorage.getItem('darkMode');
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			const shouldBeDark = saved ? saved === 'true' : prefersDark;
-			if (shouldBeDark) {
-				document.documentElement.classList.add('dark');
-			} else {
-				document.documentElement.classList.remove('dark');
-			}
+			(function() {
+				var saved = localStorage.getItem('darkMode');
+				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				var shouldBeDark = saved ? saved === 'true' : prefersDark;
+				if (shouldBeDark) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			})();
 			
 			// Initialize --cta-bottom immediately with default value
 			document.documentElement.style.setProperty('--cta-bottom', '1.5rem');
