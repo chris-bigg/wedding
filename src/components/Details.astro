@@ -69,17 +69,42 @@ import { weddingContent } from '../config/wedding-content';
 				</div>
 			</div>
 
-			{/* Schedule Content */}
+			{/* Schedule Content - only show confirmed times; TBC items stay in config for later */}
 			<div class="relative z-10 px-8 md:px-12 pt-[30px] pb-8 md:pb-12">
 				<h3 class="text-2xl font-medium text-green-950 dark:text-white mb-2 mt-0 text-center" data-animate-text>Schedule</h3>
 				<p class="text-lg text-stone-600 dark:text-stone-400 text-center mb-6" data-animate-text>{weddingContent.date.full} at {weddingContent.date.time}</p>
 				<div class="space-y-4" data-animate-stagger>
-					{weddingContent.schedule.map((item) => (
+					{weddingContent.schedule.slice(0, 2).map((item) => (
 						<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-green-800/40 dark:border-stone-200/30 pb-3" data-stagger-item>
 							<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
 							<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
 						</div>
 					))}
+					<div class="relative">
+						{/* Overlay banner - narrower, on top of the 3 blurred rows */}
+						<div class="absolute left-1/2 top-0 -translate-x-1/2 z-10 flex justify-center px-2" aria-label="More timings to be confirmed">
+							<div class="flex items-center justify-center gap-2 max-w-xs min-h-[7rem] border border-dashed border-green-700/50 dark:border-stone-500/50 rounded-xl bg-green-50/90 dark:bg-stone-800/90 backdrop-blur-sm shadow-md px-4 py-5">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-700 dark:text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+								<p class="text-xs sm:text-sm text-stone-600 dark:text-stone-400 text-center m-0 leading-snug">Reception & evening timings to follow — we'll share the full run of the day closer to the date.</p>
+							</div>
+						</div>
+						<div class="space-y-4">
+							{weddingContent.schedule.slice(2, 5).map((item, index) => {
+								const fadeClasses = ["opacity-85 blur-[1px]", "opacity-65 blur-[2px]", "opacity-45 blur-[3px]"][index];
+								return (
+									<div
+										class={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-green-800/40 dark:border-stone-200/30 pb-3 select-none ${fadeClasses}`}
+										data-stagger-item
+									>
+										<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
+										<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
+									</div>
+								);
+							})}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

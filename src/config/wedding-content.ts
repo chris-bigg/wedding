@@ -32,27 +32,27 @@ export const weddingContent = {
 	// The Story
 	story: {
 		title: "Our Story",
-		content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+		content: `<p>We cannot wait for you to join us to witness and celebrate our marriage.</p><p>It will be our eighth year together (on 7 July) and we intend to toast from midday until midnight to many more!</p>`,
 	},
 
 	// Schedule
 	schedule: [
 		{ time: "11:00", event: "Guests Arrive" },
 		{ time: "12:00", event: "Ceremony" },
-		{ time: "13:00", event: "Cocktail Hour & Canapés" },
-		{ time: "15:00", event: "Dinner Reception" },
-		{ time: "17:00", event: "First Dance" },
-		{ time: "18:00", event: "Dancing Begins / Party Time" },
-		{ time: "22:00", event: "Last Orders" },
-		{ time: "23:00", event: "Send-Off/End" },
+		{ time: "TBC", event: "Canapés" },
+		{ time: "TBC", event: "Dinner Reception" },
+		{ time: "TBC", event: "First Dance" },
+		{ time: "TBC", event: "Dancing Begins / Party Time" },
+		{ time: "TBC", event: "Last Orders" },
+		{ time: "TBC", event: "Send-Off/End" },
 	],
 
 	// Travel & Location
 	travel: {
 		driving: "Kings Head Hotel is located on <strong>Market Place</strong> in the heart of Cirencester town centre. The venue is easily accessible by car, with several public car parks nearby.",
-		publicTransit: "Cirencester is well-served by local bus routes. The nearest bus stops are on <strong>Market Place</strong> and <strong>Cricklade Street</strong>, both within walking distance of the venue. The nearest train stations are <strong>Kemble</strong> (approximately 4 miles away) and <strong>Swindon</strong> (approximately 15 miles away), with regular bus connections to Cirencester.",
-		taxiRideshare: "Yes, it should be easy to get a taxi or rideshare. Kings Head Hotel is in the town centre, and local taxi companies operate in Cirencester. You can request a ride using an app or call a local firm.",
-		parking: `<p><strong>No</strong>, there is no visitor parking immediately on-site, but public parking is available nearby.</p>
+		publicTransport: "Cirencester is well-served by local bus routes. The nearest bus stops are on <strong>Market Place</strong> and <strong>Cricklade Street</strong>, both within walking distance of the venue. The nearest train stations are <strong>Kemble</strong> (approximately 4 miles away) and <strong>Swindon</strong> (approximately 15 miles away), with regular bus connections to Cirencester.",
+		taxi: "Taxis are easy to find in Cirencester. Kings Head Hotel is in the town centre, and local taxi firms operate in the area. You can book in advance or call a local firm on the day.",
+		parking: `There is no visitor parking immediately on-site, but public parking is available nearby.</p>
 
 					<h4 class="font-semibold mb-2 mt-4">Specifics:</h4>
 					<ul class="list-disc pl-5 space-y-2">
@@ -109,16 +109,12 @@ export const weddingContent = {
 	// FAQs
 	faqs: [
 		{
-			question: "What time should I arrive?",
-			answer: "You are welcome to use the public bar at the hotel before the ceremony. Please ensure that you are seated by 11.45am for our 12 noon ceremony. You will not be able to enter the ceremony room after 11.45am.",
+			question: "What are the key timings?",
+			answer: "You are welcome to use the public bar at the hotel before the ceremony. We recommend arrival from 11.15am. Please ensure that you are seated by 11.45am for our 12 noon ceremony. You will not be able to enter the ceremony room after 11.45am. Festivities end at midnight.",
 		},
 		{
 			question: "What is the dress code?",
-			answer: "We'd love for everyone to put on their best for our big day! The dress code is Formal Attire. This means a suit and tie for the men, and a beautiful dress, dressy skirt, or smart trouser suit for the women. We want everyone to feel elegant and celebrate in style!",
-		},
-		{
-			question: "Is there a gifts registry?",
-			answer: "Having you celebrate with us is the greatest gift. However, if you would like to give a gift we'd be incredibly grateful for a contribution towards our honeymoon (since we have accumulated most of what we need for our home).",
+			answer: "We'd love everyone to put on their best for our big day! The dress code is formal attire — suit and tie for men; dresses, skirts or trouser suits for women.",
 		},
 		{
 			question: "Can I bring a date?",
@@ -127,10 +123,6 @@ export const weddingContent = {
 		{
 			question: "Can I bring my children?",
 			answer: "Whilst we adore all our family and friend's children, this is an adult only celebration.",
-		},
-		{
-			question: "Where should I park?",
-			answer: "There is no parking at the venue. There is long stay parking available in Cirencester.",
 		},
 		{
 			question: "Is the wedding indoors or outdoors?",
@@ -153,7 +145,7 @@ export const weddingContent = {
 	// Gift Registry / Honeymoon
 	gift: {
 		message:
-			"Having you celebrate with us is the greatest gift. Since we've accumulated most of what we need for our home, we'd be incredibly grateful for a contribution towards our dream honeymoon to<br>🇮🇹 Italy, 🇸🇮 Slovenia & 🇭🇷 Croatia.",
+			"Having you celebrate with us is the greatest gift. However, if you would like to give a gift we'd be incredibly grateful for a contribution towards our dream honeymoon to Italy, Slovenia and Croatia (since we have accumulated most of what we need for our home).",
 		donationUrl: "[The URL for Stripe/PayPal/Honeyfund]",
 	},
 };

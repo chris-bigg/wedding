@@ -11,9 +11,7 @@ import { weddingContent } from '../config/wedding-content';
 				{weddingContent.story.title}
 			</span>
 		</h2>
-			<div class="prose prose-lg mx-auto text-stone-700 dark:text-stone-300 leading-relaxed mb-8" data-animate-text>
-				<p>{weddingContent.story.content}</p>
-			</div>
+			<div class="prose prose-lg mx-auto text-stone-700 dark:text-stone-300 leading-relaxed mb-8" data-animate-text set:html={weddingContent.story.content} />
 			<div class="flex justify-center">
 				<div class="relative group max-w-lg w-full" data-animate-image>
 					<div class="absolute inset-0 bg-gradient-to-br from-green-600/20 to-[#F2F4F0]/30 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -41,9 +39,7 @@ import { weddingContent } from '../config/wedding-content';
 				{weddingContent.story.title}
 			</span>
 		</h2>
-				<div class="prose prose-lg lg:prose-xl text-stone-700 dark:text-stone-300 leading-relaxed" data-animate-left>
-					<p>{weddingContent.story.content}</p>
-				</div>
+				<div class="prose prose-lg lg:prose-xl text-stone-700 dark:text-stone-300 leading-relaxed" data-animate-left set:html={weddingContent.story.content} />
 			</div>
 			
 			<!-- Right: Image -->
