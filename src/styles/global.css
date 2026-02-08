@@ -29,7 +29,7 @@
 
 @font-face {
   font-family: 'Mon de Tresor';
-  src: url('/font/Mon de Tresor.otf') format('opentype');
+  src: url('/font/Mon%20de%20Tresor.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -37,7 +37,7 @@
 
 @font-face {
   font-family: 'Auteur Script';
-  src: url('/font/Auteur Script.otf') format('opentype');
+  src: url('/font/Auteur%20Script.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
