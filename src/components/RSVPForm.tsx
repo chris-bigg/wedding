@@ -15,6 +15,9 @@ interface FormData {
 	plusOneName: string;
 	dietaryRestrictions: string;
 	songRequest: string;
+	starter: string;
+	main: string;
+	dessert: string;
 }
 
 // Get guest list from window global (injected by Astro)
@@ -34,6 +37,9 @@ export default function RSVPForm() {
 		plusOneName: '',
 		dietaryRestrictions: '',
 		songRequest: '',
+		starter: '',
+		main: '',
+		dessert: '',
 	});
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -136,6 +142,9 @@ export default function RSVPForm() {
 					plusOneName: '',
 					dietaryRestrictions: '',
 					songRequest: '',
+					starter: '',
+					main: '',
+					dessert: '',
 				});
 			} else {
 				console.error('Form submission failed:', response.status);
@@ -334,22 +343,6 @@ export default function RSVPForm() {
 								</div>
 							)}
 
-							{/* Dietary Restrictions */}
-							<div>
-								<label htmlFor="dietaryRestrictions" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-									Dietary Restrictions
-								</label>
-								<textarea
-									id="dietaryRestrictions"
-									name="dietaryRestrictions"
-									rows={3}
-									value={formData.dietaryRestrictions}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-									placeholder="Let us know of any dietary needs..."
-								/>
-							</div>
-
 							{/* Song Request */}
 							<div>
 								<label htmlFor="songRequest" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
@@ -364,6 +357,86 @@ export default function RSVPForm() {
 									className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
 									placeholder="What song will get you on the dance floor?"
 								/>
+							</div>
+
+							{/* Food Selection */}
+							<div className="space-y-4">
+								<h3 className="text-lg font-medium text-green-950 dark:text-white mb-4">
+									Food Selection
+								</h3>
+								
+								{/* Starter */}
+								<div>
+									<label htmlFor="starter" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+										Starter *
+									</label>
+									<select
+										id="starter"
+										name="starter"
+										required
+										value={formData.starter}
+										onChange={handleChange}
+										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+									>
+										<option value="">Please select</option>
+										<option value="fish">Fish Option</option>
+										<option value="meat">Meat Option</option>
+									</select>
+								</div>
+
+								{/* Main */}
+								<div>
+									<label htmlFor="main" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+										Main Course *
+									</label>
+									<select
+										id="main"
+										name="main"
+										required
+										value={formData.main}
+										onChange={handleChange}
+										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+									>
+										<option value="">Please select</option>
+										<option value="fish">Fish Option</option>
+										<option value="meat">Meat Option</option>
+									</select>
+								</div>
+
+								{/* Dessert */}
+								<div>
+									<label htmlFor="dessert" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+										Dessert *
+									</label>
+									<select
+										id="dessert"
+										name="dessert"
+										required
+										value={formData.dessert}
+										onChange={handleChange}
+										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+									>
+										<option value="">Please select</option>
+										<option value="option1">Dessert Option 1</option>
+										<option value="option2">Dessert Option 2</option>
+									</select>
+								</div>
+
+								{/* Dietary Notes */}
+								<div>
+									<label htmlFor="dietaryRestrictions" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+										Dietary Notes
+									</label>
+									<textarea
+										id="dietaryRestrictions"
+										name="dietaryRestrictions"
+										rows={3}
+										value={formData.dietaryRestrictions}
+										onChange={handleChange}
+										className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+										placeholder="Let us know of any dietary needs..."
+									/>
+								</div>
 							</div>
 						</>
 					)}
