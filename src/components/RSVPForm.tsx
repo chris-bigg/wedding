@@ -10,8 +10,6 @@ interface FormData {
 	names: string[];
 	email: string;
 	attendance: 'yes' | 'no' | '';
-	plusOne: boolean;
-	plusOneName: string;
 	dietaryRestrictions: string;
 	songRequest: string;
 	starter: string;
@@ -24,8 +22,6 @@ export default function RSVPForm() {
 		names: [''],
 		email: '',
 		attendance: '',
-		plusOne: false,
-		plusOneName: '',
 		dietaryRestrictions: '',
 		songRequest: '',
 		starter: '',
@@ -113,8 +109,6 @@ export default function RSVPForm() {
 					names: [''],
 					email: '',
 					attendance: '',
-					plusOne: false,
-					plusOneName: '',
 					dietaryRestrictions: '',
 					songRequest: '',
 					starter: '',
@@ -285,39 +279,8 @@ export default function RSVPForm() {
 						</select>
 					</div>
 
-					{/* Plus One */}
 					{formData.attendance === 'yes' && (
 						<>
-							<div className="flex items-center">
-								<input
-									type="checkbox"
-									id="plusOne"
-									name="plusOne"
-									checked={formData.plusOne}
-									onChange={handleChange}
-									className="w-4 h-4 text-green-800 border-stone-300 dark:border-stone-600 rounded focus:ring-green-700 dark:focus:ring-white/40"
-								/>
-								<label htmlFor="plusOne" className="ml-2 text-sm text-stone-700 dark:text-stone-300">
-									I will be bringing a plus-one
-								</label>
-							</div>
-
-							{formData.plusOne && (
-								<div>
-									<label htmlFor="plusOneName" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-										Plus-One Name
-									</label>
-									<input
-										type="text"
-										id="plusOneName"
-										name="plusOneName"
-										value={formData.plusOneName}
-										onChange={handleChange}
-										className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-									/>
-								</div>
-							)}
-
 							{/* Song Request */}
 							<div>
 								<label htmlFor="songRequest" className="block text-sm font-medium text-green-950 dark:text-white mb-2">

@@ -214,7 +214,7 @@ const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
 **Current endpoint**: The template uses `xgvpanpe` - **you must change this** to your own Formspree form ID.
 
 **Features:**
-- Conditional fields (plus-one, dietary restrictions) only shown when attending
+- Conditional fields (dietary restrictions, song request, food selection) only shown when attending
 - Confetti animation triggers on successful "Joyfully accepts" submission
 - Custom colors matching site theme
 - Mobile-optimized with smooth fade-out
