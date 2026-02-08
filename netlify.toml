@@ -2,6 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
+# Prevent search engine indexing via HTTP headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
