@@ -40,7 +40,7 @@
   src: url('/font/Auteur%20Script.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @layer base {

@@ -98,8 +98,14 @@ export default function HeroTitle({ name1, name2 }: HeroTitleProps) {
 			);
 		};
 
-		// Wait for splash screen to complete
-		const handleSplashComplete = () => {
+		// Wait for splash screen to complete, then ensure Auteur Script is loaded before animating
+		// (SVG text can lock in fallback font if the webfont isn't ready when first painted)
+		const handleSplashComplete = async () => {
+			try {
+				await document.fonts.load('160px "Auteur Script"');
+			} catch {
+				// Proceed anyway if font load fails (e.g. in tests)
+			}
 			animate();
 		};
 
