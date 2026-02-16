@@ -1,10 +1,122 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
 import { getGuestList } from '../utils/guests';
 import { getUrlParam, removeUrlParam } from '../utils/url';
 import { useWindowSize } from '../hooks/useWindowSize';
 import type { GuestData } from '../types/guest';
+
+type MenuOption = { value: string; label: string; description: string };
+
+function CustomSelect({
+	name,
+	id,
+	required,
+	value,
+	onChange,
+	options,
+	placeholder = 'Please select',
+	className,
+}: {
+	name: string;
+	id: string;
+	required?: boolean;
+	value: string;
+	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+	options: MenuOption[];
+	placeholder?: string;
+	className?: string;
+}) {
+	const [open, setOpen] = useState(false);
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	const selected = options.find((o) => o.value === value);
+
+	useEffect(() => {
+		if (!open) return;
+		const handleClickOutside = (e: MouseEvent) => {
+			if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+				setOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, [open]);
+
+	const selectClass =
+		'w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100 text-left ' +
+		(className ?? '');
+
+	return (
+		<div ref={containerRef} className="relative">
+			<button
+				type="button"
+				id={id}
+				aria-haspopup="listbox"
+				aria-expanded={open}
+				aria-required={required}
+				aria-label={selected ? `${selected.label} - ${selected.description}` : placeholder}
+				onClick={() => setOpen((o) => !o)}
+				className={selectClass + (open ? ' ring-2 ring-green-700 dark:ring-white/40' : '')}
+			>
+				<span className="block truncate">
+					{selected ? (
+						<>
+							<span className="font-semibold">{selected.label}</span>
+							<span className="font-normal text-stone-600 dark:text-stone-400">
+								{' — '}{selected.description}
+							</span>
+						</>
+					) : (
+						<span className="text-stone-500 dark:text-stone-400">{placeholder}</span>
+					)}
+				</span>
+				<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-stone-400">
+					<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+					</svg>
+				</span>
+			</button>
+			{open && (
+				<ul
+					role="listbox"
+					className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 py-1 shadow-lg"
+				>
+					{options.map((opt) => (
+						<li
+							key={opt.value}
+							role="option"
+							aria-selected={value === opt.value}
+							onClick={() => {
+								onChange({ target: { name, value: opt.value } } as React.ChangeEvent<HTMLSelectElement>);
+								setOpen(false);
+							}}
+							className="cursor-pointer px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 text-stone-900 dark:text-stone-100"
+						>
+							<span className="font-semibold">{opt.label}</span>
+							<span className="font-normal text-stone-600 dark:text-stone-400">
+								{' — '}{opt.description}
+							</span>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	);
+}
+
+const STARTER_OPTIONS: MenuOption[] = [
+	{ value: 'fish', label: 'Ham Hock Terrine', description: 'House pickled vegetables, English mustard mayonnaise' },
+	{ value: 'meat', label: 'Wild Mushroom & Tarragon on Sourdough', description: 'Poached egg, truffle oil' },
+];
+const MAIN_OPTIONS: MenuOption[] = [
+	{ value: 'fish', label: 'Ginger Glazed Belly of Pork', description: 'Fondant potato, calvados and apple jus' },
+	{ value: 'meat', label: 'Pan Roasted Cod', description: 'Parmesan gnocchi, tender stem broccoli' },
+];
+const DESSERT_OPTIONS: MenuOption[] = [
+	{ value: 'option1', label: 'Raspberry & White Chocolate Cheesecake', description: 'Wild berry coulis' },
+	{ value: 'option2', label: 'Homemade Apple Crumble', description: 'Creme anglaise, vanilla ice cream' },
+];
 
 interface FormData {
 	names: string[];
@@ -60,10 +172,15 @@ export default function RSVPForm() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('Form submitted with data:', formData);
-		setIsSubmitting(true);
 		setSubmitMessage('');
 
 		const attendingYes = formData.attendance === 'yes';
+		if (attendingYes && (!formData.starter || !formData.main || !formData.dessert)) {
+			setSubmitMessage('Please select your starter, main and dessert.');
+			return;
+		}
+
+		setIsSubmitting(true);
 		console.log('Attending yes?', attendingYes);
 
 		// Combine names for submission (Formspree expects a single name field)
@@ -308,18 +425,15 @@ export default function RSVPForm() {
 									<label htmlFor="starter" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
 										Starter *
 									</label>
-									<select
+									<CustomSelect
 										id="starter"
 										name="starter"
 										required
 										value={formData.starter}
 										onChange={handleChange}
-										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-									>
-										<option value="">Please select</option>
-										<option value="fish">Fish Option</option>
-										<option value="meat">Meat Option</option>
-									</select>
+										options={STARTER_OPTIONS}
+										placeholder="Please select"
+									/>
 								</div>
 
 								{/* Main */}
@@ -327,18 +441,15 @@ export default function RSVPForm() {
 									<label htmlFor="main" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
 										Main Course *
 									</label>
-									<select
+									<CustomSelect
 										id="main"
 										name="main"
 										required
 										value={formData.main}
 										onChange={handleChange}
-										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-									>
-										<option value="">Please select</option>
-										<option value="fish">Fish Option</option>
-										<option value="meat">Meat Option</option>
-									</select>
+										options={MAIN_OPTIONS}
+										placeholder="Please select"
+									/>
 								</div>
 
 								{/* Dessert */}
@@ -346,18 +457,15 @@ export default function RSVPForm() {
 									<label htmlFor="dessert" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
 										Dessert *
 									</label>
-									<select
+									<CustomSelect
 										id="dessert"
 										name="dessert"
 										required
 										value={formData.dessert}
 										onChange={handleChange}
-										className="w-full pl-4 pr-10 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-									>
-										<option value="">Please select</option>
-										<option value="option1">Dessert Option 1</option>
-										<option value="option2">Dessert Option 2</option>
-									</select>
+										options={DESSERT_OPTIONS}
+										placeholder="Please select"
+									/>
 								</div>
 
 								{/* Dietary Notes */}

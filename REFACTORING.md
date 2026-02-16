@@ -184,6 +184,8 @@ Added `loading="lazy"` attribute to all non-critical images:
 - Room slideshow images (6 images)
 - Hotel logo image
 
+**Typography note:** Mon de Tresor has a single weight; do not use `font-bold` or `font-semibold` with this font (see AccommodationHero and other components).
+
 **AccommodationCarousel.tsx:**
 - Hotel card images (all hotel images in carousel)
 

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Accommodation & RSVP updates - 2026-02-16
+
+#### Added
+- **AccommodationHero.tsx** - Rates and voucher sub-card below hero: displays voucher code "Feleena and Chris", room rates (31 Jul £158 / 1 Aug £168 Classic Room), and upgrades (Superior +£30, Feature +£75, Family +£120) in a two-column layout.
+- **RSVPForm.tsx** - Custom food dropdowns (Starter, Main, Dessert) with bold dish names and plain descriptions; menu options defined as `STARTER_OPTIONS`, `MAIN_OPTIONS`, `DESSERT_OPTIONS`.
+
+#### Changed
+- **AccommodationHero.tsx** - Booking URL and promo code moved to module-level constants; booking link rendered only after mount to avoid first-click issues with rezcontrol.com. Hero copy updated; voucher code display text set to "Feleena and Chris". Removed `font-bold` / `font-semibold` from all elements using Mon de Tresor (font has no bold weight).
+- **Typography** - Mon de Tresor used only at normal weight across the site; avoid `font-bold` or `font-semibold` with this font.
+
 ### Performance Refactoring - 2026-02-08
 
 #### Added
