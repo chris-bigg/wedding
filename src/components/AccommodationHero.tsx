@@ -13,6 +13,28 @@ const roomImages = [
 const PROMO_CODE = encodeURIComponent("Feleena and Christopher").replace(/%20/g, '+');
 const BOOKING_URL = `https://kingshead-hotel-brakspear.rezcontrol.com/rooms?startDate=2026-07-31&endDate=2026-08-02&promoCode=${PROMO_CODE}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
 
+const BOOKING_SESSION_KEY = 'kingshead_booking_initialized';
+
+/** Open booking in new tab. First time in session: open then reload after a short delay so rezcontrol cookies/session are set and query params apply. */
+function openBooking(): void {
+  if (typeof window === 'undefined') return;
+  if (!sessionStorage.getItem(BOOKING_SESSION_KEY)) {
+    sessionStorage.setItem(BOOKING_SESSION_KEY, 'true');
+    const win = window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
+    if (win) {
+      setTimeout(() => {
+        try {
+          win.location.reload();
+        } catch {
+          // Cross-origin or closed: ignore
+        }
+      }, 500);
+    }
+  } else {
+    window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
+  }
+}
+
 export default function AccommodationHero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
@@ -88,6 +110,10 @@ export default function AccommodationHero() {
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openBooking();
+                }}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <span>View Rooms & Book</span>
