@@ -181,7 +181,7 @@ The site uses a **dark forest green and warm cream/beige** color scheme with whi
 3. **Fonts**: Custom fonts are preloaded for optimal performance:
    - Montserrat (variable font) - body text
    - Greater Theory - headings
-   - Mon de Tresor - decorative script
+   - Mon de Tresor - decorative script (single weight only; do not use bold/semibold with this font)
    - Auteur Script - special elements
    - Font files located in `/public/font/`
 
@@ -339,11 +339,11 @@ venue: {
 │   │   ├── Location.astro           # Travel info with Google Maps
 │   │   ├── Accommodation.astro      # Hotel recommendations wrapper
 │   │   ├── AccommodationCarousel.tsx # Swiper carousel for hotels
-│   │   ├── AccommodationHero.tsx    # Accommodation hero with slideshow
+│   │   ├── AccommodationHero.tsx    # Kings Head hero, slideshow, voucher/rates sub-card
 │   │   ├── FAQ.astro                # Frequently asked questions (2-column layout)
 │   │   ├── Gift.astro               # Gift registry message
 │   │   ├── HoneymoonModal.tsx       # Modal for honeymoon donation info
-│   │   ├── RSVPForm.tsx             # Interactive RSVP with confetti & guest ID
+│   │   ├── RSVPForm.tsx             # Interactive RSVP, custom food dropdowns, confetti & guest ID
 │   │   ├── PersonalizedGreeting.tsx # Personalized greeting based on guest ID
 │   │   ├── Navigation.tsx           # Sticky nav with active section tracking
 │   │   ├── SplashScreen.tsx         # Animated intro screen

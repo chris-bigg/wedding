@@ -9,14 +9,18 @@ const roomImages = [
   '/images/KH/rooms/JAA_0456-scaled.jpg',
 ];
 
+// Build booking URL once at module load so it's stable and never differs between server/client or first vs later render
+const PROMO_CODE = encodeURIComponent("Feleena and Christopher").replace(/%20/g, '+');
+const BOOKING_URL = `https://kingshead-hotel-brakspear.rezcontrol.com/rooms?startDate=2026-07-31&endDate=2026-08-02&promoCode=${PROMO_CODE}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
+
 export default function AccommodationHero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
+  const [linkReady, setLinkReady] = useState(false);
 
-  // Use encodeURIComponent to handle the special characters safely
-  // Replace %20 with + for query parameters as some systems prefer + for spaces
-  const promoCode = encodeURIComponent("Feleena & Christopher").replace(/%20/g, '+');
-  const bookingUrl = `https://kingshead-hotel-brakspear.rezcontrol.com/rooms?startDate=2026-07-31&endDate=2026-08-02&promoCode=${promoCode}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
+  useEffect(() => {
+    setLinkReady(true);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,34 +77,121 @@ export default function AccommodationHero() {
                 loading="lazy"
               />
             </div>
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-8 drop-shadow-lg" style={{ fontFamily: "'Mon de Tresor', serif" }}>
+            <h3 className="text-3xl md:text-5xl text-white mb-4 md:mb-8 drop-shadow-lg" style={{ fontFamily: "'Mon de Tresor', serif" }}>
               Your home for the weekend.
             </h3>
             <p className="text-base md:text-xl text-white/95 mb-6 md:mb-10 max-w-2xl mx-auto drop-shadow-md">
-              We've made the Kings Head our home for the wedding. It's a wonderful old building with 66 rooms, and because it's so historic, no two are exactly the same. We hope you find a cozy corner you love and enjoy being right in the heart of town with us. Book your room through the link below and a promo code will be automatically applied for 20% off your stay.
+              We've made the Kings Head our home for the wedding. It's a wonderful old building with 66 rooms, and because it's so historic, no two are exactly the same. We hope you find a cozy corner you love and enjoy being right in the heart of town with us.
             </p>
-            <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              <span>View Rooms & Book</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            {linkReady ? (
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </a>
+                <span>View Rooms & Book</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </a>
+            ) : (
+              <span
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 dark:from-stone-200/30 dark:to-stone-300/40 text-white font-medium px-8 py-4 rounded-full shadow-lg opacity-90"
+                aria-hidden
+              >
+                <span>View Rooms & Book</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Rates & Voucher Code Card */}
+      <div className="mt-6 bg-white/90 dark:bg-stone-800/90 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-stone-200/50 dark:border-stone-700/50 shadow-lg">
+        <div className="max-w-4xl mx-auto">
+          {/* Voucher Code - Prominent */}
+          <div className="text-center mb-6 pb-6 border-b border-stone-200 dark:border-stone-700">
+            <p className="text-sm md:text-base text-stone-600 dark:text-stone-400 mb-3 font-medium">
+              Use voucher code for 20% discount:
+            </p>
+            <div className="inline-block bg-gradient-to-r from-green-800 to-green-900 dark:from-green-700 dark:to-green-800 text-white px-6 py-3 rounded-lg shadow-md">
+              <span className="text-2xl md:text-3xl tracking-wide" style={{ fontFamily: "'Mon de Tresor', serif" }}>
+                Feleena and Christopher
+              </span>
+            </div>
+          </div>
+
+          {/* Rates & Upgrades - Two Column Layout */}
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {/* Rates Column */}
+            <div>
+              <h4 className="text-lg md:text-xl text-green-950 dark:text-white mb-4" style={{ fontFamily: "'Mon de Tresor', serif" }}>
+                Room Rates
+              </h4>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b border-stone-100 dark:border-stone-700">
+                  <span className="text-stone-700 dark:text-stone-300">31st July</span>
+                  <span className="font-semibold text-green-900 dark:text-green-300">£158</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-stone-100 dark:border-stone-700">
+                  <span className="text-stone-700 dark:text-stone-300">1st August</span>
+                  <span className="font-semibold text-green-900 dark:text-green-300">£168</span>
+                </div>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-2 italic">
+                  Classic Room (per night)
+                </p>
+              </div>
+            </div>
+
+            {/* Upgrades Column */}
+            <div>
+              <h4 className="text-lg md:text-xl text-green-950 dark:text-white mb-4" style={{ fontFamily: "'Mon de Tresor', serif" }}>
+                Room Upgrades
+              </h4>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b border-stone-100 dark:border-stone-700">
+                  <span className="text-stone-700 dark:text-stone-300">Superior</span>
+                  <span className="font-semibold text-green-900 dark:text-green-300">+£30</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-stone-100 dark:border-stone-700">
+                  <span className="text-stone-700 dark:text-stone-300">Feature</span>
+                  <span className="font-semibold text-green-900 dark:text-green-300">+£75</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-stone-100 dark:border-stone-700">
+                  <span className="text-stone-700 dark:text-stone-300">Family Room</span>
+                  <span className="font-semibold text-green-900 dark:text-green-300">+£120</span>
+                </div>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-2 italic">
+                  Additional cost per night
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

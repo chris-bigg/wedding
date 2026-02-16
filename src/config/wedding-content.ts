@@ -32,7 +32,13 @@ export const weddingContent = {
 	// The Story
 	story: {
 		title: "Our Story",
-		content: `<p>We cannot wait for you to join us to witness and celebrate our marriage.</p><p>It will be our eighth year together (on 7 July) and we intend to toast from midday until midnight to many more!</p>`,
+		content: `<p>Just before our wedding, on 7 July, we mark eight years together. It is still wild to us to think that it all began with a (drunken) first kiss in Dublin. Since then, there have been flat shares in Stockwell and Brixton, our first pet (the mischievous Domino the rabbit), our first home in Greenwich, a move across the country to Plymouth, a painstaking pupillage, and finally becoming homeowners in Exeter. </p><br>
+
+		<p>Whilst there have of course been “downs” too (the pandemic for one!), we are so grateful to each other for working hard together to reach this point and we cannot wait to see what’s next for us. </p><br>
+
+		<p>We are even more grateful to all of you joining us on our wedding day – many of whom have shaped our relationship in ways big and small. </p><br>
+
+		<p>We cannot wait to celebrate our marriage with you, and fully intend to toast from midday until midnight to our life together!</p>`,
 	},
 
 	// Schedule
