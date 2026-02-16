@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 const images = [
-	"/images/us/1.jpg",
+	"/images/us/heroImage.jpg",
 	"/images/Collagev3.jpg"
 ];
 

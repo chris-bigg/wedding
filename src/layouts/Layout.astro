@@ -80,11 +80,11 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 				}, 20);
 			})();
 			
-			// Initialize dark mode before page renders to prevent flash
+			// Initialize dark mode before page renders to prevent flash. No saved preference = follow system.
 			(function() {
 				var saved = localStorage.getItem('darkMode');
 				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				var shouldBeDark = saved ? saved === 'true' : prefersDark;
+				var shouldBeDark = saved === 'true' ? true : (saved === 'false' ? false : prefersDark);
 				if (shouldBeDark) {
 					document.documentElement.classList.add('dark');
 				} else {

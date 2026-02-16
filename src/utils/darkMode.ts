@@ -1,13 +1,15 @@
 /**
- * Get the dark mode preference from localStorage or system preference
+ * Get the dark mode preference from localStorage or system preference.
+ * No saved preference (initial load) = follow system.
  */
 export function getDarkModePreference(): boolean {
 	if (typeof window === 'undefined') return false;
 	
 	const saved = localStorage.getItem('darkMode');
+	if (saved === 'true') return true;
+	if (saved === 'false') return false;
 	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-	
-	return saved ? saved === 'true' : prefersDark;
+	return prefersDark;
 }
 
 /**
@@ -24,12 +26,12 @@ export function setDarkMode(isDark: boolean): void {
 }
 
 /**
- * Initialize dark mode on page load
- * This should be called as early as possible to prevent flash
+ * Initialize dark mode on page load. Does not write to localStorage;
+ * no saved preference means follow system (initial load default).
+ * Call as early as possible to prevent flash.
  */
 export function initDarkMode(): void {
 	if (typeof window === 'undefined') return;
-	
 	const shouldBeDark = getDarkModePreference();
 	setDarkMode(shouldBeDark);
 }
@@ -47,6 +49,33 @@ export function toggleDarkMode(): boolean {
 	setDarkMode(newValue);
 	
 	return newValue;
+}
+
+export type ThemeMode = 'light' | 'dark' | 'system';
+
+/**
+ * Get the current theme mode. No saved preference (initial load) = 'system'.
+ */
+export function getThemeMode(): ThemeMode {
+	if (typeof window === 'undefined') return 'system';
+	const saved = localStorage.getItem('darkMode');
+	if (saved === 'true') return 'dark';
+	if (saved === 'false') return 'light';
+	return 'system';
+}
+
+/**
+ * Set theme mode and apply it
+ */
+export function setThemeMode(mode: ThemeMode): boolean {
+	if (typeof window === 'undefined') return false;
+	if (mode === 'system') {
+		return followSystemPreference();
+	}
+	const isDark = mode === 'dark';
+	localStorage.setItem('darkMode', String(isDark));
+	setDarkMode(isDark);
+	return isDark;
 }
 
 /**

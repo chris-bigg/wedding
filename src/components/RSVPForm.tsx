@@ -106,16 +106,19 @@ function CustomSelect({
 }
 
 const STARTER_OPTIONS: MenuOption[] = [
-	{ value: 'fish', label: 'Ham Hock Terrine', description: 'House pickled vegetables, English mustard mayonnaise' },
-	{ value: 'meat', label: 'Wild Mushroom & Tarragon on Sourdough', description: 'Poached egg, truffle oil' },
+	{ value: 'terrine', label: 'Ham Hock Terrine', description: 'House pickled vegetables, English mustard mayonnaise' },
+	{ value: 'mushroom', label: 'Wild Mushroom & Tarragon on Sourdough', description: 'Poached egg, truffle oil' },
+	{ value: 'veggie', label: 'Vegetarian or Vegan Option', description: 'Please complete box below' }
 ];
 const MAIN_OPTIONS: MenuOption[] = [
-	{ value: 'fish', label: 'Ginger Glazed Belly of Pork', description: 'Fondant potato, calvados and apple jus' },
-	{ value: 'meat', label: 'Pan Roasted Cod', description: 'Parmesan gnocchi, tender stem broccoli' },
+	{ value: 'pork', label: 'Ginger Glazed Belly of Pork', description: 'Fondant potato, calvados and apple jus' },
+	{ value: 'cod', label: 'Pan Roasted Cod', description: 'Parmesan gnocchi, tender stem broccoli' },
+	{ value: 'veggie', label: 'Vegetarian or Vegan Option', description: 'Please complete box below' }
 ];
 const DESSERT_OPTIONS: MenuOption[] = [
-	{ value: 'option1', label: 'Raspberry & White Chocolate Cheesecake', description: 'Wild berry coulis' },
-	{ value: 'option2', label: 'Homemade Apple Crumble', description: 'Creme anglaise, vanilla ice cream' },
+	{ value: 'cheesecake', label: 'Raspberry & White Chocolate Cheesecake', description: 'Wild berry coulis' },
+	{ value: 'crumble', label: 'Homemade Apple Crumble', description: 'Creme anglaise, vanilla ice cream' },
+	{ value: 'veggie', label: 'Vegetarian or Vegan Option', description: 'Please complete box below' }
 ];
 
 interface FormData {
