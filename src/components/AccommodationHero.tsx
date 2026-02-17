@@ -9,40 +9,44 @@ const roomImages = [
   '/images/KH/rooms/JAA_0456-scaled.jpg',
 ];
 
-// Build booking URL once at module load so it's stable and never differs between server/client or first vs later render
-const PROMO_CODE = encodeURIComponent("Feleena and Christopher").replace(/%20/g, '+');
-const BOOKING_URL = `https://kingshead-hotel-brakspear.rezcontrol.com/rooms?startDate=2026-07-31&endDate=2026-08-02&promoCode=${PROMO_CODE}&selectedBooking=1&booking=%5B%7B%22bookingId%22%3A1%2C%22guests%22%3A%7B%22adults%22%3A2%2C%22children%22%3A0%2C%22infants%22%3A0%2C%22pets%22%3A0%7D%7D%5D`;
+import { KINGS_HEAD_BOOKING_URL } from '../config/booking';
 
-const BOOKING_SESSION_KEY = 'kingshead_booking_initialized';
-
-/** Open booking in new tab. First time in session: open then reload after a short delay so rezcontrol cookies/session are set and query params apply. */
-function openBooking(): void {
-  if (typeof window === 'undefined') return;
-  if (!sessionStorage.getItem(BOOKING_SESSION_KEY)) {
-    sessionStorage.setItem(BOOKING_SESSION_KEY, 'true');
-    const win = window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
-    if (win) {
-      setTimeout(() => {
-        try {
-          win.location.reload();
-        } catch {
-          // Cross-origin or closed: ignore
-        }
-      }, 500);
-    }
-  } else {
-    window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
-  }
-}
+const VOUCHER_CODE = 'Feleena and Christopher';
 
 export default function AccommodationHero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
   const [linkReady, setLinkReady] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setLinkReady(true);
   }, []);
+
+  const handleCopyVoucher = async () => {
+    try {
+      await navigator.clipboard.writeText(VOUCHER_CODE);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback for older browsers
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = VOUCHER_CODE;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // ignore
+      }
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -107,13 +111,9 @@ export default function AccommodationHero() {
             </p>
             {linkReady ? (
               <a
-                href={BOOKING_URL}
+                href={KINGS_HEAD_BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  openBooking();
-                }}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <span>View Rooms & Book</span>
@@ -161,16 +161,28 @@ export default function AccommodationHero() {
       {/* Rates & Voucher Code Card */}
       <div className="mt-6 bg-white/90 dark:bg-stone-800/90 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-stone-200/50 dark:border-stone-700/50 shadow-lg">
         <div className="max-w-4xl mx-auto">
-          {/* Voucher Code - Prominent */}
+          {/* Voucher Code - Prominent, click to copy */}
           <div className="text-center mb-6 pb-6 border-b border-stone-200 dark:border-stone-700">
             <p className="text-sm md:text-base text-stone-600 dark:text-stone-400 mb-3 font-medium">
               Use voucher code for 20% discount:
             </p>
-            <div className="inline-block bg-gradient-to-r from-green-800 to-green-900 dark:from-green-700 dark:to-green-800 text-white px-6 py-3 rounded-lg shadow-md">
+            <button
+              type="button"
+              onClick={handleCopyVoucher}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 dark:from-green-700 dark:to-green-800 text-white px-6 py-3 rounded-lg shadow-md hover:from-green-900 hover:to-green-950 dark:hover:from-green-800 dark:hover:to-green-900 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 dark:focus:ring-offset-stone-800"
+              aria-label={`Copy voucher code: ${VOUCHER_CODE}. ${copied ? 'Copied to clipboard.' : 'Click to copy.'}`}
+            >
               <span className="text-2xl md:text-3xl tracking-wide" style={{ fontFamily: "'Mon de Tresor', serif" }}>
-                Feleena and Christopher
+                {VOUCHER_CODE}
               </span>
-            </div>
+              {copied ? (
+                <span className="text-sm font-medium opacity-90">Copied!</span>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white/80 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              )}
+            </button>
           </div>
 
           {/* Rates & Upgrades - Two Column Layout */}
