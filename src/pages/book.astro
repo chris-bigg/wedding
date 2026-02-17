@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KINGS_HEAD_BOOKING_URL } from '../config/booking';
+---
+
+<Layout title="Taking you to the booking page...">
+	<main class="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-br from-[#F2F4F0]/50 via-[#E6E8E2]/40 to-green-50/40 dark:from-stone-900/30 dark:via-stone-900/20 dark:to-stone-950/30">
+		<div class="text-center max-w-md">
+			<p class="text-xl md:text-2xl text-stone-700 dark:text-stone-200 mb-4" style="font-family: 'Mon de Tresor', serif;">
+				Taking you to the booking page...
+			</p>
+			<p class="text-stone-600 dark:text-stone-400 text-sm">
+				If you are not redirected in a few seconds, <a href={KINGS_HEAD_BOOKING_URL} class="text-green-800 dark:text-green-300 underline hover:no-underline">click here</a>.
+			</p>
+		</div>
+	</main>
+
+	<script define:vars={{ bookingUrl: KINGS_HEAD_BOOKING_URL }}>
+		(function () {
+			// 1. Open the URL in a small, hidden popup to trigger Rezcontrol cookie/session
+			const primer = window.open(bookingUrl, 'primer', 'width=1,height=1,left=-1000,top=-1000');
+			// 2. Wait for Rezcontrol to finish its session reset, then redirect this window
+			setTimeout(function () {
+				if (primer) try { primer.close(); } catch (_) {}
+				window.location.href = bookingUrl;
+			}, 1500);
+		})();
+	</script>
+</Layout>

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SmoothScroll from '../components/SmoothScroll';
 import CustomCursor from '../components/CustomCursor';
+import { KINGS_HEAD_BOOKING_BASE_URL } from '../config/booking';
 
 interface Props {
 	title: string;
@@ -155,5 +156,12 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 			window.addEventListener('splashComplete', updateCtaBottom);
 		</script>
 		<slot />
+		<!-- Primer iframe: load Rezcontrol base URL so the SPA (Apollo Client, i18next) runs in background. By the time the guest clicks "Book Now" (full URL with params), the engine has already initialized and params apply. -->
+		<iframe
+			src={KINGS_HEAD_BOOKING_BASE_URL}
+			title=""
+			aria-hidden="true"
+			style="width:0; height:0; border:0; border:none; visibility:hidden; position:absolute;"
+		/>
 	</body>
 </html>
