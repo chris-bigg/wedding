@@ -2,8 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { weddingContent } from '../config/wedding-content';
 
+const SORT_CODE = '04-00-04';
+const ACCOUNT_NUMBER = '13592391';
+
 export default function HoneymoonModal() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [cardFlipped, setCardFlipped] = useState(false);
 	const modalRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 	const triggerButtonRef = useRef<HTMLButtonElement>(null);
@@ -29,8 +33,9 @@ export default function HoneymoonModal() {
 	}, [isOpen]);
 
 	useEffect(() => {
-		if (!isOpen && triggerButtonRef.current) {
-			triggerButtonRef.current.focus();
+		if (!isOpen) {
+			setCardFlipped(false);
+			if (triggerButtonRef.current) triggerButtonRef.current.focus();
 		}
 	}, [isOpen]);
 
@@ -94,22 +99,67 @@ export default function HoneymoonModal() {
 						</span>
 					</h3>
 
-					<p className="text-stone-600 dark:text-stone-400 mb-6 text-sm">
-						Scan the QR code or click the button below to contribute
+					<p className="text-stone-600 dark:text-stone-400 mb-4 text-sm">
+						For those who prefer traditional banking, click the QR code below to reveal our sort code and account number.
 					</p>
 
-					{/* QR Code */}
-					<div className="bg-white p-4 rounded-2xl shadow-lg mb-6 inline-block">
-					<img
-						src="/images/qrcode.png"
-						alt="PayPal QR Code"
-						className="w-64 h-64 mx-auto"
-					/>
+					{/* Flippable card: QR code (front) / bank details (back) */}
+					<div className="mb-4 inline-block" style={{ perspective: '1000px' }}>
+						<button
+							type="button"
+							onClick={() => setCardFlipped((f) => !f)}
+							className="relative w-[272px] h-[272px] mx-auto block cursor-pointer border-0"
+							style={{ transformStyle: 'preserve-3d' }}
+							aria-label={cardFlipped ? 'Show QR code' : 'Show bank details'}
+						>
+							{/* Front: QR code */}
+							<div
+								className="absolute inset-0 bg-white p-4 rounded-2xl shadow-lg transition-transform duration-500 ease-in-out"
+								style={{
+									transformStyle: 'preserve-3d',
+									backfaceVisibility: 'hidden',
+									transform: cardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+								}}
+							>
+								<img
+									src="/images/qrcode2.jpg"
+									alt="PayPal QR Code"
+									className="w-full h-full object-contain"
+								/>
+								<span className="absolute bottom-2 left-0 right-0 text-xs text-stone-500">Tap for bank details</span>
+							</div>
+							{/* Back: sort code & account number (selectable so users can copy) */}
+							<div
+								className="absolute inset-0 bg-stone-100 dark:bg-stone-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center transition-transform duration-500 ease-in-out"
+								style={{
+									transformStyle: 'preserve-3d',
+									backfaceVisibility: 'hidden',
+									transform: cardFlipped ? 'rotateY(0deg)' : 'rotateY(-180deg)',
+								}}
+							>
+								<p className="text-stone-600 dark:text-stone-400 text-sm font-medium mb-4">Bank transfer</p>
+								<dl
+									className="text-left space-y-2 w-full max-w-[200px] select-text cursor-text"
+									style={{ userSelect: 'text' }}
+									onClick={(e) => e.stopPropagation()}
+								>
+									<div>
+										<dt className="text-xs text-stone-500 dark:text-stone-500 uppercase tracking-wide">Sort code</dt>
+										<dd className="text-lg font-semibold text-stone-800 dark:text-stone-200 tabular-nums">{SORT_CODE}</dd>
+									</div>
+									<div>
+										<dt className="text-xs text-stone-500 dark:text-stone-500 uppercase tracking-wide">Account number</dt>
+										<dd className="text-lg font-semibold text-stone-800 dark:text-stone-200 tabular-nums">{ACCOUNT_NUMBER}</dd>
+									</div>
+								</dl>
+								<span className="absolute bottom-2 left-0 right-0 text-xs text-stone-500">Tap for QR code</span>
+							</div>
+						</button>
 					</div>
 
 					{/* PayPal Button */}
 					<a
-						href="https://paypal.me/mahoganyjoint"
+						href="https://paypal.me/FeleenaAndChris"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="inline-block bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
