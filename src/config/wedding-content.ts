@@ -26,7 +26,7 @@ export const weddingContent = {
 		deadline: "01/05/2026",
 	},
 	contact: {
-		email: "christopherbigg@gmail.com",
+		email: "enquire@feleenaandchristopher.wedding",
 	},
 
 	// The Story

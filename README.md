@@ -121,7 +121,7 @@ This strategy ensures optimal performance with minimal JavaScript sent to the br
 - **Single Source of Truth**: All content in `wedding-content.ts`
 - **HTML Support**: Description fields support HTML formatting (`<strong>`, `<a>`, etc.)
 - **Google Maps Integration**: Embedded map with "Get Directions" CTA overlay
-- **Honeymoon Modal**: Clickable modal for honeymoon donation information
+- **Honeymoon Modal**: Clickable modal with PayPal link; flippable card reveals copyable bank details (sort code & account number) for traditional transfers
 
 ## 📝 Customization Guide
 
@@ -483,6 +483,7 @@ All recommended platforms support custom domains with automatic SSL certificates
 - **[Swiper](https://swiperjs.com/)** - Touch-enabled carousel/slider
 - **[React Confetti](https://www.npmjs.com/package/react-confetti)** - Celebration effects
 - **[Formspree](https://formspree.io)** - Form backend service (no server required)
+- **[Cursor](https://cursor.com)** - AI-powered editor used to build the site (credited on the [Tech](/tech) page)
 
 ## 📚 Learn More
 

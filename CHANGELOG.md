@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Tech, accommodation booking & honeymoon fund - 2026-02-23
+
+#### Added
+- **tech.astro** - "Powered by AI" and Cursor mention in intro, Tech Stack Details ("Built with AI"), Key Features, and Powered By logo row. Cursor icon at `public/images/icons/cursor.svg` (white in dark mode). Grid for Powered By icons reorganized (e.g. 6 cols on large) so no single icon sits alone.
+- **HoneymoonModal.tsx** - Bank transfer option: flippable card (tap QR to reveal sort code and account number). Sort code 04-00-04, account 13592391. Copyable bank details; copy hint text: "For those who prefer traditional banking, click the QR code below to reveal our sort code and account number."
+
+#### Changed
+- **AccommodationHero.tsx** - Booking link uses two-step open: open Rezcontrol base URL in new tab first, then after ~2.2s navigate that tab to full URL with params so Rezcontrol applies dates/promo on first visit. "Opening…" state and fallback if popup blocked.
+- **HoneymoonModal.tsx** - Removed "Scan the QR code or click the button below to contribute" line. Bank details on back of card are selectable/copyable; click on numbers does not flip card.
+
 ### Accommodation & RSVP updates - 2026-02-16
 
 #### Added
