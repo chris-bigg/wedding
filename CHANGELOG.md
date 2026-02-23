@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Hero, contact privacy & accommodation tweaks - 2026-02-23
+
+#### Added
+- **Contact phones from env** – FAQ "Who should I call?" uses `CONTACT_PHONE_FELEENA` and `CONTACT_PHONE_CHRIS` (Netlify or `.env`). If unset, shows "Please contact us via the email address below." Keeps numbers out of the public repo.
+- **Voucher copy icon** – Accommodation voucher block uses `public/copy-link-icon.svg`; icon styled for light/dark (white on green button).
+
+#### Changed
+- **HeroBackground.tsx** – Mobile focal point shifted 20px right (`object-position`) so subjects are centred on small screens; desktop unchanged.
+- **index.astro** – Floating music player removed (MusicPlayer component no longer rendered).
+- **AccommodationHero.tsx** – Booking link is a simple direct link again (no two-step Rezcontrol workaround). Voucher copy button uses copy-link icon with correct colours.
+
+#### Documentation
+- **README.md** – Environment variables section updated: `GUEST_LIST`, `CONTACT_PHONE_FELEENA`, `CONTACT_PHONE_CHRIS`.
+
 ### Tech, accommodation booking & honeymoon fund - 2026-02-23
 
 #### Added

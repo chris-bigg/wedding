@@ -3,6 +3,14 @@ const getImagePath = (path: string) => {
 	return path;
 };
 
+// Contact phone numbers from env (set in Netlify / .env) so they are not in the public repo
+const contactPhoneFeleena = (import.meta.env.CONTACT_PHONE_FELEENA as string) || '';
+const contactPhoneChris = (import.meta.env.CONTACT_PHONE_CHRIS as string) || '';
+const contactPhonesFaqAnswer =
+	contactPhoneFeleena && contactPhoneChris
+		? `Please contact Feleena at ${contactPhoneFeleena} or Chris at ${contactPhoneChris}.`
+		: 'Please contact us via the email address below.';
+
 export const weddingContent = {
 	// Core Details
 	couple: {
@@ -144,7 +152,7 @@ export const weddingContent = {
 		},
 		{
 			question: "Who should I call with questions?",
-			answer: "Please contact Feleena at 07977291638 or Chris at 07584032612.",
+			answer: contactPhonesFaqAnswer,
 		},
 	],
 

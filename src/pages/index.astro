@@ -14,7 +14,6 @@ import Navigation from '../components/Navigation';
 import SplashScreen from '../components/SplashScreen';
 import FloralAnimation from '../components/FloralAnimation';
 import WeatherWidget from '../components/WeatherWidget';
-import MusicPlayer from '../components/MusicPlayer';
 import SectionAnimations from '../components/SectionAnimations';
 import { weddingContent } from '../config/wedding-content';
 import { getGuestList } from '../data/guests';
@@ -40,9 +39,6 @@ const guestListJson = JSON.stringify(guestList);
 <Layout title={`${weddingContent.couple.name1} & ${weddingContent.couple.name2} | Wedding`} guestListJson={guestListJson}>
 	<!-- Splash Screen -->
 	<SplashScreen client:load />
-
-	<!-- Music Player -->
-	<MusicPlayer client:load />
 
 	<!-- Navigation -->
 	<Navigation client:load />
