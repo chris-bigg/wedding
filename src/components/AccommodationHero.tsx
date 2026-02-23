@@ -9,7 +9,7 @@ const roomImages = [
   '/images/KH/rooms/JAA_0456-scaled.jpg',
 ];
 
-import { KINGS_HEAD_BOOKING_BASE_URL, KINGS_HEAD_BOOKING_URL } from '../config/booking';
+import { KINGS_HEAD_BOOKING_URL } from '../config/booking';
 
 const VOUCHER_CODE = 'Feleena and Christopher';
 
@@ -18,37 +18,10 @@ export default function AccommodationHero() {
   const [fadeState, setFadeState] = useState<'fade-in' | 'fade-out'>('fade-in');
   const [linkReady, setLinkReady] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [openingBooking, setOpeningBooking] = useState(false);
 
   useEffect(() => {
     setLinkReady(true);
   }, []);
-
-  /**
-   * Rezcontrol often ignores URL params on the first load in a new tab, then applies them on a
-   * second load. We open the base URL first so the SPA initializes, then navigate that same tab
-   * to the full URL with params so the engine treats it as the "second" load and applies dates/promo.
-   */
-  const handleBookingClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (openingBooking) return;
-    setOpeningBooking(true);
-    const w = window.open(KINGS_HEAD_BOOKING_BASE_URL, '_blank', 'noopener,noreferrer');
-    const delay = 2200;
-    setTimeout(() => {
-      try {
-        if (w && !w.closed) {
-          w.location.href = KINGS_HEAD_BOOKING_URL;
-        } else {
-          // Popup was blocked or closed: open full URL so user still gets there
-          window.open(KINGS_HEAD_BOOKING_URL, '_blank', 'noopener,noreferrer');
-        }
-      } catch {
-        window.open(KINGS_HEAD_BOOKING_URL, '_blank', 'noopener,noreferrer');
-      }
-      setOpeningBooking(false);
-    }, delay);
-  };
 
   const handleCopyVoucher = async () => {
     try {
@@ -141,12 +114,10 @@ export default function AccommodationHero() {
                 href={KINGS_HEAD_BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={handleBookingClick}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                aria-busy={openingBooking}
-                aria-label={openingBooking ? 'Opening booking site…' : 'View rooms and book'}
+                aria-label="View rooms and book"
               >
-                <span>{openingBooking ? 'Opening…' : 'View Rooms & Book'}</span>
+                <span>View Rooms & Book</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -194,7 +165,7 @@ export default function AccommodationHero() {
           {/* Voucher Code - Prominent, click to copy */}
           <div className="text-center mb-6 pb-6 border-b border-stone-200 dark:border-stone-700">
             <p className="text-sm md:text-base text-stone-600 dark:text-stone-400 mb-3 font-medium">
-              Use voucher code for 20% discount:
+              Use voucher code for discount:
             </p>
             <button
               type="button"
@@ -208,9 +179,12 @@ export default function AccommodationHero() {
               {copied ? (
                 <span className="text-sm font-medium opacity-90">Copied!</span>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white/80 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
+                <img
+                src="/copy-link-icon.svg"
+                alt=""
+                className="h-5 w-5 shrink-0 brightness-0 invert opacity-90"
+                aria-hidden
+              />
               )}
             </button>
           </div>

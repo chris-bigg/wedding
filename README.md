@@ -422,7 +422,9 @@ venue: {
 
 ### Environment Variables
 
-No environment variables are required. The project uses `import.meta.env.BASE_URL` for routing (automatically handled by Astro).
+- **`import.meta.env.BASE_URL`** – Used for routing (automatically set by Astro).
+- **`GUEST_LIST`** (optional) – JSON string of guest data for personalised RSVP links. Set in Netlify (or `.env` locally) so guest data is not in the repo. See guest list / RSVP docs.
+- **`CONTACT_PHONE_FELEENA`** and **`CONTACT_PHONE_CHRIS`** (optional) – Phone numbers shown in the “Who should I call with questions?” FAQ. Set in Netlify (or `.env`) to keep numbers out of the public repo. If unset, the FAQ shows “Please contact us via the email address below.”
 
 ### TypeScript
 

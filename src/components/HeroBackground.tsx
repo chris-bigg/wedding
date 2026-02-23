@@ -123,7 +123,7 @@ export default function HeroBackground() {
 						<img
 							src={image}
 							alt=""
-							className="w-full h-full object-cover"
+							className="w-full h-full object-cover object-[calc(50%+50px)_50%] md:object-center"
 							aria-hidden="true"
 						/>
 					</div>
