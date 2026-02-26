@@ -22,16 +22,6 @@ import { getGuestList } from '../data/guests';
 const guestList = getGuestList();
 const guestListKeys = Object.keys(guestList);
 
-// Debug: Log guest list status (only in dev)
-if (import.meta.env.DEV) {
-	console.log('[index.astro] Guest list loaded:', guestListKeys.length > 0 ? `${guestListKeys.length} guests` : 'EMPTY - check .env file');
-	console.log('[index.astro] Environment variable GUEST_LIST exists:', !!import.meta.env.GUEST_LIST);
-	if (guestListKeys.length > 0) {
-		console.log('[index.astro] Sample guest keys:', guestListKeys.slice(0, 3));
-		console.log('[index.astro] Sample guest (jon-abby):', guestList['jon-abby']);
-	}
-}
-
 // Serialize for injection into page
 const guestListJson = JSON.stringify(guestList);
 ---

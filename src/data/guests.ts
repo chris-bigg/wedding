@@ -14,21 +14,17 @@ export function getGuestList(): Record<string, GuestData> {
 		try {
 			const parsed = JSON.parse(guestListEnv);
 			if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
-				console.log(`[guests.ts] ✓ Loaded ${Object.keys(parsed).length} guests from GUEST_LIST environment variable`);
 				return parsed;
 			}
 		} catch (error) {
 			console.error('[guests.ts] ✗ Failed to parse GUEST_LIST from environment:', error);
 			console.error('[guests.ts] Raw value:', guestListEnv.substring(0, 100));
 		}
-	} else {
-		console.log('[guests.ts] GUEST_LIST environment variable not set or empty');
 	}
 	
 	// Second priority: use stub file (empty in production, but exists in repo)
 	// This ensures the import doesn't fail, but won't have data
 	if (STUB_DATA && Object.keys(STUB_DATA).length > 0) {
-		console.log(`[guests.ts] Loaded ${Object.keys(STUB_DATA).length} guests from stub file`);
 		return STUB_DATA;
 	}
 	

@@ -10,6 +10,7 @@ A modern, elegant wedding website template built with Astro, React, and Tailwind
 - [Architecture](#-architecture)
 - [Key Features](#-key-features)
 - [Customization Guide](#-customization-guide)
+- [Guest tier URL parameters](#42-guest-tier-url-parameters)
 - [Project Structure](#-project-structure)
 - [Development](#-development)
 - [Deployment](#-deployment)
@@ -275,6 +276,41 @@ Generate personalized RSVP links for your guests:
 #### Personalized Greeting
 
 The `PersonalizedGreeting` component also uses the same ID system. When a guest visits with `?id=...`, they'll see a personalized greeting like "Hi Jon & Abby, we can't wait to celebrate with you!" just after the Hero section.
+
+### 4.2. Guest tier URL parameters
+
+The site supports different **guest tiers** via the `type` query parameter so you can send day guests and evening-only guests different links. The same `id` parameter still pre-fills the RSVP form and shows the personalized greeting.
+
+#### Query parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `id` | Unique guest identifier (e.g. `abby-jon`). Pre-fills the RSVP form and shows the personalized greeting. |
+| `type` | Guest tier. Accepted values: `day` or `evening`. |
+
+#### Behaviour by URL
+
+| URL state | Schedule (Details) | RSVP form | FAQs |
+|-----------|--------------------|-----------|------|
+| `?type=day` (with or without `id`) | Full “Plan of the Day” (confirmed times + blurred TBC block). | All fields, including Food Selection; food required when attending. | All FAQs shown. |
+| `?type=evening` | Only evening view: TBC message + 3 blurred rows (no daytime ceremony times). | No Food Selection; food not required. | “What are the key timings?” and “Can I take photographs with my phone/camera?” are hidden. |
+| No `type` and no `id` (General) | Same as day: full schedule. | All fields visible but empty (manual entry); food required when attending. | All FAQs shown. |
+
+- If `type` is missing but `id` is present, the site behaves as **day** (backward compatibility).
+- Invalid or unknown `type` with no `id` is treated as **General**.
+
+#### Implementation notes
+
+- **Layout** (`src/layouts/Layout.astro`): An inline script at the start of `<body>` reads `type` and `id` from the URL and sets `data-guest-type` on `<html>` (`day`, `evening`, or `general`) so CSS can show/hide content.
+- **Schedule**: `src/components/Details.astro` has two blocks, `data-schedule-tier="day"` and `data-schedule-tier="evening"`. Global CSS hides the day block and shows the evening block when `html[data-guest-type="evening"]`.
+- **RSVP**: `src/components/RSVPForm.tsx` uses `getGuestViewType()` from `src/utils/url.ts` to hide the Food Selection block for evening guests and to skip food validation when `type=evening`.
+- **FAQs**: `src/components/FAQ.astro` marks the two day-only questions with `data-faq-tier="day"` and hides them when `html[data-guest-type="evening"]`.
+
+#### Example links
+
+- Day guest (full day + food): `https://yoursite.com/?id=jon-abby&type=day` or `https://yoursite.com/?id=jon-abby`
+- Evening guest (evening schedule, no food): `https://yoursite.com/?id=jon-abby&type=evening`
+- General (no pre-fill): `https://yoursite.com/`
 
 ### 5. Update Favicon
 
