@@ -93,6 +93,18 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 				}
 			})();
 			
+			// Set guest view type from URL for schedule/RSVP visibility (day | evening | general)
+			(function() {
+				var params = new URLSearchParams(window.location.search);
+				var type = params.get('type');
+				var id = params.get('id');
+				var guestType = 'general';
+				if (type === 'evening') guestType = 'evening';
+				else if (type === 'day') guestType = 'day';
+				else if (id) guestType = 'day';
+				document.documentElement.dataset.guestType = guestType;
+			})();
+			
 			// Initialize --cta-bottom immediately with default value
 			document.documentElement.style.setProperty('--cta-bottom', '1.5rem');
 		</script>
@@ -102,6 +114,9 @@ const { title, description = 'Join us for our special day!', guestListJson } = A
 		<title>{title}</title>
 	</head>
 	<body class="bg-gradient-to-br from-[#F2F4F0]/50 via-stone-50 to-green-50/40 dark:from-stone-950 dark:via-stone-900 dark:to-stone-800/30 text-stone-900 dark:text-stone-100 antialiased">
+		<script is:inline>
+			(function(){var p=new URLSearchParams(window.location.search);var t=p.get('type');var i=p.get('id');var g='general';if(t==='evening')g='evening';else if(t==='day')g='day';else if(i)g='day';document.documentElement.setAttribute('data-guest-type',g);})();
+		</script>
 		<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-green-800 dark:focus:bg-white/20 focus:text-white dark:focus:text-stone-900 focus:rounded-lg focus:font-medium focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600 dark:focus:ring-white/30 focus:ring-offset-2">
 			Skip to main content
 		</a>

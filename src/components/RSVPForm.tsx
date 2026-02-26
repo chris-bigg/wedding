@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
 import { getGuestList } from '../utils/guests';
-import { getUrlParam, removeUrlParam } from '../utils/url';
+import { getUrlParam, getGuestViewType, removeUrlParam } from '../utils/url';
 import { useWindowSize } from '../hooks/useWindowSize';
 import type { GuestData } from '../types/guest';
 
@@ -174,17 +174,16 @@ export default function RSVPForm() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('Form submitted with data:', formData);
 		setSubmitMessage('');
 
 		const attendingYes = formData.attendance === 'yes';
-		if (attendingYes && (!formData.starter || !formData.main || !formData.dessert)) {
+		const requireFood = attendingYes && getGuestViewType() !== 'evening';
+		if (requireFood && (!formData.starter || !formData.main || !formData.dessert)) {
 			setSubmitMessage('Please select your starter, main and dessert.');
 			return;
 		}
 
 		setIsSubmitting(true);
-		console.log('Attending yes?', attendingYes);
 
 		// Combine names for submission (Formspree expects a single name field)
 		const submissionData = {
@@ -201,24 +200,19 @@ export default function RSVPForm() {
 			});
 
 			if (response.ok) {
-				console.log('Form submission successful!');
 				setIsSubmitting(false);
 				setSubmitMessage('Thank you for your RSVP! We can\'t wait to celebrate with you!');
 				
 				// Trigger confetti only if attending
 				if (attendingYes) {
-					console.log('Triggering confetti!');
 					setShowConfetti(true);
 					setConfettiFading(false);
-					console.log('showConfetti state set to true');
 					// Start fading after 5 seconds
 					setTimeout(() => {
-						console.log('Fading confetti');
 						setConfettiFading(true);
 					}, 5000);
 					// Remove completely after fade (5s + 2s fade)
 					setTimeout(() => {
-						console.log('Stopping confetti');
 						setShowConfetti(false);
 						setConfettiFading(false);
 					}, 7000);
@@ -284,8 +278,6 @@ export default function RSVPForm() {
 			}));
 		}
 	};
-
-	console.log('RSVPForm render - showConfetti:', showConfetti, 'windowDimensions:', windowDimensions);
 
 	return (
 		<>
@@ -417,76 +409,78 @@ export default function RSVPForm() {
 								/>
 							</div>
 
-							{/* Food Selection */}
-							<div className="space-y-4">
-								<h3 className="text-lg font-medium text-green-950 dark:text-white mb-4">
-									Food Selection
-								</h3>
-								
-								{/* Starter */}
-								<div>
-									<label htmlFor="starter" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-										Starter *
-									</label>
-									<CustomSelect
-										id="starter"
-										name="starter"
-										required
-										value={formData.starter}
-										onChange={handleChange}
-										options={STARTER_OPTIONS}
-										placeholder="Please select"
-									/>
-								</div>
+							{/* Food Selection - hidden for evening guests */}
+							{getGuestViewType() !== 'evening' && (
+								<div className="space-y-4">
+									<h3 className="text-lg font-medium text-green-950 dark:text-white mb-4">
+										Food Selection
+									</h3>
+									
+									{/* Starter */}
+									<div>
+										<label htmlFor="starter" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+											Starter *
+										</label>
+										<CustomSelect
+											id="starter"
+											name="starter"
+											required
+											value={formData.starter}
+											onChange={handleChange}
+											options={STARTER_OPTIONS}
+											placeholder="Please select"
+										/>
+									</div>
 
-								{/* Main */}
-								<div>
-									<label htmlFor="main" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-										Main Course *
-									</label>
-									<CustomSelect
-										id="main"
-										name="main"
-										required
-										value={formData.main}
-										onChange={handleChange}
-										options={MAIN_OPTIONS}
-										placeholder="Please select"
-									/>
-								</div>
+									{/* Main */}
+									<div>
+										<label htmlFor="main" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+											Main Course *
+										</label>
+										<CustomSelect
+											id="main"
+											name="main"
+											required
+											value={formData.main}
+											onChange={handleChange}
+											options={MAIN_OPTIONS}
+											placeholder="Please select"
+										/>
+									</div>
 
-								{/* Dessert */}
-								<div>
-									<label htmlFor="dessert" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-										Dessert *
-									</label>
-									<CustomSelect
-										id="dessert"
-										name="dessert"
-										required
-										value={formData.dessert}
-										onChange={handleChange}
-										options={DESSERT_OPTIONS}
-										placeholder="Please select"
-									/>
-								</div>
+									{/* Dessert */}
+									<div>
+										<label htmlFor="dessert" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+											Dessert *
+										</label>
+										<CustomSelect
+											id="dessert"
+											name="dessert"
+											required
+											value={formData.dessert}
+											onChange={handleChange}
+											options={DESSERT_OPTIONS}
+											placeholder="Please select"
+										/>
+									</div>
 
-								{/* Dietary Notes */}
-								<div>
-									<label htmlFor="dietaryRestrictions" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-										Dietary Notes
-									</label>
-									<textarea
-										id="dietaryRestrictions"
-										name="dietaryRestrictions"
-										rows={3}
-										value={formData.dietaryRestrictions}
-										onChange={handleChange}
-										className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
-										placeholder="Let us know of any dietary needs..."
-									/>
+									{/* Dietary Notes */}
+									<div>
+										<label htmlFor="dietaryRestrictions" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+											Dietary Notes
+										</label>
+										<textarea
+											id="dietaryRestrictions"
+											name="dietaryRestrictions"
+											rows={3}
+											value={formData.dietaryRestrictions}
+											onChange={handleChange}
+											className="w-full px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-700 dark:focus:ring-white/40 focus:border-transparent bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm text-stone-900 dark:text-stone-100"
+											placeholder="Let us know of any dietary needs..."
+										/>
+									</div>
 								</div>
-							</div>
+							)}
 						</>
 					)}
 

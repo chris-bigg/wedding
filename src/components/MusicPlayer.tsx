@@ -11,9 +11,8 @@ export default function MusicPlayer() {
 				try {
 					await audioRef.current.play();
 					setIsPlaying(true);
-				} catch (error) {
+				} catch {
 					// Autoplay blocked - user will need to click play
-					console.log('Autoplay prevented:', error);
 				}
 			}
 		};

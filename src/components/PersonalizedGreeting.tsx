@@ -13,13 +13,7 @@ export default function PersonalizedGreeting() {
 			// Wait a tick to ensure script has run
 			setTimeout(() => {
 				const guestList = getGuestList();
-				
-				// Debug logging
-				console.log('PersonalizedGreeting - ID:', id);
-				console.log('PersonalizedGreeting - window.__GUEST_LIST__:', (window as any).__GUEST_LIST__);
-				console.log('PersonalizedGreeting - Guest list keys:', Object.keys(guestList));
-				console.log('PersonalizedGreeting - Guest list has ID?', id ? guestList[id] : false);
-				
+
 				if (id && guestList[id]) {
 					const guestData = guestList[id];
 					setFormattedNames(formatNames(guestData.names));
