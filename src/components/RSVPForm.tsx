@@ -127,9 +127,9 @@ interface FormData {
 	attendance: 'yes' | 'no' | '';
 	dietaryRestrictions: string;
 	songRequest: string;
-	starter: string;
-	main: string;
-	dessert: string;
+	starters: string[];
+	mains: string[];
+	desserts: string[];
 }
 
 export default function RSVPForm() {
@@ -139,9 +139,9 @@ export default function RSVPForm() {
 		attendance: '',
 		dietaryRestrictions: '',
 		songRequest: '',
-		starter: '',
-		main: '',
-		dessert: '',
+		starters: [''],
+		mains: [''],
+		desserts: [''],
 	});
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -160,10 +160,14 @@ export default function RSVPForm() {
 			
 			if (id && guestList[id]) {
 				const guestData = guestList[id];
+				const n = guestData.names.length;
 				setFormData(prev => ({
 					...prev,
 					names: [...guestData.names],
 					email: guestData.email || prev.email,
+					starters: Array(n).fill(''),
+					mains: Array(n).fill(''),
+					desserts: Array(n).fill(''),
 				}));
 				// Keep id in URL so behaviour stays correct and nav to/from tech preserves it
 			}
@@ -176,19 +180,36 @@ export default function RSVPForm() {
 
 		const attendingYes = formData.attendance === 'yes';
 		const requireFood = attendingYes && getGuestViewType() !== 'evening';
-		if (requireFood && (!formData.starter || !formData.main || !formData.dessert)) {
-			setSubmitMessage('Please select your starter, main and dessert.');
-			return;
+		if (requireFood) {
+			const allFoodSelected = formData.names.every((name, i) => {
+				if (!name.trim()) return true;
+				return !!(formData.starters[i] && formData.mains[i] && formData.desserts[i]);
+			});
+			if (!allFoodSelected) {
+				setSubmitMessage('Please select a starter, main and dessert for each guest.');
+				return;
+			}
 		}
 
 		setIsSubmitting(true);
 
-		// Combine names for submission (Formspree expects a single name field)
-		const submissionData = {
-			...formData,
+		// Build submission: name (joined), email, attendance, foodChoices (per-guest), etc.
+		const submissionData: Record<string, unknown> = {
+			email: formData.email,
+			attendance: formData.attendance,
+			dietaryRestrictions: formData.dietaryRestrictions,
+			songRequest: formData.songRequest,
 			name: formData.names.filter(n => n.trim()).join(' '),
+			foodChoices: formData.names
+				.map((name, i) => (name.trim() ? { guest: name.trim(), i } : null))
+				.filter((x): x is { guest: string; i: number } => x != null)
+				.map(({ guest, i }) => ({
+					guest,
+					starter: formData.starters[i] ?? '',
+					main: formData.mains[i] ?? '',
+					dessert: formData.desserts[i] ?? '',
+				})),
 		};
-		delete (submissionData as any).names;
 
 		try {
 			const response = await fetch('https://formspree.io/f/xgvpanpe', {
@@ -223,9 +244,9 @@ export default function RSVPForm() {
 					attendance: '',
 					dietaryRestrictions: '',
 					songRequest: '',
-					starter: '',
-					main: '',
-					dessert: '',
+					starters: [''],
+					mains: [''],
+					desserts: [''],
 				});
 			} else {
 				console.error('Form submission failed:', response.status);
@@ -255,6 +276,20 @@ export default function RSVPForm() {
 			return;
 		}
 
+		// Handle per-guest food fields (starter-0, main-1, dessert-2, etc.)
+		const foodMatch = name.match(/^(starter|main|dessert)-(\d+)$/);
+		if (foodMatch) {
+			const [, field, indexStr] = foodMatch;
+			const index = parseInt(indexStr, 10);
+			const key = field === 'starter' ? 'starters' : field === 'main' ? 'mains' : 'desserts';
+			setFormData((prev) => {
+				const arr = [...(prev[key] as string[])];
+				arr[index] = value;
+				return { ...prev, [key]: arr };
+			});
+			return;
+		}
+
 		setFormData((prev) => ({
 			...prev,
 			[name]: type === 'checkbox' ? checked : value,
@@ -265,6 +300,9 @@ export default function RSVPForm() {
 		setFormData((prev) => ({
 			...prev,
 			names: [...prev.names, ''],
+			starters: [...prev.starters, ''],
+			mains: [...prev.mains, ''],
+			desserts: [...prev.desserts, ''],
 		}));
 	};
 
@@ -273,6 +311,9 @@ export default function RSVPForm() {
 			setFormData((prev) => ({
 				...prev,
 				names: prev.names.filter((_, i) => i !== index),
+				starters: prev.starters.filter((_, i) => i !== index),
+				mains: prev.mains.filter((_, i) => i !== index),
+				desserts: prev.desserts.filter((_, i) => i !== index),
 			}));
 		}
 	};
@@ -407,60 +448,64 @@ export default function RSVPForm() {
 								/>
 							</div>
 
-							{/* Food Selection - hidden for evening guests */}
+							{/* Food Selection - hidden for evening guests; one set per guest */}
 							{getGuestViewType() !== 'evening' && (
-								<div className="space-y-4">
+								<div className="space-y-6">
 									<h3 className="text-lg font-medium text-green-950 dark:text-white mb-4">
 										Food Selection
 									</h3>
-									
-									{/* Starter */}
-									<div>
-										<label htmlFor="starter" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-											Starter *
-										</label>
-										<CustomSelect
-											id="starter"
-											name="starter"
-											required
-											value={formData.starter}
-											onChange={handleChange}
-											options={STARTER_OPTIONS}
-											placeholder="Please select"
-										/>
-									</div>
-
-									{/* Main */}
-									<div>
-										<label htmlFor="main" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-											Main Course *
-										</label>
-										<CustomSelect
-											id="main"
-											name="main"
-											required
-											value={formData.main}
-											onChange={handleChange}
-											options={MAIN_OPTIONS}
-											placeholder="Please select"
-										/>
-									</div>
-
-									{/* Dessert */}
-									<div>
-										<label htmlFor="dessert" className="block text-sm font-medium text-green-950 dark:text-white mb-2">
-											Dessert *
-										</label>
-										<CustomSelect
-											id="dessert"
-											name="dessert"
-											required
-											value={formData.dessert}
-											onChange={handleChange}
-											options={DESSERT_OPTIONS}
-											placeholder="Please select"
-										/>
-									</div>
+									<p className="text-sm text-stone-600 dark:text-stone-400 -mt-2">
+										Select a starter, main and dessert for each guest.
+									</p>
+									{formData.names.map((guestName, index) => (
+										<div key={index} className="rounded-xl border border-stone-200 dark:border-stone-600 bg-stone-50/50 dark:bg-stone-800/30 p-4 space-y-4">
+											<h4 className="text-base font-medium text-green-950 dark:text-white">
+												{guestName.trim() ? guestName.trim() : `Guest ${index + 1}`}
+											</h4>
+											<div>
+												<label htmlFor={`starter-${index}`} className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+													Starter *
+												</label>
+												<CustomSelect
+													id={`starter-${index}`}
+													name={`starter-${index}`}
+													required
+													value={formData.starters[index] ?? ''}
+													onChange={handleChange}
+													options={STARTER_OPTIONS}
+													placeholder="Please select"
+												/>
+											</div>
+											<div>
+												<label htmlFor={`main-${index}`} className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+													Main Course *
+												</label>
+												<CustomSelect
+													id={`main-${index}`}
+													name={`main-${index}`}
+													required
+													value={formData.mains[index] ?? ''}
+													onChange={handleChange}
+													options={MAIN_OPTIONS}
+													placeholder="Please select"
+												/>
+											</div>
+											<div>
+												<label htmlFor={`dessert-${index}`} className="block text-sm font-medium text-green-950 dark:text-white mb-2">
+													Dessert *
+												</label>
+												<CustomSelect
+													id={`dessert-${index}`}
+													name={`dessert-${index}`}
+													required
+													value={formData.desserts[index] ?? ''}
+													onChange={handleChange}
+													options={DESSERT_OPTIONS}
+													placeholder="Please select"
+												/>
+											</div>
+										</div>
+									))}
 
 									{/* Dietary Notes */}
 									<div>
