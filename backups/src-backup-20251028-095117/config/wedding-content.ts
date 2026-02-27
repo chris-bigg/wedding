@@ -43,7 +43,7 @@ export const weddingContent = {
 	travel: {
 		driving: "The Priory is located on Blackfriars Lane, off Ladybellegate Street in Gloucester city centre. The main entrance has a small curb, but a temporary ramp is available when the site is open to the public. You'll likely need to use nearby public car parks.",
 		publicTransit: "The nearest bus stops are on Ladybellegate Street (Stop Code gloawtat, near Blackfriars Priory) and the main Gloucester Train Station is approximately a 10-minute walk.",
-		taxiRideshare: "Yes, it should be easy to get a taxi or rideshare. The Priory is in the city centre, and local taxi companies (e.g., Five Star Taxis) operate in Gloucester. UberX is also available in the Gloucester area as a rideshare option. You can request a ride using an app or call a local firm.",
+		taxiRideshare: "Yes, it should be easy to get a taxi or rideshare. The Priory is in the city centre, and local taxi companies (e.g., Five Star Taxis) operate in Gloucester. UberX is also available in the Gloucester area as a rideshare option. You can request a ride using an app or call a local firm. Uber is also available.",
 		parking: `No, there is no visitor parking immediately on-site, but charged public parking is available next door.
 Specifics:
 * The nearest car parks are the Ladybellegate Street Car Park (Gloucester City Council) and the NCP Gloucester Blackfriars car park. Both are paid parking.
