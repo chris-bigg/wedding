@@ -65,8 +65,9 @@ const guestListJson = JSON.stringify(guestList);
                 <p class="text-sm">{new Date().getFullYear()} {weddingContent.couple.name1} & {weddingContent.couple.name2}</p>
             </div>
         </div>
-		<!-- Nerdy Stuff CTA -->
+		<!-- Nerdy Stuff CTA (preserve id & type when navigating to tech) -->
 		<a 
+			data-nerdy-cta="true"
 			href={`${import.meta.env.BASE_URL}tech`}
             class="fixed right-4 md:right-6 z-50 bg-stone-800/80 hover:bg-stone-700/90 backdrop-blur-sm text-stone-200 px-3 md:px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:shadow-xl hover:scale-105 border border-stone-600/50"
             style="bottom: var(--cta-bottom, 1.5rem); transition: background-color 300ms, box-shadow 300ms;"
@@ -74,5 +75,15 @@ const guestListJson = JSON.stringify(guestList);
 		>
 			🤓 Nerdy stuff
 		</a>
+		<script is:inline>
+			(function () {
+				if (typeof window === 'undefined') return;
+				var cta = document.querySelector('[data-nerdy-cta="true"]');
+				if (!cta) return;
+				var baseHref = cta.getAttribute('href') || '/tech';
+				var search = window.location.search || '';
+				cta.setAttribute('href', baseHref + search);
+			})();
+		</script>
 	</footer>
 </Layout>

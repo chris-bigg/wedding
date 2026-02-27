@@ -12,9 +12,22 @@ const baseUrl = import.meta.env.BASE_URL;
 			window.history.scrollRestoration = 'manual';
 			// Ensure scroll position is at top immediately
 			window.scrollTo(0, 0);
-			// Also ensure on DOM ready
+			// Also ensure on DOM ready and wire up back link to preserve guest params
 			document.addEventListener('DOMContentLoaded', () => {
 				window.scrollTo(0, 0);
+				const backLink = document.querySelector('[data-back-to-wedding="true"]');
+				if (backLink) {
+					const baseHref = backLink.getAttribute('href') || '/';
+					const params = new URLSearchParams(window.location.search);
+					const id = params.get('id');
+					const type = params.get('type');
+					const backParams = new URLSearchParams();
+					if (id) backParams.set('id', id);
+					if (type) backParams.set('type', type);
+					backParams.set('from', 'tech');
+					const query = backParams.toString();
+					backLink.setAttribute('href', baseHref + (query ? `?${query}` : ''));
+				}
 			});
 		}
 	</script>
@@ -22,7 +35,7 @@ const baseUrl = import.meta.env.BASE_URL;
 	<nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm z-50 border-b border-stone-200/50 dark:border-stone-700/50">
 		<div class="max-w-6xl mx-auto px-4 py-3">
 			<div class="flex justify-between items-center">
-				<a href={baseUrl || '/'} class="text-green-950 dark:text-white hover:text-green-800 dark:hover:text-stone-200 transition-colors font-medium">
+				<a href={baseUrl || '/'} data-back-to-wedding="true" class="text-green-950 dark:text-white hover:text-green-800 dark:hover:text-stone-200 transition-colors font-medium">
 					← Back to Wedding
 				</a>
 				<div class="ml-3">

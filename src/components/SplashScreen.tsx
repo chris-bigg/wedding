@@ -8,6 +8,24 @@ export default function SplashScreen() {
 	const [hideLottie, setHideLottie] = useState(false);
 
 	useEffect(() => {
+		// When returning from tech page: skip splash and go straight to hero (soft transition)
+		if (typeof window !== 'undefined') {
+			const params = new URLSearchParams(window.location.search);
+			if (params.get('from') === 'tech') {
+				params.delete('from');
+				const cleanSearch = params.toString();
+				const newUrl = window.location.pathname + (cleanSearch ? `?${cleanSearch}` : '');
+				window.history.replaceState({}, '', newUrl);
+				setIsVisible(false);
+				sessionStorage.setItem('splashCompleted', 'true');
+				// Defer splashComplete slightly so hero listeners have time to attach
+				setTimeout(() => {
+					window.dispatchEvent(new CustomEvent('splashComplete'));
+				}, 100);
+				return;
+			}
+		}
+
 		// After 3 seconds, start showing falling image and hide lottie
 		const showImageTimer = setTimeout(() => {
 			setShowFallingImage(true);

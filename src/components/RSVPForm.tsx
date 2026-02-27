@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { weddingContent } from '../config/wedding-content';
 import Confetti from 'react-confetti';
 import { getGuestList } from '../utils/guests';
-import { getUrlParam, getGuestViewType, removeUrlParam } from '../utils/url';
+import { getUrlParam, getGuestViewType } from '../utils/url';
 import { useWindowSize } from '../hooks/useWindowSize';
 import type { GuestData } from '../types/guest';
 
@@ -165,9 +165,7 @@ export default function RSVPForm() {
 					names: [...guestData.names],
 					email: guestData.email || prev.email,
 				}));
-				
-				// Clean up URL by removing the id parameter
-				removeUrlParam('id');
+				// Keep id in URL so behaviour stays correct and nav to/from tech preserves it
 			}
 		}
 	}, []);
