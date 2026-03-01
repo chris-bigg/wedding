@@ -31,7 +31,7 @@ export function removeUrlParams(params: string[]): void {
 
 import { getGuestList } from './guests';
 
-export type GuestViewType = 'day' | 'evening' | 'general';
+export type GuestViewType = 'day' | 'evening';
 
 /**
  * Derive guest view tier from URL (type and id params).

@@ -46,6 +46,15 @@ import { weddingContent } from '../config/wedding-content';
 	html:not([data-show-schedule="true"]) [data-details-schedule] {
 		display: none !important;
 	}
+	/* Card has no in-flow content when schedule is hidden; give it min-height so the absolutely positioned video is visible */
+	html:not([data-show-schedule="true"]) [data-details-card] {
+		min-height: 24rem;
+	}
+	@media (min-width: 768px) {
+		html:not([data-show-schedule="true"]) [data-details-card] {
+			min-height: 400px;
+		}
+	}
 	/* No bottom gradient or mask when there's no schedule below the video */
 	html:not([data-show-schedule="true"]) .video-fade-container::after {
 		display: none !important;
@@ -64,7 +73,7 @@ import { weddingContent } from '../config/wedding-content';
 			</span>
 		</h2>
 		
-		<div class="relative bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 dark:border-stone-700/50 overflow-hidden mb-8" data-animate-fade-up>
+		<div class="relative bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 dark:border-stone-700/50 overflow-hidden mb-8" data-details-card data-animate-fade-up>
 			{/* Video Background with fade-out effect */}
 			<div class="video-fade-container absolute top-0 left-0 w-full h-96 md:h-[400px]">
 				<video 
