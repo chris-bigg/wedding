@@ -17,9 +17,6 @@ export default function PersonalizedGreeting() {
 				if (id && guestList[id]) {
 					const guestData = guestList[id];
 					setFormattedNames(formatNames(guestData.names));
-				} else if (id) {
-					console.warn('Guest list is empty or ID not found. Guest list:', guestList);
-					console.warn('Available keys:', Object.keys(guestList));
 				}
 			}, 0);
 		}

@@ -16,9 +16,8 @@ export function getGuestList(): Record<string, GuestData> {
 			if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
 				return parsed;
 			}
-		} catch (error) {
-			console.error('[guests.ts] ✗ Failed to parse GUEST_LIST from environment:', error);
-			console.error('[guests.ts] Raw value:', guestListEnv.substring(0, 100));
+		} catch {
+			// Parse failed; will fall back to stub or empty object
 		}
 	}
 	

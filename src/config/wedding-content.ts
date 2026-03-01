@@ -1,8 +1,3 @@
-// Helper function to get the correct image path
-const getImagePath = (path: string) => {
-	return path;
-};
-
 // Contact phone numbers from env (set in Netlify / .env) so they are not in the public repo
 const contactPhoneFeleena = (import.meta.env.CONTACT_PHONE_FELEENA as string) || '';
 const contactPhoneChris = (import.meta.env.CONTACT_PHONE_CHRIS as string) || '';
