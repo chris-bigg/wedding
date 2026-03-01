@@ -279,38 +279,42 @@ The `PersonalizedGreeting` component also uses the same ID system. When a guest 
 
 ### 4.2. Guest tier URL parameters
 
-The site supports different **guest tiers** via the `type` query parameter so you can send day guests and evening-only guests different links. The same `id` parameter still pre-fills the RSVP form and shows the personalized greeting.
+The site supports different **guest tiers** via the `type` and `id` query parameters so you can send day guests and evening-only guests different links. **Day view (food, full FAQs, day schedule) is only shown when `type=day` and `id` is present and valid** (i.e. the `id` exists in the guest list). Anything else—wrong or missing `type`/`id`, or `type` not equal to `day` or `evening`—is treated as **fallback** (no food, no schedule block, fewer FAQs).
 
 #### Query parameters
 
 | Parameter | Description |
 |-----------|-------------|
-| `id` | Unique guest identifier (e.g. `abby-jon`). Pre-fills the RSVP form and shows the personalized greeting. |
-| `type` | Guest tier. Accepted values: `day` or `evening`. |
+| `id` | Unique guest identifier (e.g. `jon-abby`). Must be a key in the guest list. Pre-fills the RSVP form and shows the personalized greeting. Required for **day** view. |
+| `type` | Guest tier. Accepted values: `day` or `evening`. Any other value (or missing) → fallback. |
 
 #### Behaviour by URL
 
 | URL state | Schedule (Details) | RSVP form | FAQs |
 |-----------|--------------------|-----------|------|
-| `?type=day` (with or without `id`) | Full “Plan of the Day” (confirmed times + blurred TBC block). | All fields, including Food Selection; food required when attending. | All FAQs shown. |
-| `?type=evening` | Only evening view: TBC message + 3 blurred rows (no daytime ceremony times). | No Food Selection; food not required. | “What are the key timings?” and “Can I take photographs with my phone/camera?” are hidden. |
-| No `type` and no `id` (General) | Same as day: full schedule. | All fields visible but empty (manual entry); food required when attending. | All FAQs shown. |
+| `?type=day&id=<valid-id>` | Full “Plan of the Day” (confirmed times + blurred TBC block). | All fields, including Food Selection; food required when attending. | All FAQs shown. |
+| `?type=evening` (with or without `id`) | Evening view: TBC message + 3 blurred rows (no daytime ceremony times). | No Food Selection; food not required. | “What are the key timings?” and “Can I take photographs with my phone/camera?” are hidden. |
+| **Fallback** (no params, `?type=test`, `?type=day` without `id`, invalid `id`, or any `type` other than `day`/`evening`) | **No schedule block**—Details card shows only the Kings Head video (no gradient at bottom). | No Food Selection; food not required. | Same as evening: the two day-only FAQs are hidden. |
 
-- If `type` is missing but `id` is present, the site behaves as **day** (backward compatibility).
-- Invalid or unknown `type` with no `id` is treated as **General**.
+- **Day** = `type=day` **and** a valid `id` (must exist in the guest list). If `id` is missing or invalid, the site uses fallback.
+- **Evening** = `type=evening` only. Works standalone (no `id` required).
+- **Fallback** = default for everyone else: no schedule, no food fields, fewer FAQs.
 
 #### Implementation notes
 
-- **Layout** (`src/layouts/Layout.astro`): An inline script at the start of `<body>` reads `type` and `id` from the URL and sets `data-guest-type` on `<html>` (`day`, `evening`, or `general`) so CSS can show/hide content.
-- **Schedule**: `src/components/Details.astro` has two blocks, `data-schedule-tier="day"` and `data-schedule-tier="evening"`. Global CSS hides the day block and shows the evening block when `html[data-guest-type="evening"]`.
-- **RSVP**: `src/components/RSVPForm.tsx` uses `getGuestViewType()` from `src/utils/url.ts` to hide the Food Selection block for evening guests and to skip food validation when `type=evening`.
-- **FAQs**: `src/components/FAQ.astro` marks the two day-only questions with `data-faq-tier="day"` and hides them when `html[data-guest-type="evening"]`.
+- **Layout** (`src/layouts/Layout.astro`): Inline scripts (head and body) read `type` and `id` from the URL, validate `id` against `window.__GUEST_LIST__`, and set on `<html>`:
+  - `data-guest-type`: `day` (only when `type=day` and valid `id`), otherwise `evening`.
+  - `data-show-schedule`: `true` when day (valid id) or evening; otherwise unset so the schedule block is hidden.
+- **url.ts** (`src/utils/url.ts`): `getGuestViewType()` returns `day` only when `type=day` and `id` is in the guest list (via `getGuestList()`); returns `evening` for `type=evening` or fallback. Used by the RSVP form for food visibility and validation.
+- **Details** (`src/components/Details.astro`): Schedule block has `data-details-schedule`; it is hidden when `html` does not have `data-show-schedule="true"`. When hidden, the video card has no bottom gradient or mask. Day vs evening content is toggled with `data-schedule-tier="day"` / `data-schedule-tier="evening"` and `data-guest-type`.
+- **RSVP** (`src/components/RSVPForm.tsx`): Uses `getGuestViewType()` to hide the Food Selection block and skip food validation when not day.
+- **FAQs** (`src/components/FAQ.astro`): Two questions use `data-faq-tier="day"` and are hidden when `html[data-guest-type="evening"]` (so hidden for both evening and fallback).
 
 #### Example links
 
-- Day guest (full day + food): `https://yoursite.com/?id=jon-abby&type=day` or `https://yoursite.com/?id=jon-abby`
-- Evening guest (evening schedule, no food): `https://yoursite.com/?id=jon-abby&type=evening`
-- General (no pre-fill): `https://yoursite.com/`
+- Day guest (full day + food): `https://yoursite.com/?id=jon-abby&type=day` (both `id` and valid guest required).
+- Evening guest (evening schedule, no food): `https://yoursite.com/?type=evening` or `https://yoursite.com/?id=jon-abby&type=evening`
+- Fallback (video-only details, no food, fewer FAQs): `https://yoursite.com/`, `https://yoursite.com/?type=test`, or `https://yoursite.com/?type=day` (missing/invalid `id`)
 
 ### 5. Update Favicon
 
