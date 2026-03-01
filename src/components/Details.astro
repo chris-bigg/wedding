@@ -42,6 +42,18 @@ import { weddingContent } from '../config/wedding-content';
 	html[data-guest-type="evening"] [data-schedule-tier="evening"] {
 		display: block !important;
 	}
+	/* Show schedule only when type=day+valid id or type=evening; else card shows only Kings Head video */
+	html:not([data-show-schedule="true"]) [data-details-schedule] {
+		display: none !important;
+	}
+	/* No bottom gradient or mask when there's no schedule below the video */
+	html:not([data-show-schedule="true"]) .video-fade-container::after {
+		display: none !important;
+	}
+	html:not([data-show-schedule="true"]) .video-fade-container {
+		mask-image: none !important;
+		-webkit-mask-image: none !important;
+	}
 </style>
 
 <section id="details" class="py-20 px-4 bg-gradient-to-br from-green-50/50 to-stone-50 dark:from-stone-900/20 dark:to-stone-950/30">
@@ -81,8 +93,8 @@ import { weddingContent } from '../config/wedding-content';
 				</div>
 			</div>
 
-			{/* Schedule Content - only show confirmed times; TBC items stay in config for later */}
-			<div class="relative z-10 px-8 md:px-12 pt-[30px] pb-8 md:pb-12">
+			{/* Schedule Content - hidden when no id (fallback); only show for guests with id */}
+			<div class="relative z-10 px-8 md:px-12 pt-[30px] pb-8 md:pb-12" data-details-schedule>
 				<h3 class="text-2xl font-medium text-green-950 dark:text-white mb-2 mt-0 text-center" data-animate-text>Schedule</h3>
 				<p class="text-lg text-stone-600 dark:text-stone-400 text-center mb-6" data-animate-text>{weddingContent.date.full}</p>
 

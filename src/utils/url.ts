@@ -29,19 +29,23 @@ export function removeUrlParams(params: string[]): void {
 	window.history.replaceState({}, '', newUrl);
 }
 
+import { getGuestList } from './guests';
+
 export type GuestViewType = 'day' | 'evening' | 'general';
 
 /**
  * Derive guest view tier from URL (type and id params).
- * Used for schedule visibility and RSVP form (food fields / validation).
+ * Day (food, full FAQs, day schedule) only when type=day AND valid id.
+ * Evening works standalone (type=evening). Anything else = fallback.
  */
 export function getGuestViewType(): GuestViewType {
-	if (typeof window === 'undefined') return 'general';
+	if (typeof window === 'undefined') return 'evening';
 	const params = new URLSearchParams(window.location.search);
 	const type = params.get('type');
 	const id = params.get('id');
+	const list = getGuestList();
+	const validId = id && list && Object.prototype.hasOwnProperty.call(list, id);
+	if (type === 'day' && validId) return 'day';
 	if (type === 'evening') return 'evening';
-	if (type === 'day') return 'day';
-	if (id) return 'day'; // backward compatibility: id without type = day
-	return 'general';
+	return 'evening'; // fallback: wrong/missing type or id
 }
