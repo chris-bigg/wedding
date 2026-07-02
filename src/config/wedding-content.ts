@@ -48,12 +48,16 @@ export const weddingContent = {
 	schedule: [
 		{ time: "11:00", event: "Guests Arrive" },
 		{ time: "12:00", event: "Ceremony" },
-		{ time: "TBC", event: "Canapés" },
-		{ time: "TBC", event: "Dinner Reception" },
-		{ time: "TBC", event: "First Dance" },
-		{ time: "TBC", event: "Dancing Begins / Party Time" },
-		{ time: "TBC", event: "Last Orders" },
-		{ time: "TBC", event: "Send-Off/End" },
+		{ time: "1:00 PM", event: "Welcome Drinks" },
+		{ time: "2:15 PM", event: "Speeches" },
+		{ time: "3:15–5:15 PM", event: "Wedding Breakfast" },
+		{ time: "6:30 PM", event: "Cake Cutting" },
+		{ time: "6:45–7:15 PM", event: "Evening Guests Arrival" },
+		{ time: "8:00 PM", event: "First Dance" },
+	],
+	eveningSchedule: [
+		{ time: "6:45–7:15 PM", event: "Evening Guests Arrival" },
+		{ time: "8:00 PM", event: "First Dance" },
 	],
 
 	// Travel & Location
