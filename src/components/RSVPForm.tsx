@@ -176,6 +176,7 @@ export default function RSVPForm() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (!weddingContent.rsvp.enabled) return;
 		setSubmitMessage('');
 
 		const attendingYes = formData.attendance === 'yes';
@@ -351,10 +352,25 @@ export default function RSVPForm() {
 					</span>
 				</h2>
 				<p className="text-center text-stone-600 dark:text-stone-400 mb-12">
-					Please respond by {weddingContent.rsvp.deadline}
+					{weddingContent.rsvp.enabled
+						? `Please respond by ${weddingContent.rsvp.deadline}`
+						: weddingContent.rsvp.closedMessage}
 				</p>
 
+				{!weddingContent.rsvp.enabled && (
+					<div
+						className="mb-6 rounded-xl border border-stone-300/80 dark:border-stone-600/80 bg-stone-100/80 dark:bg-stone-800/60 px-4 py-3 text-center text-sm text-stone-600 dark:text-stone-300"
+						role="status"
+					>
+						This form is no longer accepting responses.
+					</div>
+				)}
+
 				<form onSubmit={handleSubmit} className="space-y-6 bg-white/70 dark:bg-stone-800/70 backdrop-blur-sm rounded-2xl p-8 border border-stone-200/50 dark:border-stone-700/50 shadow-lg">
+					<fieldset
+						disabled={!weddingContent.rsvp.enabled}
+						className={`space-y-6 border-0 p-0 m-0 min-w-0 ${!weddingContent.rsvp.enabled ? 'opacity-60' : ''}`}
+					>
 					{/* Names - Dynamic fields */}
 					<div>
 						<label className="block text-sm font-medium text-green-950 dark:text-white mb-2">
@@ -530,16 +546,17 @@ export default function RSVPForm() {
 					{/* Submit Button */}
 					<button
 						type="submit"
-						disabled={isSubmitting}
-						className="w-full button-sparkle bg-gradient-to-r from-[#C9C7C1] via-[#BAB8B2] to-[#AAA8A2] hover:from-[#BAB8B2] hover:via-[#AAA8A2] hover:to-[#9A988F] disabled:bg-stone-400 text-white px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:hover:scale-100 text-3xl"
+						disabled={isSubmitting || !weddingContent.rsvp.enabled}
+						className="w-full bg-gradient-to-r from-[#C9C7C1] via-[#BAB8B2] to-[#AAA8A2] hover:from-[#BAB8B2] hover:via-[#AAA8A2] hover:to-[#9A988F] disabled:bg-stone-400 disabled:cursor-not-allowed text-white px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:hover:scale-100 text-3xl"
 						style={{fontFamily: "'Mon de Tresor', serif", fontWeight: 400}}
 					>
-						{isSubmitting ? 'Submitting...' : 'Submit RSVP'}
+						{!weddingContent.rsvp.enabled ? 'RSVP Closed' : isSubmitting ? 'Submitting...' : 'Submit RSVP'}
 					</button>
 
 					{submitMessage && (
 						<p className="text-center text-green-900 dark:text-white font-medium">{submitMessage}</p>
 					)}
+					</fieldset>
 				</form>
 				</div>
 			</section>

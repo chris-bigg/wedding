@@ -1,15 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
 import DarkModeToggle from './DarkModeToggle';
+import { weddingContent } from '../config/wedding-content';
+
+const rsvpEnabled = weddingContent.rsvp.enabled;
 
 const navItems = [
 	{ href: '#home', label: 'Home' },
 	{ href: '#story', label: 'Story' },
-	{ href: '#details', label: 'Details' },
+	{ href: '#details', label: 'Schedule', highlight: true },
 	{ href: '#location', label: 'Location' },
 	{ href: '#accommodation', label: 'Stay' },
 	{ href: '#faq', label: 'FAQ' },
 	{ href: '#gift', label: 'Gift' },
-];
+] as const;
+
+const schedulePillClass =
+	'button-sparkle inline-block bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl';
 
 export default function Navigation() {
 	const [activeSection, setActiveSection] = useState('home');
@@ -74,21 +80,25 @@ export default function Navigation() {
 	return (
 		<>
 			{/* Desktop Navigation */}
-			<div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4 hidden md:block">
-				<nav aria-label="Main navigation" className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
+			<div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-fit max-w-[calc(100vw-2rem)] hidden md:block">
+				<nav aria-label="Main navigation" className="w-fit bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs shadow-lg rounded-full border border-stone-200/50 dark:border-stone-700/50">
 					<div className="px-4 py-3">
-						<div className="flex justify-between items-center">
-							<ul className="flex flex-wrap justify-center gap-2 md:gap-4 lg:gap-6 text-xs sm:text-sm mx-auto" role="list">
+						<div className="flex items-center gap-3">
+							<ul className="flex flex-nowrap items-center gap-2 lg:gap-4 text-xs sm:text-sm" role="list">
 								{navItems.map((item) => {
 									const isActive = activeSection === item.href.substring(1);
 									return (
-										<li key={item.href}>
+										<li key={item.href} className="shrink-0">
 											<a
 												href={item.href}
 												className={`transition-all duration-300 whitespace-nowrap ${
-													isActive
-														? 'text-green-900 dark:text-white font-bold'
-														: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200'
+													item.highlight
+														? `px-3 md:px-4 py-1.5 md:py-2 rounded-full ${schedulePillClass} ${
+																isActive ? 'ring-2 ring-green-600 dark:ring-white/40 ring-offset-2' : ''
+															}`
+														: isActive
+															? 'text-green-900 dark:text-white font-bold'
+															: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200'
 												}`}
 											>
 												{item.label}
@@ -96,18 +106,24 @@ export default function Navigation() {
 										</li>
 									);
 								})}
-								<li>
+								<li className="shrink-0">
 									<a
 										href="#rsvp"
-										className={`bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap ${
-											activeSection === 'rsvp' ? 'ring-2 ring-green-600 dark:ring-white/40 ring-offset-2' : ''
+										aria-disabled={!rsvpEnabled}
+										title={rsvpEnabled ? undefined : weddingContent.rsvp.closedMessage}
+										className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-all duration-300 whitespace-nowrap ${
+											rsvpEnabled
+												? `bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl ${
+														activeSection === 'rsvp' ? 'ring-2 ring-green-600 dark:ring-white/40 ring-offset-2' : ''
+													}`
+												: 'bg-stone-300/80 dark:bg-stone-700/80 text-stone-600 dark:text-stone-400 cursor-default'
 										}`}
 									>
-										RSVP
+										{rsvpEnabled ? 'RSVP' : 'RSVP Closed'}
 									</a>
 								</li>
 							</ul>
-							<div className="ml-3">
+							<div className="shrink-0">
 								<DarkModeToggle />
 							</div>
 						</div>
@@ -179,10 +195,14 @@ export default function Navigation() {
 										<a
 											href={item.href}
 											onClick={handleMenuItemClick}
-											className={`block px-8 py-4 text-lg transition-all duration-300 ${
-												isActive
-													? 'text-green-900 dark:text-white font-bold bg-green-50 dark:bg-stone-200/20'
-													: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+											className={`block text-lg transition-all duration-300 ${
+												item.highlight
+													? `mx-8 my-2 text-center px-6 py-4 rounded-full font-semibold ${schedulePillClass}`
+													: `px-8 py-4 ${
+															isActive
+																? 'text-green-900 dark:text-white font-bold bg-green-50 dark:bg-stone-200/20'
+																: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+														}`
 											}`}
 										>
 											{item.label}
@@ -194,9 +214,15 @@ export default function Navigation() {
 								<a
 									href="#rsvp"
 									onClick={handleMenuItemClick}
-									className="block text-center bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white px-6 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-semibold"
+									aria-disabled={!rsvpEnabled}
+									title={rsvpEnabled ? undefined : weddingContent.rsvp.closedMessage}
+									className={`block text-center px-6 py-4 rounded-full transition-all duration-300 text-lg font-semibold ${
+										rsvpEnabled
+											? 'bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl'
+											: 'bg-stone-300/80 dark:bg-stone-700/80 text-stone-600 dark:text-stone-400 cursor-default'
+									}`}
 								>
-									RSVP
+									{rsvpEnabled ? 'RSVP' : 'RSVP Closed'}
 								</a>
 							</li>
 						</ul>
