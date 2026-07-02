@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import CountdownTimer from './CountdownTimer';
+
+const schedulePillClass =
+	'button-sparkle inline-block bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl hover:scale-105';
 
 interface HeroContentProps {
 	dateText: string;
@@ -31,7 +34,7 @@ export default function HeroContent({ dateText, venueName }: HeroContentProps) {
 			);
 			
 			gsap.fromTo(
-				'.hero-rsvp',
+				'.hero-schedule',
 				{ opacity: 0, scale: 0.8 },
 				{ opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 1.1 }
 			);
@@ -61,13 +64,13 @@ export default function HeroContent({ dateText, venueName }: HeroContentProps) {
 				<CountdownTimer />
 			</div>
 			
-			<div className="hero-rsvp mt-8 opacity-0">
-				<a 
-					href="#rsvp" 
-					className="inline-block bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+			<div className="hero-schedule mt-8 opacity-0">
+				<a
+					href="#details"
+					className={`font-medium px-8 py-3 rounded-full transition-all duration-300 ${schedulePillClass}`}
 					style={{ filter: 'drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25)) drop-shadow(0 3px 6px rgba(255, 255, 255, 0.8))' }}
 				>
-					RSVP Now
+					Schedule
 				</a>
 			</div>
 		</>

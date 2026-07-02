@@ -27,6 +27,8 @@ export const weddingContent = {
 	},
 	rsvp: {
 		deadline: "01/05/2026",
+		enabled: false,
+		closedMessage: "RSVP is now closed. If you need to get in touch, please see the FAQ for contact details.",
 	},
 	contact: {
 		email: "enquire@feleenaandchristopher.wedding",
@@ -148,6 +150,14 @@ export const weddingContent = {
 		{
 			question: "When should I RSVP by?",
 			answer: null as string | null, // Will be set after object creation
+		},
+		{
+			question: "Should I bring a card?",
+			answer: "We are not having a guestbook and would greatly appreciate cards.",
+		},
+		{
+			question: "Are there any colours to avoid?",
+			answer: "Other than white and white adjacent, there are no colours to avoid! For your information, the wedding party will be wearing champagne and dark green.",
 		},
 		{
 			question: "Who should I call with questions?",

@@ -108,8 +108,14 @@ import { weddingContent } from '../config/wedding-content';
 				<p class="text-lg text-stone-600 dark:text-stone-400 text-center mb-6" data-animate-text>{weddingContent.date.full}</p>
 
 				<div class="schedule-for-day space-y-4" data-schedule-tier="day" data-animate-stagger>
-					{weddingContent.schedule.map((item) => (
-						<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-green-800/40 dark:border-stone-200/30 pb-3" data-stagger-item>
+					{weddingContent.schedule.map((item, index) => (
+						<div
+							class:list={[
+								"flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 pb-3",
+								index < weddingContent.schedule.length - 1 && "border-b border-green-800/40 dark:border-stone-200/30",
+							]}
+							data-stagger-item
+						>
 							<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
 							<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
 						</div>
@@ -117,8 +123,14 @@ import { weddingContent } from '../config/wedding-content';
 				</div>
 
 				<div class="schedule-for-evening space-y-4" data-schedule-tier="evening" data-animate-stagger>
-					{weddingContent.eveningSchedule.map((item) => (
-						<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-green-800/40 dark:border-stone-200/30 pb-3" data-stagger-item>
+					{weddingContent.eveningSchedule.map((item, index) => (
+						<div
+							class:list={[
+								"flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 pb-3",
+								index < weddingContent.eveningSchedule.length - 1 && "border-b border-green-800/40 dark:border-stone-200/30",
+							]}
+							data-stagger-item
+						>
 							<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
 							<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
 						</div>
