@@ -130,14 +130,14 @@ export default function HoneymoonModal() {
 							</div>
 							{/* Back: sort code & account number (selectable so users can copy) */}
 							<div
-								className="absolute inset-0 bg-stone-100 dark:bg-stone-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center transition-transform duration-500 ease-in-out"
+								className="absolute inset-0 bg-stone-100 dark:bg-stone-800 px-6 pt-4 pb-6 rounded-2xl shadow-lg flex flex-col items-center justify-center transition-transform duration-500 ease-in-out"
 								style={{
 									transformStyle: 'preserve-3d',
 									backfaceVisibility: 'hidden',
 									transform: cardFlipped ? 'rotateY(0deg)' : 'rotateY(-180deg)',
 								}}
 							>
-								<p className="text-stone-600 dark:text-stone-400 text-sm font-medium mb-4">Bank transfer</p>
+								<p className="text-stone-600 dark:text-stone-400 text-sm font-medium mb-2">Bank transfer</p>
 								<dl
 									className="text-left space-y-2 w-full max-w-[200px] select-text cursor-text"
 									style={{ userSelect: 'text' }}
@@ -150,6 +150,10 @@ export default function HoneymoonModal() {
 									<div>
 										<dt className="text-xs text-stone-500 dark:text-stone-500 uppercase tracking-wide">Account number</dt>
 										<dd className="text-lg font-semibold text-stone-800 dark:text-stone-200 tabular-nums">{ACCOUNT_NUMBER}</dd>
+									</div>
+									<div>
+										<dt className="text-xs text-stone-500 dark:text-stone-500 uppercase tracking-wide">Name</dt>
+										<dd className="text-sm text-stone-600 dark:text-stone-300">Christopher Bigg</dd>
 									</div>
 								</dl>
 								<span className="absolute bottom-2 left-0 right-0 text-xs text-stone-500">Tap for QR code</span>
