@@ -187,45 +187,51 @@ export default function Navigation() {
 						onClick={(e) => e.stopPropagation()}
 					>
 						<h2 id="mobile-menu-title" className="sr-only">Mobile menu</h2>
-						<ul className="py-6" role="list">
-							{navItems.map((item) => {
-								const isActive = activeSection === item.href.substring(1);
-								return (
-									<li key={item.href}>
-										<a
-											href={item.href}
-											onClick={handleMenuItemClick}
-											className={`block text-lg transition-all duration-300 ${
-												item.highlight
-													? `mx-8 my-2 text-center px-6 py-4 rounded-full font-semibold ${schedulePillClass}`
-													: `px-8 py-4 ${
-															isActive
-																? 'text-green-900 dark:text-white font-bold bg-green-50 dark:bg-stone-200/20'
-																: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800/50'
-														}`
-											}`}
-										>
-											{item.label}
-										</a>
-									</li>
-								);
-							})}
-							<li className="mt-4 px-8">
+					<ul className="py-6 flex flex-col h-full" role="list">
+						{navItems.filter(item => !item.highlight).map((item) => {
+							const isActive = activeSection === item.href.substring(1);
+							return (
+								<li key={item.href}>
+									<a
+										href={item.href}
+										onClick={handleMenuItemClick}
+										className={`block text-lg transition-all duration-300 px-8 py-4 ${
+											isActive
+												? 'text-green-900 dark:text-white font-bold bg-green-50 dark:bg-stone-200/20'
+												: 'text-stone-700 dark:text-stone-200 hover:text-green-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+										}`}
+									>
+										{item.label}
+									</a>
+								</li>
+							);
+						})}
+						<li className="mt-auto pt-4 px-8 flex flex-col gap-3 border-t border-stone-200/50 dark:border-stone-700/50">
+							{navItems.filter(item => item.highlight).map((item) => (
 								<a
-									href="#rsvp"
+									key={item.href}
+									href={item.href}
 									onClick={handleMenuItemClick}
-									aria-disabled={!rsvpEnabled}
-									title={rsvpEnabled ? undefined : weddingContent.rsvp.closedMessage}
-									className={`block text-center px-6 py-4 rounded-full transition-all duration-300 text-lg font-semibold ${
-										rsvpEnabled
-											? 'bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl'
-											: 'bg-stone-300/80 dark:bg-stone-700/80 text-stone-600 dark:text-stone-400 cursor-default'
-									}`}
+									className={`block text-center px-6 py-4 rounded-full transition-all duration-300 text-lg font-semibold ${schedulePillClass}`}
 								>
-									{rsvpEnabled ? 'RSVP' : 'RSVP Closed'}
+									{item.label}
 								</a>
-							</li>
-						</ul>
+							))}
+							<a
+								href="#rsvp"
+								onClick={handleMenuItemClick}
+								aria-disabled={!rsvpEnabled}
+								title={rsvpEnabled ? undefined : weddingContent.rsvp.closedMessage}
+								className={`block text-center px-6 py-4 rounded-full transition-all duration-300 text-lg font-semibold ${
+									rsvpEnabled
+										? 'bg-gradient-to-r from-green-800 to-green-900 hover:from-green-900 hover:to-green-950 dark:from-stone-200/30 dark:to-stone-300/40 dark:hover:from-stone-300/40 dark:hover:to-stone-200/30 text-white shadow-lg hover:shadow-xl'
+										: 'bg-stone-300/80 dark:bg-stone-700/80 text-stone-600 dark:text-stone-400 cursor-default'
+								}`}
+							>
+								{rsvpEnabled ? 'RSVP' : 'RSVP Closed'}
+							</a>
+						</li>
+					</ul>
 					</div>
 				</div>
 			)}
