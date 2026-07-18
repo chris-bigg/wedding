@@ -116,8 +116,18 @@ import { weddingContent } from '../config/wedding-content';
 							]}
 							data-stagger-item
 						>
-							<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
-							<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
+							<span class:list={[
+								"text-base sm:text-lg",
+								item.highlight
+									? "font-bold text-green-950 dark:text-white"
+									: "font-medium text-green-900 dark:text-white",
+							]}>{item.time}</span>
+							<span class:list={[
+								"text-base sm:text-lg",
+								item.highlight
+									? "font-bold text-green-950 dark:text-white"
+									: "text-stone-600 dark:text-stone-400",
+							]}>{item.event}</span>
 						</div>
 					))}
 				</div>
@@ -131,8 +141,18 @@ import { weddingContent } from '../config/wedding-content';
 							]}
 							data-stagger-item
 						>
-							<span class="text-base sm:text-lg font-medium text-green-900 dark:text-white">{item.time}</span>
-							<span class="text-base sm:text-lg text-stone-600 dark:text-stone-400">{item.event}</span>
+							<span class:list={[
+								"text-base sm:text-lg",
+								item.highlight
+									? "font-bold text-green-950 dark:text-white"
+									: "font-medium text-green-900 dark:text-white",
+							]}>{item.time}</span>
+							<span class:list={[
+								"text-base sm:text-lg",
+								item.highlight
+									? "font-bold text-green-950 dark:text-white"
+									: "text-stone-600 dark:text-stone-400",
+							]}>{item.event}</span>
 						</div>
 					))}
 				</div>
